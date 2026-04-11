@@ -6,23 +6,40 @@ import DemoSection from './components/Landing/DemoSection';
 import CTASection from './components/Landing/CTASection';
 import Footer from './components/Landing/Footer';
 import ShowcasePage from './components/Landing/ShowcasePage';
-import { showcases } from './content/showcases';
+import ProjectDetailPage from './components/Landing/ProjectDetailPage';
+import { showcaseMediaBySlug, showcases } from './content/showcases';
 
-function getActiveShowcaseSlug() {
+function getRouteState() {
   if (typeof window === 'undefined') {
-    return null;
+    return {
+      showcaseSlug: null,
+      projectId: null,
+    };
   }
 
-  const match = window.location.hash.match(/^#showcase\/(.+)$/);
-  return match?.[1] ?? null;
+  const projectMatch = window.location.hash.match(/^#showcase\/([^/]+)\/project\/([^/]+)$/);
+
+  if (projectMatch) {
+    return {
+      showcaseSlug: projectMatch[1] ?? null,
+      projectId: projectMatch[2] ?? null,
+    };
+  }
+
+  const showcaseMatch = window.location.hash.match(/^#showcase\/([^/]+)$/);
+
+  return {
+    showcaseSlug: showcaseMatch?.[1] ?? null,
+    projectId: null,
+  };
 }
 
 function App() {
-  const [activeShowcaseSlug, setActiveShowcaseSlug] = useState<string | null>(getActiveShowcaseSlug());
+  const [routeState, setRouteState] = useState(getRouteState());
 
   useEffect(() => {
     const handleHashChange = () => {
-      setActiveShowcaseSlug(getActiveShowcaseSlug());
+      setRouteState(getRouteState());
     };
 
     handleHashChange();
@@ -30,12 +47,17 @@ function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  const activeShowcase = showcases.find((item) => item.slug === activeShowcaseSlug) ?? null;
+  const activeShowcase = showcases.find((item) => item.slug === routeState.showcaseSlug) ?? null;
+  const activeProject = activeShowcase && routeState.projectId
+    ? (showcaseMediaBySlug[activeShowcase.slug] ?? []).find((item) => item.id === routeState.projectId) ?? null
+    : null;
 
   return (
     <>
       <Navbar />
-      {activeShowcase ? (
+      {activeShowcase && activeProject ? (
+        <ProjectDetailPage showcase={activeShowcase} project={activeProject} />
+      ) : activeShowcase ? (
         <ShowcasePage showcase={activeShowcase} />
       ) : (
         <>
