@@ -1,10 +1,11 @@
 import { useState, useCallback, useRef } from 'react';
-import type { Message, AgentStatus } from '../types/chat';
+import type { Attachment, Message, AgentStatus, NanoModelId } from '../types/chat';
+import { generateNanoImage } from '../services/nanoImage';
 
 const GREETINGS: Record<string, string> = {
-  morning: '早上好！我是 Kaya，设计部0号员工。今天需要我帮你做什么设计吗？',
-  afternoon: '下午好！我是 Kaya，随时准备为你处理设计任务。',
-  evening: '晚上好！我是 Kaya，有什么设计需求可以交给我。',
+  morning: '早上好！我是 LQB，设计部0号员工。今天需要我帮你做什么设计吗？',
+  afternoon: '下午好！我是 LQB，随时准备为你处理设计任务。',
+  evening: '晚上好！我是 LQB，有什么设计需求可以交给我。',
 };
 
 function getGreeting(): string {
@@ -28,6 +29,16 @@ function getMockResponse(input: string): string {
   return `收到你的需求："${input}"\n\n我正在分析任务内容，稍后会给你一个详细的设计方案。如果有参考图片或具体要求，可以随时补充。`;
 }
 
+export interface ChatSubmitPayload {
+  content: string;
+  operation?: 'text-to-image' | 'image-to-image';
+  model?: NanoModelId;
+  sourceImage?: {
+    url: string;
+    name: string;
+  };
+}
+
 let messageIdCounter = 0;
 function generateId(): string {
   return `msg-${Date.now()}-${++messageIdCounter}`;
@@ -38,22 +49,44 @@ export function useChat() {
     {
       id: generateId(),
       role: 'assistant',
-      content: getGreeting(),
+      content: `${getGreeting()}\n\n现在可以直接在对话框里使用 Nano Banana：\n• 文生图：输入提示词直接生成\n• 图生图：切到图生图模块，上传参考图后再描述你想改成什么`,
       timestamp: new Date(),
       status: 'delivered',
     },
   ]);
   const [isTyping, setIsTyping] = useState(false);
   const [agentStatus, setAgentStatus] = useState<AgentStatus>('online');
-  const typingTimerRef = useRef<ReturnType<typeof setTimeout>>();
+  const typingTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  const sendMessage = useCallback((content: string) => {
+  const sendMessage = useCallback(async ({
+    content,
+    operation = 'text-to-image',
+    model = 'gemini-2.5-flash-image',
+    sourceImage,
+  }: ChatSubmitPayload) => {
+    const userAttachments: Attachment[] | undefined = sourceImage
+      ? [
+          {
+            type: 'image',
+            url: sourceImage.url,
+            name: sourceImage.name,
+            purpose: 'input',
+          },
+        ]
+      : undefined;
+
     const userMessage: Message = {
       id: generateId(),
       role: 'user',
       content,
       timestamp: new Date(),
       status: 'delivered',
+      attachments: userAttachments,
+      meta: {
+        provider: 'nano-banana',
+        operation,
+        model,
+      },
     };
 
     setMessages((prev) => [...prev, userMessage]);
@@ -61,6 +94,59 @@ export function useChat() {
     setAgentStatus('thinking');
 
     if (typingTimerRef.current) clearTimeout(typingTimerRef.current);
+
+    if (operation === 'text-to-image' || operation === 'image-to-image') {
+      try {
+        const result = await generateNanoImage({
+          prompt: content,
+          operation,
+          sourceImage: sourceImage?.url,
+          model,
+        });
+        const assistantMessage: Message = {
+          id: generateId(),
+          role: 'assistant',
+          kind: 'image-result',
+          content: result.note,
+          timestamp: new Date(),
+          status: 'delivered',
+          attachments: [
+            {
+              type: 'image',
+              url: result.imageUrl,
+              name: 'nano-banana-result.png',
+              prompt: result.prompt,
+              width: result.width,
+              height: result.height,
+              purpose: 'result',
+            },
+          ],
+          meta: {
+            provider: 'nano-banana',
+            mode: result.mode,
+            prompt: result.prompt,
+            operation: result.operation,
+            model: result.model,
+          },
+        };
+
+        setMessages((prev) => [...prev, assistantMessage]);
+      } catch (error) {
+        const assistantMessage: Message = {
+          id: generateId(),
+          role: 'assistant',
+          content: `Nano Banana ${operation === 'image-to-image' ? '图生图' : '文生图'}暂时失败了。\n\n${error instanceof Error ? error.message : '请稍后重试。'}`,
+          timestamp: new Date(),
+          status: 'delivered',
+        };
+
+        setMessages((prev) => [...prev, assistantMessage]);
+      }
+
+      setIsTyping(false);
+      setAgentStatus('online');
+      return;
+    }
 
     const responseText = getMockResponse(content);
     const delay = 800 + Math.random() * 1200;

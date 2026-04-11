@@ -20,7 +20,7 @@ export default function CTASection() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          用 Kaya 设计
+          用LQB设计
         </motion.h2>
         <motion.p
           className="text-lg text-surface-400 mt-5 max-w-xl mx-auto"

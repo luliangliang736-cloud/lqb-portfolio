@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import type { DesignElement, ToolType, CanvasState, Position, Size } from '../types/editor';
 
 let idCounter = 0;
@@ -26,7 +26,7 @@ const DEFAULT_ELEMENTS: DesignElement[] = [
   {
     id: genId(), type: 'text', position: { x: 160, y: 228 }, size: { width: 240, height: 32 },
     rotation: 0, fill: 'rgba(255,255,255,0.7)', stroke: 'transparent', strokeWidth: 0, opacity: 1, borderRadius: 0,
-    text: 'AI 虚拟设计员工 Kaya', fontSize: 14, fontWeight: 400,
+    text: 'AI 虚拟设计员工 LQB', fontSize: 14, fontWeight: 400,
     locked: false, visible: true, name: '副标题',
   },
   {
@@ -48,15 +48,109 @@ const DEFAULT_ELEMENTS: DesignElement[] = [
     id: genId(), type: 'image', position: { x: 500, y: 340 }, size: { width: 130, height: 130 },
     rotation: 0, fill: 'transparent', stroke: 'transparent', strokeWidth: 0, opacity: 1, borderRadius: 8,
     imageSrc: '/assets/character.png',
-    locked: false, visible: true, name: 'Kaya 角色',
+    locked: false, visible: true, name: 'LQB 角色',
   },
 ];
+
+interface HistorySnapshot {
+  elements: DesignElement[];
+  selectedIds: string[];
+  canvas: CanvasState;
+}
+
+interface AddElementOptions {
+  position?: Position;
+  size?: Size;
+}
+
+function cloneElement(element: DesignElement): DesignElement {
+  return {
+    ...element,
+    position: { ...element.position },
+    size: { ...element.size },
+  };
+}
+
+function cloneElements(elements: DesignElement[]) {
+  return elements.map(cloneElement);
+}
+
+function createElement(type: DesignElement['type'], index: number, options: AddElementOptions = {}): DesignElement {
+  const base: DesignElement = {
+    id: genId(),
+    type,
+    position: options.position ?? { x: 200, y: 200 },
+    size: options.size ?? (type === 'text' ? { width: 220, height: 48 } : { width: 150, height: 150 }),
+    rotation: 0,
+    fill: type === 'text' ? '#ffffff' : '#7c6aff',
+    stroke: 'transparent',
+    strokeWidth: 0,
+    opacity: 1,
+    borderRadius: type === 'ellipse' ? 9999 : 8,
+    locked: false,
+    visible: true,
+    name: `${type === 'rectangle' ? '矩形' : type === 'ellipse' ? '椭圆' : type === 'text' ? '文字' : '图片'} ${index}`,
+  };
+
+  if (type === 'text') {
+    base.text = '输入文字';
+    base.fontSize = 18;
+    base.fontWeight = 500;
+  }
+
+  if (type === 'image') {
+    base.fill = 'transparent';
+    base.imageSrc = '/assets/character.png';
+  }
+
+  return base;
+}
 
 export function useEditorState() {
   const [elements, setElements] = useState<DesignElement[]>(DEFAULT_ELEMENTS);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [activeTool, setActiveTool] = useState<ToolType>('select');
   const [canvas, setCanvas] = useState<CanvasState>({ zoom: 1, offset: { x: 0, y: 0 } });
+  const [history, setHistory] = useState<HistorySnapshot[]>([]);
+  const [future, setFuture] = useState<HistorySnapshot[]>([]);
+  const [clipboard, setClipboard] = useState<DesignElement[]>([]);
+  const batchedSnapshotRef = useRef<HistorySnapshot | null>(null);
+  const pasteCountRef = useRef(0);
+
+  const createSnapshot = useCallback((): HistorySnapshot => ({
+    elements: cloneElements(elements),
+    selectedIds: [...selectedIds],
+    canvas: {
+      zoom: canvas.zoom,
+      offset: { ...canvas.offset },
+    },
+  }), [elements, selectedIds, canvas]);
+
+  const restoreSnapshot = useCallback((snapshot: HistorySnapshot) => {
+    setElements(cloneElements(snapshot.elements));
+    setSelectedIds([...snapshot.selectedIds]);
+    setCanvas({
+      zoom: snapshot.canvas.zoom,
+      offset: { ...snapshot.canvas.offset },
+    });
+  }, []);
+
+  const pushHistory = useCallback((snapshot: HistorySnapshot) => {
+    setHistory((prev) => [...prev, snapshot]);
+    setFuture([]);
+  }, []);
+
+  const beginHistoryAction = useCallback(() => {
+    if (!batchedSnapshotRef.current) {
+      batchedSnapshotRef.current = createSnapshot();
+    }
+  }, [createSnapshot]);
+
+  const endHistoryAction = useCallback(() => {
+    if (!batchedSnapshotRef.current) return;
+    pushHistory(batchedSnapshotRef.current);
+    batchedSnapshotRef.current = null;
+  }, [pushHistory]);
 
   const selectElement = useCallback((id: string, multi = false) => {
     setSelectedIds((prev) => {
@@ -67,16 +161,31 @@ export function useEditorState() {
     });
   }, []);
 
+  const selectElements = useCallback((ids: string[]) => {
+    setSelectedIds(ids);
+  }, []);
+
   const clearSelection = useCallback(() => setSelectedIds([]), []);
 
   const updateElement = useCallback((id: string, patch: Partial<DesignElement>) => {
+    pushHistory(createSnapshot());
     setElements((prev) => prev.map((el) => (el.id === id ? { ...el, ...patch } : el)));
-  }, []);
+  }, [createSnapshot, pushHistory]);
 
   const moveElement = useCallback((id: string, delta: Position) => {
     setElements((prev) =>
       prev.map((el) =>
         el.id === id && !el.locked
+          ? { ...el, position: { x: el.position.x + delta.x, y: el.position.y + delta.y } }
+          : el,
+      ),
+    );
+  }, []);
+
+  const moveSelectedElements = useCallback((ids: string[], delta: Position) => {
+    setElements((prev) =>
+      prev.map((el) =>
+        ids.includes(el.id) && !el.locked
           ? { ...el, position: { x: el.position.x + delta.x, y: el.position.y + delta.y } }
           : el,
       ),
@@ -94,32 +203,24 @@ export function useEditorState() {
     );
   }, []);
 
-  const addElement = useCallback((type: DesignElement['type']) => {
-    const base: DesignElement = {
-      id: genId(), type, position: { x: 200, y: 200 },
-      size: type === 'text' ? { width: 200, height: 40 } : { width: 150, height: 150 },
-      rotation: 0, fill: type === 'text' ? '#ffffff' : '#7c6aff',
-      stroke: 'transparent', strokeWidth: 0, opacity: 1,
-      borderRadius: type === 'ellipse' ? 9999 : 8,
-      locked: false, visible: true,
-      name: `${type === 'rectangle' ? '矩形' : type === 'ellipse' ? '椭圆' : type === 'text' ? '文字' : '图片'} ${elements.length + 1}`,
-    };
-    if (type === 'text') {
-      base.text = '双击编辑';
-      base.fontSize = 18;
-      base.fontWeight = 400;
-    }
+  const addElement = useCallback((type: DesignElement['type'], options?: AddElementOptions) => {
+    pushHistory(createSnapshot());
+    const base = createElement(type, elements.length + 1, options);
     setElements((prev) => [...prev, base]);
     setSelectedIds([base.id]);
     setActiveTool('select');
-  }, [elements.length]);
+  }, [createSnapshot, elements.length, pushHistory]);
 
   const deleteSelected = useCallback(() => {
+    if (!selectedIds.length) return;
+    pushHistory(createSnapshot());
     setElements((prev) => prev.filter((el) => !selectedIds.includes(el.id)));
     setSelectedIds([]);
-  }, [selectedIds]);
+  }, [createSnapshot, pushHistory, selectedIds]);
 
   const duplicateSelected = useCallback(() => {
+    if (!selectedIds.length) return;
+    pushHistory(createSnapshot());
     const copies: DesignElement[] = [];
     setElements((prev) => {
       const newEls = [...prev];
@@ -138,7 +239,54 @@ export function useEditorState() {
       return newEls;
     });
     setSelectedIds(copies.map((c) => c.id));
-  }, [selectedIds]);
+  }, [createSnapshot, pushHistory, selectedIds]);
+
+  const copySelected = useCallback(() => {
+    if (!selectedIds.length) return;
+    const copied = elements
+      .filter((el) => selectedIds.includes(el.id))
+      .map(cloneElement);
+    setClipboard(copied);
+    pasteCountRef.current = 0;
+  }, [elements, selectedIds]);
+
+  const pasteClipboard = useCallback(() => {
+    if (!clipboard.length) return;
+    pushHistory(createSnapshot());
+    pasteCountRef.current += 1;
+    const offset = 24 * pasteCountRef.current;
+    const copies = clipboard.map((el) => ({
+      ...cloneElement(el),
+      id: genId(),
+      position: {
+        x: el.position.x + offset,
+        y: el.position.y + offset,
+      },
+      name: `${el.name} 副本`,
+    }));
+    setElements((prev) => [...prev, ...copies]);
+    setSelectedIds(copies.map((el) => el.id));
+  }, [clipboard, createSnapshot, pushHistory]);
+
+  const undo = useCallback(() => {
+    if (!history.length) return;
+    const currentSnapshot = createSnapshot();
+    const previous = history[history.length - 1];
+    setHistory((prev) => prev.slice(0, -1));
+    setFuture((prev) => [currentSnapshot, ...prev]);
+    batchedSnapshotRef.current = null;
+    restoreSnapshot(previous);
+  }, [createSnapshot, history, restoreSnapshot]);
+
+  const redo = useCallback(() => {
+    if (!future.length) return;
+    const currentSnapshot = createSnapshot();
+    const next = future[0];
+    setFuture((prev) => prev.slice(1));
+    setHistory((prev) => [...prev, currentSnapshot]);
+    batchedSnapshotRef.current = null;
+    restoreSnapshot(next);
+  }, [createSnapshot, future, restoreSnapshot]);
 
   const setZoom = useCallback((z: number) => {
     setCanvas((prev) => ({ ...prev, zoom: Math.max(0.1, Math.min(5, z)) }));
@@ -155,8 +303,10 @@ export function useEditorState() {
 
   return {
     elements, selectedIds, selectedElements, activeTool, canvas,
-    selectElement, clearSelection, updateElement, moveElement, resizeElement,
-    addElement, deleteSelected, duplicateSelected,
+    canUndo: history.length > 0, canRedo: future.length > 0,
+    selectElement, selectElements, clearSelection, updateElement, moveElement, moveSelectedElements, resizeElement,
+    addElement, deleteSelected, duplicateSelected, copySelected, pasteClipboard,
+    beginHistoryAction, endHistoryAction, undo, redo,
     setActiveTool, setZoom, panCanvas,
   };
 }

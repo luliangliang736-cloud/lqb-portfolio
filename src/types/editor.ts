@@ -8,6 +8,13 @@ export interface Size {
   height: number;
 }
 
+export interface Rect {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
 export type ElementType = 'rectangle' | 'ellipse' | 'text' | 'image';
 
 export type ToolType = 'select' | 'hand' | 'rectangle' | 'ellipse' | 'text' | 'image';

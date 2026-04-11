@@ -59,7 +59,7 @@ export default function SystemDesign() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          设计决策，并非一座孤岛。Kaya 将色彩、版式、语言统一为完整的品牌体系，
+          设计决策，并非一座孤岛。LQB 将色彩、版式、语言统一为完整的品牌体系，
           从第一稿，到第一百稿。
         </motion.p>
 

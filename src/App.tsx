@@ -1,31 +1,53 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from './components/Landing/Navbar';
 import Hero from './components/Landing/Hero';
-import SystemDesign from './components/Landing/SystemDesign';
 import Features from './components/Landing/Features';
 import DemoSection from './components/Landing/DemoSection';
 import CTASection from './components/Landing/CTASection';
 import Footer from './components/Landing/Footer';
-import EditorPage from './components/Editor/EditorPage';
+import ShowcasePage from './components/Landing/ShowcasePage';
+import { showcases } from './content/showcases';
+
+function getActiveShowcaseSlug() {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  const match = window.location.hash.match(/^#showcase\/(.+)$/);
+  return match?.[1] ?? null;
+}
 
 function App() {
-  const [page, setPage] = useState<'landing' | 'editor'>('landing');
+  const [activeShowcaseSlug, setActiveShowcaseSlug] = useState<string | null>(getActiveShowcaseSlug());
 
-  if (page === 'editor') {
-    return <EditorPage onBack={() => setPage('landing')} />;
-  }
+  useEffect(() => {
+    const handleHashChange = () => {
+      setActiveShowcaseSlug(getActiveShowcaseSlug());
+    };
+
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  const activeShowcase = showcases.find((item) => item.slug === activeShowcaseSlug) ?? null;
 
   return (
     <>
       <Navbar />
-      <Hero />
-      <div className="min-h-screen bg-surface-950">
-        <SystemDesign />
-        <Features />
-        <DemoSection onOpenEditor={() => setPage('editor')} />
-        <CTASection />
-        <Footer />
-      </div>
+      {activeShowcase ? (
+        <ShowcasePage showcase={activeShowcase} />
+      ) : (
+        <>
+          <Hero />
+          <div className="min-h-screen bg-surface-950">
+            <Features />
+            <DemoSection />
+            <CTASection />
+            <Footer />
+          </div>
+        </>
+      )}
     </>
   );
 }

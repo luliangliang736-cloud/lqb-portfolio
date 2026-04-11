@@ -36,7 +36,7 @@ export default function HeroDemo() {
           <span className="w-3 h-3 rounded-full bg-surface-700" />
         </div>
         <div className="flex-1 flex justify-center">
-          <span className="text-xs text-surface-500">Kaya · 设计部0号员工</span>
+          <span className="text-xs text-surface-500">LQB · 设计部0号员工</span>
         </div>
         <div className="w-12" />
       </div>

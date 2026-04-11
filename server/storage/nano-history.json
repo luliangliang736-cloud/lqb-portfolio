@@ -1,0 +1,50 @@
+[
+  {
+    "id": "ab8618e3-b1b9-4aac-9bc3-858640064a27",
+    "createdAt": "2026-04-10T11:18:31.392Z",
+    "prompt": "换两套不同的服饰",
+    "operation": "image-to-image",
+    "model": "gemini-2.5-flash-image",
+    "imageUrl": "https://r2.nanobananaapi.dev/assets/20260410/3f8d7ebf-297c-4e70-9f17-ce781006225c.png",
+    "width": 1024,
+    "height": 1024,
+    "note": "Nano Banana 已完成图生图。",
+    "hasSourceImage": true
+  },
+  {
+    "id": "47dd8c0b-d71a-4ecc-956d-dd9339fdbd3b",
+    "createdAt": "2026-04-10T11:17:28.054Z",
+    "prompt": "人物来两组不同的姿势和不同服饰",
+    "operation": "image-to-image",
+    "model": "gemini-2.5-flash-image",
+    "imageUrl": "https://r2.nanobananaapi.dev/assets/20260410/f8ce810a-232b-4334-ba6b-389421cc4fad.png",
+    "width": 1024,
+    "height": 1024,
+    "note": "Nano Banana 已完成图生图。",
+    "hasSourceImage": true
+  },
+  {
+    "id": "2029119f-e53d-4705-a836-878319fbe6b3",
+    "createdAt": "2026-04-10T10:24:03.314Z",
+    "prompt": "人物换两套不同的服饰",
+    "operation": "image-to-image",
+    "model": "gemini-2.5-flash-image",
+    "imageUrl": "https://r2.nanobananaapi.dev/assets/20260410/cafdee32-6558-4eb7-83f6-e0f4df05570b.png",
+    "width": 1024,
+    "height": 1024,
+    "note": "Nano Banana 已完成图生图。",
+    "hasSourceImage": true
+  },
+  {
+    "id": "be7685db-e9d6-41c4-bb19-fd428981f1e6",
+    "createdAt": "2026-04-10T09:49:46.538Z",
+    "prompt": "A glossy purple digital human poster with neon glow",
+    "operation": "text-to-image",
+    "model": "gemini-2.5-flash-image",
+    "imageUrl": "https://r2.nanobananaapi.dev/assets/20260410/dcd17136-e20c-4d45-a655-c58e30c09536.png",
+    "width": 1024,
+    "height": 1024,
+    "note": "Nano Banana 已完成生图。",
+    "hasSourceImage": false
+  }
+]

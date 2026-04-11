@@ -22,7 +22,7 @@ export default function EditorTopBar({ canvas, onZoom, onBack }: EditorTopBarPro
         <div className="w-px h-5 bg-surface-800" />
         <div className="flex items-center gap-1.5">
           <div className="w-5 h-5 rounded bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white text-[10px] font-bold">K</div>
-          <span className="text-sm text-surface-200 font-medium">Kaya 设计工作台</span>
+          <span className="text-sm text-surface-200 font-medium">LQB 设计工作台</span>
         </div>
       </div>
 

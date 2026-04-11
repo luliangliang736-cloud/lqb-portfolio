@@ -8,7 +8,7 @@ const SPEECH_BUBBLES = [
   '你好呀！',
   '需要我帮忙设计吗？',
   '点我试试～',
-  '我是 Kaya！',
+  '我是 LQB！',
   '有什么设计需求？',
 ];
 
@@ -18,7 +18,7 @@ export default function InteractiveCharacter() {
   const [expression, setExpression] = useState<Expression>('idle');
   const [bubble, setBubble] = useState<string | null>(null);
   const [clickCount, setClickCount] = useState(0);
-  const bubbleTimer = useRef<ReturnType<typeof setTimeout>>();
+  const bubbleTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -89,7 +89,7 @@ export default function InteractiveCharacter() {
       case 'nod':
         return { y: [0, 8, -2, 0], rotateX: [0, 3, -1, 0], transition: { duration: 0.6 } };
       case 'smile':
-        return { scale: [1, 1.04, 1.02], y: [0, -3, -1], transition: { duration: 0.8, ease: 'easeOut' } };
+        return { scale: [1, 1.04, 1.02], y: [0, -3, -1], transition: { duration: 0.8, ease: 'easeOut' as const } };
       case 'wave':
         return { rotate: [0, -3, 3, -2, 0], transition: { duration: 0.7 } };
       default:
@@ -129,7 +129,7 @@ export default function InteractiveCharacter() {
           {characterSrc ? (
             <img
               src={characterSrc}
-              alt="Kaya - 设计部0号员工"
+              alt="LQB - 设计部0号员工"
               draggable={false}
               className="w-full h-full object-contain drop-shadow-[0_0_60px_rgba(124,106,255,0.2)]"
             />

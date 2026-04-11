@@ -14,8 +14,8 @@ const sizeMap = {
 };
 
 const statusColorMap: Record<AgentStatus, string> = {
-  online: 'bg-emerald-400',
-  thinking: 'bg-amber-400',
+  online: 'bg-[#AEFF62]',
+  thinking: 'bg-[#FFB8DF]',
   idle: 'bg-surface-500',
 };
 
@@ -33,18 +33,22 @@ export default function CharacterAvatar({
   return (
     <div className="relative flex-shrink-0">
       <motion.div
-        className={`${sizeMap[size]} rounded-full bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center font-bold text-white shadow-lg shadow-primary-500/20`}
+        className={`${sizeMap[size]} overflow-hidden rounded-full shadow-lg shadow-black/20`}
         animate={status === 'thinking' ? { scale: [1, 1.05, 1] } : {}}
         transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
       >
-        K
+        <img
+          src="/assets/chat-avatar.png"
+          alt="LQB avatar"
+          className="h-full w-full object-cover"
+        />
       </motion.div>
 
       {showStatus && (
         <div className="absolute -bottom-0.5 -right-0.5">
           <span className="relative flex h-3 w-3">
             {status === 'online' && (
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#AEFF62] opacity-75" />
             )}
             <span
               className={`relative inline-flex rounded-full h-3 w-3 ${statusColorMap[status]} ring-2 ring-surface-900`}

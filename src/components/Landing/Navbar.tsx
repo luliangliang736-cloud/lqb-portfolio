@@ -4,8 +4,7 @@ import { Menu, X } from 'lucide-react';
 
 const navLinks = [
   { label: '首页', href: '#hero' },
-  { label: '能力', href: '#features' },
-  { label: '关于', href: '#about' },
+  { label: '作品', href: '#features' },
 ];
 
 export default function Navbar() {
@@ -22,31 +21,33 @@ export default function Navbar() {
     <motion.nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-surface-950/80 backdrop-blur-xl border-b border-surface-800/50'
-          : 'bg-transparent'
+          ? 'bg-black/68 backdrop-blur-xl border-b border-white/8 shadow-lg shadow-black/30'
+          : 'bg-black/42 backdrop-blur-lg border-b border-white/6'
       }`}
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div className="relative max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <a href="#hero" className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-primary-500/20">
-            K
-          </div>
-          <span className="text-lg font-semibold text-surface-50 tracking-tight">
-            Kaya
+          <img
+            src="/assets/site-icon.png"
+            alt="LQB icon"
+            className="w-8 h-8 rounded-lg object-cover shadow-lg shadow-black/20"
+          />
+          <span className="text-sm font-medium text-surface-50 tracking-[0.01em]">
+            LQB
           </span>
         </a>
 
         {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-surface-400 hover:text-surface-50 transition-colors"
+              className="text-sm font-medium tracking-[0.01em] text-surface-400 hover:text-surface-50 transition-colors"
             >
               {link.label}
             </a>
@@ -57,9 +58,9 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-3">
           <a
             href="#demo"
-            className="text-sm px-5 py-2 rounded-full bg-white text-surface-950 font-medium hover:bg-surface-200 transition-colors"
+            className="text-sm font-medium tracking-[0.01em] px-5 py-2 rounded-full bg-[#FFB8DF] text-surface-950 hover:bg-[#FFCBE8] transition-colors"
           >
-            开始体验
+            体验更多
           </a>
         </div>
 
@@ -83,7 +84,7 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="block text-sm text-surface-400 hover:text-surface-50 py-2"
+              className="block text-sm font-medium tracking-[0.01em] text-surface-400 hover:text-surface-50 py-2"
               onClick={() => setMobileOpen(false)}
             >
               {link.label}
@@ -91,10 +92,10 @@ export default function Navbar() {
           ))}
           <a
             href="#demo"
-            className="block text-sm text-center px-5 py-2.5 rounded-full bg-white text-surface-950 font-medium"
+            className="block text-sm font-medium tracking-[0.01em] text-center px-5 py-2.5 rounded-full bg-[#FFB8DF] text-surface-950"
             onClick={() => setMobileOpen(false)}
           >
-            开始体验
+            体验更多
           </a>
         </motion.div>
       )}

@@ -12,11 +12,13 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white font-bold text-sm">
-                K
-              </div>
+              <img
+                src="/assets/site-icon.png"
+                alt="LQB icon"
+                className="w-8 h-8 rounded-lg object-cover"
+              />
               <span className="text-lg font-semibold text-surface-50 tracking-tight">
-                Kaya
+                LQB
               </span>
             </div>
             <p className="text-sm text-surface-500 leading-relaxed max-w-xs">
@@ -44,7 +46,7 @@ export default function Footer() {
         {/* Bottom */}
         <div className="flex flex-col md:flex-row items-center justify-between mt-16 pt-8 border-t border-surface-800/40 gap-4">
           <span className="text-xs text-surface-600">
-            &copy; {new Date().getFullYear()} Kaya · 设计部0号员工
+            &copy; {new Date().getFullYear()} LQB · 设计部0号员工
           </span>
           <div className="flex items-center gap-5">
             {['GitHub', 'Twitter', 'Discord'].map((social) => (
