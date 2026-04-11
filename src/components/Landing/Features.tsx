@@ -34,9 +34,17 @@ function FeatureCard({ feature, index }: { feature: typeof showcases[number]; in
         </p>
 
         {/* Preview area */}
-        <div className={`flex-1 mt-8 rounded-xl ${colors.glow} border border-surface-800/40 min-h-[220px] flex items-center justify-center`}>
-          <feature.icon size={40} className="text-surface-600" />
-        </div>
+        {feature.coverSrc ? (
+          <img
+            src={feature.coverSrc}
+            alt={`${feature.title} 封面`}
+            className={`flex-1 mt-8 min-h-[220px] w-full rounded-xl border border-surface-800/40 object-cover ${colors.glow}`}
+          />
+        ) : (
+          <div className={`flex-1 mt-8 rounded-xl ${colors.glow} border border-surface-800/40 min-h-[220px] flex items-center justify-center`}>
+            <feature.icon size={40} className="text-surface-600" />
+          </div>
+        )}
 
         {/* CTA */}
         <span className={`inline-flex items-center gap-1 text-sm font-medium mt-6 ${colors.ctaBg} transition-colors`}>

@@ -12,6 +12,7 @@ export type ShowcaseItem = {
   description: string;
   cta: string;
   accent: ShowcaseAccent;
+  coverSrc?: string;
 };
 
 export type ShowcaseMediaItem = {
@@ -30,6 +31,7 @@ export const showcases: ShowcaseItem[] = [
     description: 'AI 时代下技术赋能与视觉表达的融合实践探索',
     cta: '查看作品',
     accent: 'primary',
+    coverSrc: '/assets/showcases/creative-visuals/cover.png',
   },
   {
     id: 'form-design',
@@ -92,6 +94,11 @@ export const accentMap: Record<ShowcaseAccent, { tag: string; border: string; gl
 
 export const showcaseMediaBySlug: Record<string, ShowcaseMediaItem[]> = {
   'creative-visuals': [
+    {
+      title: '创意视觉封面',
+      description: '作为创意视觉板块的主封面，用于展示系列作品在网页中的首屏印象。',
+      src: '/assets/showcases/creative-visuals/cover.png',
+    },
     {
       title: '折扣活动海报',
       description: '商业促销主题的创意主视觉，强调鲜明色彩和立体物件组合。',
