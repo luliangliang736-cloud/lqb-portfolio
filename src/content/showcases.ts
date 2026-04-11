@@ -14,6 +14,12 @@ export type ShowcaseItem = {
   accent: ShowcaseAccent;
 };
 
+export type ShowcaseMediaItem = {
+  title: string;
+  description: string;
+  src: string;
+};
+
 export const showcases: ShowcaseItem[] = [
   {
     id: 'creative-visuals',
@@ -82,4 +88,44 @@ export const accentMap: Record<ShowcaseAccent, { tag: string; border: string; gl
     glow: 'bg-[#FFE878]/7',
     ctaBg: 'text-[#FFE878] hover:text-[#FFEE9D]',
   },
+};
+
+export const showcaseMediaBySlug: Record<string, ShowcaseMediaItem[]> = {
+  'creative-visuals': [
+    {
+      title: '折扣活动海报',
+      description: '商业促销主题的创意主视觉，强调鲜明色彩和立体物件组合。',
+      src: '/assets/showcases/creative-visuals/01.png',
+    },
+    {
+      title: '字体海报实验',
+      description: '以黑色底板承载高对比排版与角色元素，探索展示型海报语言。',
+      src: '/assets/showcases/creative-visuals/02.png',
+    },
+    {
+      title: '趣味角色系列',
+      description: '围绕玩偶角色做系列化视觉延展，形成统一又活泼的作品组。',
+      src: '/assets/showcases/creative-visuals/03.png',
+    },
+    {
+      title: '音乐主题包装',
+      description: '结合包装、电商和终端展示场景，强化视觉内容与产品氛围。',
+      src: '/assets/showcases/creative-visuals/04.png',
+    },
+    {
+      title: 'AIGC 视觉探索',
+      description: '通过高饱和配色与几何发散结构，形成实验感较强的视觉表达。',
+      src: '/assets/showcases/creative-visuals/05.png',
+    },
+    {
+      title: '年度内容整理',
+      description: '将年度项目以编辑化版式重新组合，形成更适合展示的网站封面页。',
+      src: '/assets/showcases/creative-visuals/06.png',
+    },
+    {
+      title: '图形组合海报',
+      description: '通过拼贴和图标化组织方式，让系列作品具备更强的系统辨识度。',
+      src: '/assets/showcases/creative-visuals/07.png',
+    },
+  ],
 };

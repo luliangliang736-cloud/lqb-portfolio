@@ -1,6 +1,6 @@
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { accentMap, type ShowcaseItem } from '../../content/showcases';
+import { accentMap, showcaseMediaBySlug, type ShowcaseItem } from '../../content/showcases';
 
 const sectionLabels = [
   '封面精选',
@@ -13,6 +13,7 @@ const sectionLabels = [
 
 export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
   const colors = accentMap[showcase.accent];
+  const mediaItems = showcaseMediaBySlug[showcase.slug] ?? [];
 
   return (
     <main className="min-h-screen bg-surface-950 px-6 pt-28 pb-16">
@@ -41,23 +42,35 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
 
           <div className={`mt-10 rounded-[28px] border border-surface-800/60 ${colors.glow} p-6 md:p-8`}>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-              {sectionLabels.map((label, index) => (
+              {(mediaItems.length ? mediaItems : sectionLabels.map((label) => ({
+                title: label,
+                description: '这里可以继续放入该板块对应的作品封面、过程图、视频缩略图或案例详情。',
+                src: '',
+              }))).map((item, index) => (
                 <motion.article
-                  key={label}
+                  key={`${showcase.slug}-${item.title}-${index}`}
                   className="rounded-2xl border border-surface-800/70 bg-black/25 p-4"
                   initial={{ opacity: 0, y: 18 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.35, delay: index * 0.06 }}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-surface-200">{label}</span>
+                    <span className="text-sm font-medium text-surface-200">{item.title}</span>
                     <ExternalLink size={14} className="text-surface-500" />
                   </div>
-                  <div className="mt-4 flex aspect-[3/4] items-center justify-center rounded-xl border border-surface-800/60 bg-surface-950/60">
-                    <showcase.icon size={28} className="text-surface-600" />
-                  </div>
+                  {item.src ? (
+                    <img
+                      src={item.src}
+                      alt={item.title}
+                      className="mt-4 block aspect-[3/4] w-full rounded-xl border border-surface-800/60 object-cover bg-surface-950/60"
+                    />
+                  ) : (
+                    <div className="mt-4 flex aspect-[3/4] items-center justify-center rounded-xl border border-surface-800/60 bg-surface-950/60">
+                      <showcase.icon size={28} className="text-surface-600" />
+                    </div>
+                  )}
                   <p className="mt-3 text-sm leading-relaxed text-surface-500">
-                    这里可以继续放入该板块对应的作品封面、过程图、视频缩略图或案例详情。
+                    {item.description}
                   </p>
                 </motion.article>
               ))}
