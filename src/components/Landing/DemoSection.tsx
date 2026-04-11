@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import ChatWindow from '../Chat/ChatWindow';
+import InteractiveTitle from '../common/InteractiveTitle';
 
 export default function DemoSection() {
   const ref = useRef(null);
@@ -15,22 +16,17 @@ export default function DemoSection() {
       <div className="relative max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-14">
-          <motion.span
-            className="text-xs text-[#FFB8DF] tracking-widest uppercase font-medium"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-          >
-            立即体验
-          </motion.span>
-          <motion.h2
-            className="text-4xl md:text-5xl font-semibold text-surface-50 tracking-tight mt-4"
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            与LQB数字人对话
-          </motion.h2>
+            <InteractiveTitle
+              src="/assets/lqb-ai-title.svg"
+              alt="与LQB数字人对话"
+              className="mx-auto h-auto w-full max-w-[250px] object-contain"
+            />
+          </motion.div>
           <motion.p
             className="text-lg text-surface-400 mt-4"
             initial={{ opacity: 0, y: 20 }}

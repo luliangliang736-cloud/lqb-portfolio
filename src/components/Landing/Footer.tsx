@@ -17,9 +17,11 @@ export default function Footer() {
                 alt="LQB icon"
                 className="w-8 h-8 rounded-lg object-cover"
               />
-              <span className="text-lg font-semibold text-surface-50 tracking-tight">
-                LQB
-              </span>
+              <img
+                src="/assets/site-wordmark.svg"
+                alt="LQB"
+                className="block h-7 w-auto shrink-0 object-contain object-left"
+              />
             </div>
             <p className="text-sm text-surface-500 leading-relaxed max-w-xs">
               设计部0号员工 — 以AI能力承接重复性设计任务，提升团队整体产能。

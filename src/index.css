@@ -77,3 +77,34 @@ body {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
 }
+
+@keyframes emoji-burst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate3d(0, 0, 0) scale(0.65) rotate(0deg);
+  }
+
+  12% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform:
+      translate(-50%, -50%)
+      translate3d(var(--emoji-dx), var(--emoji-dy), 0)
+      scale(1.15)
+      rotate(var(--emoji-rotate));
+  }
+}
+
+.emoji-burst {
+  position: fixed;
+  left: 0;
+  top: 0;
+  font-size: var(--emoji-size, 24px);
+  line-height: 1;
+  will-change: transform, opacity;
+  animation: emoji-burst 900ms ease-out forwards;
+  user-select: none;
+}

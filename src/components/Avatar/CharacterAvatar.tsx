@@ -5,6 +5,7 @@ interface CharacterAvatarProps {
   size?: 'sm' | 'md' | 'lg';
   status?: AgentStatus;
   showStatus?: boolean;
+  animated?: boolean;
 }
 
 const sizeMap = {
@@ -29,20 +30,33 @@ export default function CharacterAvatar({
   size = 'md',
   status = 'online',
   showStatus = false,
+  animated = true,
 }: CharacterAvatarProps) {
+  const avatarClassName = `${sizeMap[size]} overflow-hidden rounded-full shadow-lg shadow-black/20`;
+
   return (
     <div className="relative flex-shrink-0">
-      <motion.div
-        className={`${sizeMap[size]} overflow-hidden rounded-full shadow-lg shadow-black/20`}
-        animate={status === 'thinking' ? { scale: [1, 1.05, 1] } : {}}
-        transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
-      >
-        <img
-          src="/assets/chat-avatar.png"
-          alt="LQB avatar"
-          className="h-full w-full object-cover"
-        />
-      </motion.div>
+      {animated ? (
+        <motion.div
+          className={avatarClassName}
+          animate={status === 'thinking' ? { scale: [1, 1.05, 1] } : {}}
+          transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
+        >
+          <img
+            src="/assets/chat-avatar.png"
+            alt="LQB avatar"
+            className="h-full w-full object-cover"
+          />
+        </motion.div>
+      ) : (
+        <div className={avatarClassName}>
+          <img
+            src="/assets/chat-avatar.png"
+            alt="LQB avatar"
+            className="h-full w-full object-cover"
+          />
+        </div>
+      )}
 
       {showStatus && (
         <div className="absolute -bottom-0.5 -right-0.5">

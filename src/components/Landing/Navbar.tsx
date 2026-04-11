@@ -36,9 +36,11 @@ export default function Navbar() {
             alt="LQB icon"
             className="w-8 h-8 rounded-lg object-cover shadow-lg shadow-black/20"
           />
-          <span className="text-sm font-medium text-surface-50 tracking-[0.01em]">
-            LQB
-          </span>
+          <img
+            src="/assets/site-wordmark.svg"
+            alt="LQB"
+            className="block h-6 w-auto shrink-0 object-contain object-left"
+          />
         </a>
 
         {/* Desktop links */}

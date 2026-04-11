@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数字人 LQB</title>
+    <style>
+      :root {
+        font-family: Inter, "Segoe UI", system-ui, sans-serif;
+        color-scheme: dark;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: transparent;
+        user-select: none;
+      }
+
+      body {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+      }
+
+      .stage {
+        position: relative;
+        width: 316px;
+        height: 430px;
+        -webkit-app-region: drag;
+        transition: width 180ms ease, height 180ms ease;
+      }
+
+      body.is-expanded {
+        align-items: center;
+      }
+
+      body.is-expanded .stage {
+        width: calc(100vw - 28px);
+        height: calc(100vh - 28px);
+      }
+
+      .chat-panel {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        width: 188px;
+        padding: 10px;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(10, 10, 12, 0.82);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        box-shadow: 0 16px 38px rgba(0, 0, 0, 0.24);
+        opacity: 0;
+        transform: translateY(10px) scale(0.96);
+        pointer-events: none;
+        transition: opacity 180ms ease, transform 180ms ease;
+        -webkit-app-region: no-drag;
+      }
+
+      .chat-panel.is-open {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+      }
+
+      body.is-expanded .chat-panel {
+        left: 18px;
+        top: 18px;
+        width: calc(100% - 250px);
+        height: calc(100% - 36px);
+        padding: 0;
+        border-radius: 30px;
+      }
+
+      .chat-panel-inner {
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+      }
+
+      body.is-expanded .chat-panel-inner {
+        display: flex;
+        flex-direction: column;
+        width: calc(100% / var(--chat-scale, 1));
+        height: calc(100% / var(--chat-scale, 1));
+        padding: 18px 18px 16px;
+        transform: scale(var(--chat-scale, 1));
+        transform-origin: left top;
+        will-change: transform;
+      }
+
+      .chat-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 8px;
+      }
+
+      .chat-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .chat-title {
+        min-width: 0;
+      }
+
+      .chat-title strong {
+        display: block;
+        font-size: 13px;
+        line-height: 1.3;
+        color: #f8fafc;
+      }
+
+      body.is-expanded .chat-title strong {
+        font-size: 24px;
+      }
+
+      .chat-title span {
+        display: block;
+        margin-top: 2px;
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      body.is-expanded .chat-title span {
+        font-size: 14px;
+      }
+
+      .icon-btn {
+        width: 26px;
+        height: 26px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.05);
+        color: rgba(255, 255, 255, 0.86);
+        cursor: pointer;
+        transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+      }
+
+      .icon-btn:hover {
+        transform: translateY(-1px);
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .icon-btn.is-active {
+        border-color: rgba(255, 184, 223, 0.48);
+        background: rgba(255, 184, 223, 0.16);
+        color: #ffb8df;
+      }
+
+      .message-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        height: 164px;
+        overflow-y: auto;
+        padding-right: 2px;
+      }
+
+      body.is-expanded .message-list {
+        flex: 1;
+        height: auto;
+        gap: 14px;
+        padding-right: 12px;
+      }
+
+      .message {
+        max-width: 100%;
+        padding: 8px 10px;
+        border-radius: 14px;
+        font-size: 11px;
+        line-height: 1.45;
+        word-break: break-word;
+        white-space: pre-wrap;
+      }
+
+      body.is-expanded .message {
+        max-width: 82%;
+        padding: 14px 16px;
+        border-radius: 20px;
+        font-size: 15px;
+        line-height: 1.6;
+      }
+
+      .message.user {
+        align-self: flex-end;
+        background: rgba(255, 184, 223, 0.18);
+        color: #fff6fb;
+      }
+
+      .message.assistant {
+        align-self: flex-start;
+        background: rgba(255, 255, 255, 0.06);
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .message.image-result {
+        align-self: flex-start;
+        width: min(100%, 320px);
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .message.image-result img {
+        display: block;
+        width: 100%;
+        border-radius: 14px;
+        object-fit: cover;
+      }
+
+      .message.image-result .image-note {
+        margin-top: 8px;
+        font-size: 11px;
+        line-height: 1.45;
+        color: rgba(255, 255, 255, 0.78);
+      }
+
+      .message.status {
+        align-self: center;
+        padding: 5px 8px;
+        border-radius: 999px;
+        background: rgba(174, 255, 98, 0.12);
+        color: #aeff62;
+        font-size: 10px;
+      }
+
+      .composer {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      body.is-expanded .composer {
+        margin-top: 16px;
+        gap: 14px;
+      }
+
+      .composer-row {
+        display: flex;
+        align-items: flex-end;
+        gap: 7px;
+      }
+
+      .composer textarea {
+        flex: 1;
+        min-height: 58px;
+        max-height: 96px;
+        resize: none;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.04);
+        color: #ffffff;
+        outline: none;
+        font: inherit;
+        font-size: 11px;
+        line-height: 1.45;
+      }
+
+      body.is-expanded .composer textarea {
+        min-height: 118px;
+        max-height: 240px;
+        padding: 16px 18px;
+        border-radius: 20px;
+        font-size: 16px;
+        line-height: 1.7;
+      }
+
+      .composer textarea::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+      }
+
+      .send-btn {
+        width: 34px;
+        height: 34px;
+        border: 0;
+        border-radius: 999px;
+        background: #ffb8df;
+        color: #121216;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 160ms ease, filter 160ms ease;
+      }
+
+      body.is-expanded .send-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 18px;
+      }
+
+      .send-btn:hover {
+        transform: translateY(-1px) scale(1.03);
+        filter: brightness(1.02);
+      }
+
+      .send-btn:disabled {
+        cursor: default;
+        opacity: 0.6;
+        transform: none;
+        filter: none;
+      }
+
+      .composer-tips {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.48);
+      }
+
+      body.is-expanded .composer-tips {
+        font-size: 13px;
+      }
+
+      .figure-wrap {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 188px;
+        height: 330px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        animation: float 4.4s ease-in-out infinite;
+        -webkit-app-region: no-drag;
+      }
+
+      body.is-expanded .figure-wrap {
+        right: 18px;
+        bottom: 12px;
+        width: 180px;
+        height: 320px;
+        animation: none;
+      }
+
+      .figure {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.24));
+        cursor: pointer;
+      }
+
+      .figure-tip {
+        position: absolute;
+        right: 18px;
+        bottom: 8px;
+        padding: 5px 10px;
+        border-radius: 999px;
+        background: rgba(10, 10, 12, 0.32);
+        color: rgba(255, 255, 255, 0.56);
+        font-size: 10px;
+        letter-spacing: 0.02em;
+        pointer-events: none;
+      }
+
+      body.is-expanded .figure-tip {
+        right: 24px;
+        bottom: 10px;
+        font-size: 11px;
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-7px); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage">
+      <div class="chat-panel" id="chatPanel">
+        <div class="chat-panel-inner" id="chatPanelInner">
+          <div class="chat-header">
+            <div class="chat-title">
+              <strong>和 LQB 说点什么</strong>
+              <span>单击人物展开，双击进主站</span>
+            </div>
+            <div class="chat-actions">
+              <button class="icon-btn" id="fullscreenButton" title="切换全屏聊天">⛶</button>
+              <button class="icon-btn" id="closePanelButton" title="收起互动面板">×</button>
+            </div>
+          </div>
+
+          <div class="message-list" id="messageList"></div>
+
+          <div class="composer">
+            <div class="composer-row">
+              <button class="icon-btn" id="voiceButton" title="语音输入">🎤</button>
+            <textarea id="messageInput" placeholder="直接说需求，例如：我要一个IP / 帮我做张海报"></textarea>
+              <button class="send-btn" id="sendButton" title="发送">→</button>
+            </div>
+            <div class="composer-tips">
+              <span id="voiceHint">右键人物关闭桌宠</span>
+              <button class="icon-btn" id="speakButton" title="语音播报" style="width:22px;height:22px;font-size:11px;">🔊</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="figure-wrap" id="figureTrigger" title="单击聊天，双击打开主站，右键关闭">
+        <img class="figure" src="../public/assets/chat-avatar.png" alt="LQB avatar" />
+      </div>
+      <div class="figure-tip">单击聊天</div>
+    </div>
+
+    <script>
+      const electronApi = typeof require === 'function' ? require('electron') : null;
+      const ipcRenderer = electronApi?.ipcRenderer;
+      const chatPanel = document.getElementById('chatPanel');
+      const chatPanelInner = document.getElementById('chatPanelInner');
+      const figureTrigger = document.getElementById('figureTrigger');
+      const closePanelButton = document.getElementById('closePanelButton');
+      const fullscreenButton = document.getElementById('fullscreenButton');
+      const voiceButton = document.getElementById('voiceButton');
+      const speakButton = document.getElementById('speakButton');
+      const messageList = document.getElementById('messageList');
+      const messageInput = document.getElementById('messageInput');
+      const sendButton = document.getElementById('sendButton');
+      const voiceHint = document.getElementById('voiceHint');
+      const storageKey = 'lqb-desktop-chat-history-v2';
+      let dictating = false;
+      let chatExpanded = false;
+      let speakEnabled = true;
+      let clickTimer = null;
+      let messages = [];
+      let lastImageContext = null;
+
+      const greeting = '你好，我是 LQB。你可以直接打字，或者点麦克风开始说话。';
+      const keywordReplies = [
+        {
+          match: ['你是谁', '介绍', '介绍一下'],
+          reply: '我是你的桌面数字人 LQB。现在这版已经支持桌面文字互动和语音输入，后面还可以继续接真实模型能力。',
+        },
+        {
+          match: ['作品', '作品集', '网站'],
+          reply: '如果你要看完整作品，双击我就能打开主站。你也可以直接告诉我想看哪一类，比如创意视觉、构成设计或动态视觉。',
+          action: 'open',
+        },
+        {
+          match: ['海报', 'banner', '封面'],
+          reply: '海报和视觉物料我可以先帮你梳理需求。你告诉我主题、尺寸、风格和文案，我先给你一个方向建议。',
+        },
+        {
+          match: ['动态', '视频', 'motion'],
+          reply: '动态视觉这块，你可以告诉我用途、节奏感和参考风格，我会先帮你拆成镜头或表现方向。',
+        },
+        {
+          match: ['帮助', '怎么用', '可以做什么'],
+          reply: '现在我支持三件事：1. 桌面文字聊天。2. 麦克风语音输入。3. 双击打开主站。后面还可以继续加贴边、提醒和真实模型对话。',
+        },
+        {
+          match: ['关闭', '退出', '消失'],
+          reply: '我先退到后台。如果之后还想叫我出来，再双击桌面启动图标就可以。',
+          action: 'close',
+        },
+      ];
+      const imageIntentVerbs = ['生成', '做', '画', '出', '设计', '来', '给我', '帮我'];
+      const imageIntentSubjects = ['ip', '海报', '封面', 'logo', '头像', '插画', '形象', '角色', '主视觉', '壁纸', '场景', 'kv', '贴纸'];
+      const imageFollowupKeywords = ['基于刚才', '基于上一张', '上一张', '刚才那张', '这张', '继续改', '改一下', '细化', '优化', '再来一个', '换个', '调整'];
+      const questionKeywords = ['什么是', '什么意思', '是什么', '为什么', '怎么', '如何'];
+
+      function openMainApp() {
+        if (ipcRenderer) {
+          ipcRenderer.invoke('desktop:open-main-app');
+          return;
+        }
+
+        window.desktopBridge?.openMainApp?.();
+      }
+
+      function closeCompanion() {
+        if (ipcRenderer) {
+          ipcRenderer.invoke('desktop:close-companion');
+          return;
+        }
+
+        window.desktopBridge?.closeCompanion?.();
+      }
+
+      function persistMessages() {
+        try {
+          localStorage.setItem(storageKey, JSON.stringify(messages.slice(-12)));
+        } catch {}
+      }
+
+      async function setChatExpanded(expanded) {
+        chatExpanded = expanded;
+        document.body.classList.toggle('is-expanded', expanded);
+        fullscreenButton.textContent = expanded ? '🗗' : '⛶';
+        fullscreenButton.title = expanded ? '退出全屏聊天' : '切换全屏聊天';
+        chatPanelInner.style.setProperty('--chat-scale', '1');
+
+        if (ipcRenderer) {
+          try {
+            await ipcRenderer.invoke('desktop:set-chat-expanded', expanded);
+          } catch {}
+        }
+      }
+
+      function updateVoiceHint(text) {
+        voiceHint.textContent = text;
+      }
+
+      function loadMessages() {
+        try {
+          const raw = localStorage.getItem(storageKey);
+          const parsed = raw ? JSON.parse(raw) : [];
+          if (Array.isArray(parsed) && parsed.length) {
+            messages = parsed;
+            const latestImage = [...parsed].reverse().find((item) => item?.type === 'image-result' && item?.imageUrl);
+            if (latestImage) {
+              lastImageContext = {
+                imageUrl: latestImage.imageUrl,
+                prompt: latestImage.prompt || '',
+              };
+            }
+            return;
+          }
+        } catch {}
+
+        messages = [{ role: 'assistant', content: greeting }];
+      }
+
+      function renderMessages() {
+        messageList.innerHTML = '';
+        messages.forEach((message) => {
+          const item = document.createElement('div');
+          item.className = `message ${message.role}${message.type ? ` ${message.type}` : ''}`;
+
+          if (message.type === 'image-result' && message.imageUrl) {
+            const image = document.createElement('img');
+            image.src = message.imageUrl;
+            image.alt = message.prompt || 'LQB image result';
+            image.loading = 'lazy';
+            item.appendChild(image);
+
+            const note = document.createElement('div');
+            note.className = 'image-note';
+            note.textContent = message.content;
+            item.appendChild(note);
+          } else {
+            item.textContent = message.content;
+          }
+
+          messageList.appendChild(item);
+        });
+        messageList.scrollTop = messageList.scrollHeight;
+      }
+
+      function addMessage(role, content) {
+        messages.push({ role, content });
+        messages = messages.slice(-12);
+        persistMessages();
+        renderMessages();
+      }
+
+      function togglePanel(open) {
+        const shouldOpen = typeof open === 'boolean' ? open : !chatPanel.classList.contains('is-open');
+        chatPanel.classList.toggle('is-open', shouldOpen);
+        if (shouldOpen) {
+          setTimeout(() => messageInput.focus(), 80);
+        }
+      }
+
+      function speak(text) {
+        if (!speakEnabled || !('speechSynthesis' in window) || !text) {
+          return;
+        }
+
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'zh-CN';
+        utterance.rate = 1;
+        utterance.pitch = 1;
+        window.speechSynthesis.speak(utterance);
+      }
+
+      function getReply(input) {
+        const normalized = input.trim().toLowerCase();
+        const matched = keywordReplies.find((item) => item.match.some((keyword) => normalized.includes(keyword)));
+
+        if (matched) {
+          return matched;
+        }
+
+        return {
+          reply: `收到，我记住了：“${input.trim()}”。如果你愿意，我可以继续追问细节，帮你把这个想法拆成更明确的方向。`,
+        };
+      }
+
+      function shouldGenerateImage(input) {
+        const normalized = input.trim().toLowerCase();
+        if (!normalized) {
+          return false;
+        }
+
+        const isQuestion = questionKeywords.some((keyword) => normalized.includes(keyword));
+        if (isQuestion && !normalized.includes('给我') && !normalized.includes('帮我')) {
+          return false;
+        }
+
+        if (lastImageContext && imageFollowupKeywords.some((keyword) => normalized.includes(keyword))) {
+          return true;
+        }
+
+        const hasVerb = imageIntentVerbs.some((keyword) => normalized.includes(keyword));
+        const hasSubject = imageIntentSubjects.some((keyword) => normalized.includes(keyword));
+
+        if (hasVerb && hasSubject) {
+          return true;
+        }
+
+        if (normalized.includes('我要一个ip') || normalized.includes('做一个ip') || normalized.includes('生成一个ip')) {
+          return true;
+        }
+
+        if ((normalized.includes('来一张') || normalized.includes('做一张') || normalized.includes('生成一张')) && hasSubject) {
+          return true;
+        }
+
+        return false;
+      }
+
+      function shouldEditLastImage(input) {
+        if (!lastImageContext) {
+          return false;
+        }
+
+        const normalized = input.trim().toLowerCase();
+        return imageFollowupKeywords.some((keyword) => normalized.includes(keyword));
+      }
+
+      function handleAssistantAction(action) {
+        if (action === 'open') {
+          setTimeout(openMainApp, 500);
+        }
+
+        if (action === 'close') {
+          setTimeout(closeCompanion, 700);
+        }
+      }
+
+      function submitMessage(rawInput) {
+        const input = rawInput.trim();
+        if (!input) {
+          return;
+        }
+
+        if (shouldGenerateImage(input)) {
+          generateImageFromPrompt(input, { editLastImage: shouldEditLastImage(input) });
+          return;
+        }
+
+        addMessage('user', input);
+        messageInput.value = '';
+
+        const thinking = document.createElement('div');
+        thinking.className = 'message status';
+        thinking.textContent = 'LQB 正在回应...';
+        messageList.appendChild(thinking);
+        messageList.scrollTop = messageList.scrollHeight;
+
+        const { reply, action } = getReply(input);
+        setTimeout(() => {
+          thinking.remove();
+          addMessage('assistant', reply);
+          speak(reply);
+          handleAssistantAction(action);
+        }, 500);
+      }
+
+      async function generateImageFromPrompt(rawInput, options = {}) {
+        const input = rawInput.trim();
+        if (!input) {
+          updateVoiceHint('先输入一句提示词，再让我生成');
+          return;
+        }
+
+        const generator = ipcRenderer
+          ? (payload) => ipcRenderer.invoke('desktop:generate-image', payload)
+          : null;
+
+        if (!generator) {
+          addMessage('assistant', '当前桌宠版本还没有接入生图能力。');
+          return;
+        }
+
+        addMessage('user', `帮我生成：${input}`);
+        messageInput.value = '';
+
+        const thinking = document.createElement('div');
+        thinking.className = 'message status';
+        thinking.textContent = 'LQB 正在生图...';
+        messageList.appendChild(thinking);
+        messageList.scrollTop = messageList.scrollHeight;
+
+        sendButton.disabled = true;
+
+        try {
+          const useLastImage = Boolean(options.editLastImage && lastImageContext?.imageUrl);
+          const requestPrompt = useLastImage
+            ? `请基于上一张结果继续修改：${input}\n\n上一张提示词：${lastImageContext.prompt}`
+            : input;
+          const result = await generator({
+            prompt: requestPrompt,
+            operation: useLastImage ? 'image-to-image' : 'text-to-image',
+            aspectRatio: '1:1',
+            sourceImage: useLastImage ? lastImageContext.imageUrl : '',
+          });
+
+          thinking.remove();
+
+          if (!result?.ok || !result.imageUrl) {
+            addMessage('assistant', `生图失败：${result?.error || '未知错误'}`);
+            updateVoiceHint(`生图失败：${result?.error || '未知错误'}`);
+            return;
+          }
+
+          messages.push({
+            role: 'assistant',
+            type: 'image-result',
+            content: result.note || 'LQB 已完成生图。',
+            imageUrl: result.imageUrl,
+            prompt: input,
+          });
+          lastImageContext = {
+            imageUrl: result.imageUrl,
+            prompt: input,
+          };
+          messages = messages.slice(-12);
+          persistMessages();
+          renderMessages();
+          addMessage('assistant', useLastImage
+            ? '我已经基于上一张继续改了一版。如果你想继续细化，可以直接说“把颜色再亮一点”或“换成更潮玩一点”。'
+            : '图已经出来了。如果你想继续细化，可以直接说“基于刚才那张再改一下”，我会继续生成下一版。');
+          updateVoiceHint(result.mode === 'mock' ? '当前返回的是本地预览图' : '生图完成');
+        } catch (error) {
+          thinking.remove();
+          const errorText = error instanceof Error ? error.message : '未知错误';
+          addMessage('assistant', `生图失败：${errorText}`);
+          updateVoiceHint(`生图失败：${errorText}`);
+        } finally {
+          sendButton.disabled = false;
+        }
+      }
+
+      async function startNativeDictation() {
+        if (dictating) {
+          return;
+        }
+
+        const dictate = ipcRenderer
+          ? (timeoutSeconds) => ipcRenderer.invoke('desktop:dictate', timeoutSeconds)
+          : window.desktopBridge?.dictate;
+
+        if (!dictate) {
+          addMessage('assistant', '当前桌宠版本还没有接入本地语音识别能力。');
+          return;
+        }
+
+        dictating = true;
+        voiceButton.classList.add('is-active');
+        updateVoiceHint('正在录音，请直接说话...');
+        togglePanel(true);
+
+        try {
+          const result = await dictate(8);
+
+          if (!result?.ok || !result.text) {
+            const errorText = result?.error === 'no-speech'
+              ? '这次没有听清你说的话，你可以再点一次麦克风重试。'
+              : `本地语音识别失败：${result?.error || '未知错误'}`;
+            addMessage('assistant', errorText);
+            updateVoiceHint(errorText);
+            return;
+          }
+
+          messageInput.value = result.text;
+          submitMessage(result.text);
+          updateVoiceHint('识别完成，可以继续点麦克风说话');
+        } catch (error) {
+          const errorText = error instanceof Error ? error.message : '未知错误';
+          addMessage('assistant', `本地语音识别失败：${errorText}`);
+          updateVoiceHint(`本地语音识别失败：${errorText}`);
+        } finally {
+          dictating = false;
+          voiceButton.classList.remove('is-active');
+        }
+      }
+
+      loadMessages();
+      renderMessages();
+      updateVoiceHint('点麦克风开始录音并识别');
+
+      figureTrigger?.addEventListener('click', () => {
+        if (clickTimer) {
+          return;
+        }
+
+        clickTimer = window.setTimeout(() => {
+          togglePanel();
+          clickTimer = null;
+        }, 220);
+      });
+
+      figureTrigger?.addEventListener('dblclick', () => {
+        if (clickTimer) {
+          window.clearTimeout(clickTimer);
+          clickTimer = null;
+        }
+        openMainApp();
+      });
+
+      figureTrigger?.addEventListener('contextmenu', (event) => {
+        event.preventDefault();
+        closeCompanion();
+      });
+
+      closePanelButton?.addEventListener('click', () => togglePanel(false));
+      fullscreenButton?.addEventListener('click', () => {
+        togglePanel(true);
+        setChatExpanded(!chatExpanded);
+      });
+      sendButton?.addEventListener('click', () => submitMessage(messageInput.value));
+      messageInput?.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+          event.preventDefault();
+          submitMessage(messageInput.value);
+        }
+      });
+      voiceButton?.addEventListener('click', () => {
+        togglePanel(true);
+        startNativeDictation();
+      });
+      speakButton?.addEventListener('click', () => {
+        speakEnabled = !speakEnabled;
+        speakButton.classList.toggle('is-active', speakEnabled);
+      });
+      speakButton?.classList.toggle('is-active', speakEnabled);
+      chatPanelInner.style.setProperty('--chat-scale', '1');
+    </script>
+  </body>
+</html>

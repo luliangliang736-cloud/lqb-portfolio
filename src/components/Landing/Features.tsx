@@ -1,20 +1,40 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { accentMap, showcases } from '../../content/showcases';
+import InteractiveTitle from '../common/InteractiveTitle';
 
-function FeatureCard({ feature, index }: { feature: typeof showcases[number]; index: number }) {
+function FeatureCard({
+  feature,
+  index,
+  activeSlug,
+  onHoverStart,
+  onHoverEnd,
+}: {
+  feature: typeof showcases[number];
+  index: number;
+  activeSlug: string | null;
+  onHoverStart: (slug: string) => void;
+  onHoverEnd: () => void;
+}) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
   const colors = accentMap[feature.accent];
+  const isActive = activeSlug === feature.slug;
+  const isDimmed = Boolean(activeSlug) && !isActive;
+  const cardScale = isActive ? 1.085 : isDimmed ? 0.92 : 1;
 
   return (
     <motion.a
       ref={ref}
       href={`#showcase/${feature.slug}`}
-      className={`rounded-2xl border ${colors.border} bg-surface-900/40 backdrop-blur-sm overflow-hidden transition-colors group`}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className={`relative rounded-2xl border ${colors.border} bg-surface-900/40 backdrop-blur-sm overflow-hidden transition-colors group transform-gpu ${
+        isActive ? 'z-10 shadow-2xl shadow-black/30' : 'z-0'
+      }`}
+      initial={{ opacity: 0, y: 30, scale: 1 }}
+      animate={isInView ? { opacity: 1, y: 0, scale: cardScale } : { scale: cardScale }}
+      transition={{ duration: 0.4, delay: isInView ? index * 0.08 : 0 }}
+      onMouseEnter={() => onHoverStart(feature.slug)}
+      onMouseLeave={onHoverEnd}
     >
       <div className="p-8 md:p-10 flex flex-col h-full">
         {/* Tag */}
@@ -59,33 +79,44 @@ function FeatureCard({ feature, index }: { feature: typeof showcases[number]; in
 export default function Features() {
   const headerRef = useRef(null);
   const isInView = useInView(headerRef, { once: true, margin: '-80px' });
+  const [activeSlug, setActiveSlug] = useState<string | null>(null);
 
   return (
     <section id="features" className="relative py-32 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
-        <div ref={headerRef} className="text-center max-w-2xl mx-auto mb-16">
-          <motion.h2
-            className="text-4xl md:text-5xl lg:text-6xl font-semibold text-surface-50 tracking-tight leading-[1.15]"
+        <div ref={headerRef} className="text-center max-w-5xl mx-auto mb-16">
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            创意作品
-          </motion.h2>
+            <InteractiveTitle
+              src="/assets/creative-work-title.svg"
+              alt="Creative Work"
+              className="mx-auto h-auto w-full max-w-[600px] object-contain"
+            />
+          </motion.div>
           <motion.p
-            className="text-lg text-surface-400 mt-4"
+            className="text-lg text-surface-400 mt-4 mx-auto max-w-2xl"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            四大板块，集中呈现陆七八的创意内容及过程
+            一些有趣的创意化内容探索
           </motion.p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {showcases.map((feature, i) => (
-            <FeatureCard key={feature.tag} feature={feature} index={i} />
+            <FeatureCard
+              key={feature.tag}
+              feature={feature}
+              index={i}
+              activeSlug={activeSlug}
+              onHoverStart={setActiveSlug}
+              onHoverEnd={() => setActiveSlug(null)}
+            />
           ))}
         </div>
       </div>

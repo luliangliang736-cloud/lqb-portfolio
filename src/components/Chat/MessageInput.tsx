@@ -77,19 +77,43 @@ export default function MessageInput({ onSend, disabled }: MessageInputProps) {
 
   return (
     <div className="px-4 py-3 border-t border-surface-800/80">
-      <div className="mb-3 flex gap-2 flex-wrap">
-        <ModeButton
-          active={mode === 'text-to-image'}
-          icon={Sparkles}
-          label="Nano 文生图"
-          onClick={() => setMode('text-to-image')}
+      <div className="flex items-end gap-2 bg-surface-800/50 border border-surface-700/50 rounded-2xl px-3 py-2 focus-within:border-[#FFB8DF]/50 transition-colors">
+        <button
+          onClick={() => fileInputRef.current?.click()}
+          className="flex-shrink-0 p-1.5 text-surface-500 hover:text-surface-300 transition-colors rounded-lg hover:bg-surface-700/50 cursor-pointer"
+          title={mode === 'image-to-image' ? '上传参考图' : '切到图生图后可上传参考图'}
+        >
+          <Paperclip size={18} />
+        </button>
+
+        <textarea
+          ref={textareaRef}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          onInput={handleInput}
+          placeholder={
+            mode === 'image-to-image'
+              ? '描述你想如何改这张图，例如：保留构图，换成紫色未来感风格'
+              : '输入提示词直接生成图片，例如：一个适合小红书封面的数字人海报'
+          }
+          rows={1}
+          disabled={disabled}
+          className="flex-1 bg-transparent resize-none outline-none text-[15px] text-surface-100 placeholder:text-surface-500 max-h-[120px] py-1 leading-snug"
         />
-        <ModeButton
-          active={mode === 'image-to-image'}
-          icon={ImageUp}
-          label="Nano 图生图"
-          onClick={() => setMode('image-to-image')}
-        />
+
+        <motion.button
+          onClick={handleSend}
+          disabled={!canSend}
+          className={`flex-shrink-0 p-2 rounded-xl transition-all cursor-pointer ${
+            canSend
+              ? 'bg-[#FFB8DF] text-surface-950 shadow-lg shadow-[#FFB8DF]/25 hover:bg-[#FFCBE8]'
+              : 'bg-surface-700/50 text-surface-500'
+          }`}
+          whileTap={canSend ? { scale: 0.92 } : {}}
+        >
+          <Send size={16} />
+        </motion.button>
       </div>
 
       <div className="mb-3 rounded-2xl border border-surface-700/50 bg-surface-800/35 px-3 py-2.5">
@@ -153,44 +177,21 @@ export default function MessageInput({ onSend, disabled }: MessageInputProps) {
         </div>
       )}
 
-      <div className="flex items-end gap-2 bg-surface-800/50 border border-surface-700/50 rounded-2xl px-3 py-2 focus-within:border-[#FFB8DF]/50 transition-colors">
-        <button
-          onClick={() => fileInputRef.current?.click()}
-          className="flex-shrink-0 p-1.5 text-surface-500 hover:text-surface-300 transition-colors rounded-lg hover:bg-surface-700/50 cursor-pointer"
-          title={mode === 'image-to-image' ? '上传参考图' : '切到图生图后可上传参考图'}
-        >
-          <Paperclip size={18} />
-        </button>
-
-        <textarea
-          ref={textareaRef}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          onKeyDown={handleKeyDown}
-          onInput={handleInput}
-          placeholder={
-            mode === 'image-to-image'
-              ? '描述你想如何改这张图，例如：保留构图，换成紫色未来感风格'
-              : '输入提示词直接生成图片，例如：一个适合小红书封面的数字人海报'
-          }
-          rows={1}
-          disabled={disabled}
-          className="flex-1 bg-transparent resize-none outline-none text-[15px] text-surface-100 placeholder:text-surface-500 max-h-[120px] py-1 leading-snug"
+      <div className="mb-1 flex gap-2 flex-wrap">
+        <ModeButton
+          active={mode === 'text-to-image'}
+          icon={Sparkles}
+          label="Nano 文生图"
+          onClick={() => setMode('text-to-image')}
         />
-
-        <motion.button
-          onClick={handleSend}
-          disabled={!canSend}
-          className={`flex-shrink-0 p-2 rounded-xl transition-all cursor-pointer ${
-            canSend
-              ? 'bg-[#FFB8DF] text-surface-950 shadow-lg shadow-[#FFB8DF]/25 hover:bg-[#FFCBE8]'
-              : 'bg-surface-700/50 text-surface-500'
-          }`}
-          whileTap={canSend ? { scale: 0.92 } : {}}
-        >
-          <Send size={16} />
-        </motion.button>
+        <ModeButton
+          active={mode === 'image-to-image'}
+          icon={ImageUp}
+          label="Nano 图生图"
+          onClick={() => setMode('image-to-image')}
+        />
       </div>
+
       <p className="text-[11px] text-surface-600 text-center mt-2">
         LQB · Nano 文生图 / 图生图均在当前对话内完成
       </p>
