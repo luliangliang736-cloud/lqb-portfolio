@@ -18,6 +18,6 @@ export const heroVideosDesktop = [
 
 // 移动端只加载精简视频，减少首屏等待。
 export const heroVideosMobile = [
-  '/assets/hero-banner.mp4',
-  '/assets/4月12日(1)-1.mp4',
+  '/assets/移动端.mp4',
+  '/assets/移动端2.mp4',
 ];
