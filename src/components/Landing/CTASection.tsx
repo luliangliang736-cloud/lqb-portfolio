@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import InteractiveTitle from '../common/InteractiveTitle';
 
 export default function CTASection() {
   const ref = useRef(null);
@@ -14,14 +15,17 @@ export default function CTASection() {
       </div>
 
       <div className="relative max-w-4xl mx-auto text-center">
-        <motion.h2
-          className="text-4xl md:text-5xl lg:text-6xl font-semibold text-surface-50 tracking-tight leading-[1.15]"
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          用LQB设计
-        </motion.h2>
+          <InteractiveTitle
+            src="/assets/third-title.svg"
+            alt="用LQB设计"
+            className="mx-auto h-auto w-full max-w-[460px] object-contain"
+          />
+        </motion.div>
         <motion.p
           className="text-lg text-surface-400 mt-5 max-w-xl mx-auto"
           initial={{ opacity: 0, y: 20 }}

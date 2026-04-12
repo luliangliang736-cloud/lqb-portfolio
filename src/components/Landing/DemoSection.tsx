@@ -8,7 +8,7 @@ export default function DemoSection() {
   const isInView = useInView(ref, { once: true, margin: '-60px' });
 
   return (
-    <section id="demo" className="relative py-32 px-6" ref={ref}>
+    <section id="demo" className="relative px-6 pt-4 pb-32 md:pt-8" ref={ref}>
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[#FFB8DF]/8 rounded-full blur-[120px]" />
       </div>
