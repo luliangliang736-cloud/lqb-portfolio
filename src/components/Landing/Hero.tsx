@@ -6,7 +6,6 @@ export default function Hero() {
   const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 767px)').matches);
   const [activeIndex, setActiveIndex] = useState(0);
   const heroVideos = isMobile ? heroVideosMobile : heroVideosDesktop;
-  const heroPoster = '/assets/hero-banner.png';
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 767px)');
@@ -53,7 +52,6 @@ export default function Hero() {
           <video
             src={heroVideos[activeIndex]}
             className="block h-full w-full object-cover"
-            poster={heroPoster}
             preload={activeIndex === 0 ? 'auto' : 'metadata'}
             autoPlay
             muted
