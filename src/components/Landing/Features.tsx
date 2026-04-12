@@ -6,19 +6,15 @@ import InteractiveTitle from '../common/InteractiveTitle';
 
 function FeatureCard({
   feature,
-  index,
   activeSlug,
   onHoverStart,
   onHoverEnd,
 }: {
   feature: typeof showcases[number];
-  index: number;
   activeSlug: string | null;
   onHoverStart: (slug: string) => void;
   onHoverEnd: () => void;
 }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
   const colors = accentMap[feature.accent];
   const isActive = activeSlug === feature.slug;
   const isDimmed = Boolean(activeSlug) && !isActive;
@@ -33,7 +29,6 @@ function FeatureCard({
 
   return (
     <motion.a
-      ref={ref}
       href={`#showcase/${feature.slug}`}
       style={{
         x,
@@ -43,12 +38,14 @@ function FeatureCard({
         transformPerspective: 1400,
         transformStyle: 'preserve-3d',
       }}
-      className={`group relative overflow-hidden rounded-2xl bg-surface-900/40 backdrop-blur-sm transition-colors transform-gpu ${
+      animate={{
+        scale: cardScale,
+        filter: isDimmed ? 'saturate(0.82) brightness(0.88)' : 'saturate(1) brightness(1)',
+      }}
+      transition={{ type: 'spring', stiffness: 220, damping: 18, mass: 0.8 }}
+      className={`group relative flex h-full overflow-hidden rounded-2xl bg-surface-900/40 backdrop-blur-sm transition-[box-shadow,background-color] duration-300 transform-gpu ${
         isActive ? 'z-10 shadow-2xl shadow-black/35' : 'z-0 shadow-xl shadow-black/12'
       }`}
-      initial={{ opacity: 0, y: 56, scale: 0.96, filter: 'blur(12px)' }}
-      animate={isInView ? { opacity: 1, y: 0, scale: cardScale, filter: 'blur(0px)' } : { scale: cardScale }}
-      transition={{ duration: 0.5, delay: isInView ? 0.18 + index * 0.08 : 0 }}
       onMouseEnter={() => onHoverStart(feature.slug)}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => {
@@ -57,39 +54,36 @@ function FeatureCard({
       }}
     >
       <div className="flex h-full flex-col p-8 md:p-10 [transform:translateZ(0)]">
-        {/* Tag */}
-        <span className={`inline-flex self-start items-center gap-1.5 text-xs px-3 py-1 rounded-full border ${colors.tag} mb-6`}>
-          <feature.icon size={12} />
-          {feature.tag}
-        </span>
+        <div>
+          <span className={`mb-6 inline-flex self-start items-center gap-1.5 rounded-full border px-3 py-1 text-xs ${colors.tag}`}>
+            <feature.icon size={12} />
+            {feature.tag}
+          </span>
 
-        {/* Title */}
-        <h3 className="text-2xl md:text-3xl font-semibold text-surface-50 whitespace-pre-line leading-tight">
-          {feature.title}
-        </h3>
+          <h3 className="whitespace-pre-line text-2xl font-semibold leading-tight text-surface-50 md:text-3xl">
+            {feature.title}
+          </h3>
 
-        {/* Description */}
-        <p className="text-surface-400 mt-4 leading-relaxed max-w-lg">
-          {feature.description}
-        </p>
+          <p className="mt-4 max-w-lg leading-relaxed text-surface-400">
+            {feature.description}
+          </p>
+        </div>
 
-        {/* Preview area */}
         {feature.coverSrc ? (
           <img
             src={feature.coverSrc}
             alt={`${feature.title} 封面`}
-            className={`mt-8 flex-1 min-h-[220px] w-full rounded-xl object-cover ${colors.glow}`}
+            className={`mt-8 min-h-[220px] w-full flex-1 rounded-xl object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03] ${colors.glow}`}
           />
         ) : (
-          <div className={`mt-8 flex min-h-[220px] flex-1 items-center justify-center rounded-xl ${colors.glow}`}>
+          <div className={`mt-8 flex min-h-[220px] flex-1 items-center justify-center rounded-xl transition-transform duration-500 ease-out group-hover:scale-[1.03] ${colors.glow}`}>
             <feature.icon size={40} className="text-surface-600" />
           </div>
         )}
 
-        {/* CTA */}
-        <span className={`inline-flex items-center gap-1 text-sm font-medium mt-6 ${colors.ctaBg} transition-colors`}>
+        <span className={`mt-6 inline-flex items-center gap-1 text-sm font-medium ${colors.ctaBg} transition-colors`}>
           {feature.cta}
-          <span className="group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+          <span className="transition-transform group-hover:translate-x-0.5">&rarr;</span>
         </span>
       </div>
     </motion.a>
@@ -103,9 +97,8 @@ export default function Features() {
 
   return (
     <section id="features" className="relative px-6 pt-44 pb-32 md:pt-52">
-      <div className="max-w-7xl mx-auto">
-        {/* Section header */}
-        <div ref={headerRef} className="text-center max-w-5xl mx-auto mb-16">
+      <div className="mx-auto max-w-7xl">
+        <div ref={headerRef} className="mx-auto mb-16 max-w-5xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 42, filter: 'blur(10px)' }}
             animate={isInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
@@ -117,8 +110,9 @@ export default function Features() {
               className="mx-auto h-auto w-full max-w-[600px] object-contain"
             />
           </motion.div>
+
           <motion.p
-            className="text-lg text-surface-400 mt-4 mx-auto max-w-2xl"
+            className="mx-auto mt-4 max-w-2xl text-lg text-surface-400"
             initial={{ opacity: 0, y: 26, filter: 'blur(8px)' }}
             animate={isInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
             transition={{ duration: 0.6, delay: 0.18 }}
@@ -127,23 +121,17 @@ export default function Features() {
           </motion.p>
         </div>
 
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-5"
-          initial={{ opacity: 0, y: 34 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.16 }}
-        >
-          {showcases.map((feature, i) => (
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+          {showcases.map((feature) => (
             <FeatureCard
               key={feature.tag}
               feature={feature}
-              index={i}
               activeSlug={activeSlug}
               onHoverStart={setActiveSlug}
               onHoverEnd={() => setActiveSlug(null)}
             />
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
