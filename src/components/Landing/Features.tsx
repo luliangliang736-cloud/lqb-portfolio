@@ -18,14 +18,14 @@ function FeatureCard({
   const colors = accentMap[feature.accent];
   const isActive = activeSlug === feature.slug;
   const isDimmed = Boolean(activeSlug) && !isActive;
-  const cardScale = isActive ? 1.085 : isDimmed ? 0.92 : 1;
+  const cardScale = isActive ? 1.1 : isDimmed ? 0.93 : 1;
   const { x, y, handleMouseMove, handleMouseLeave } = useMagneticMotion({
-    strength: isActive ? 18 : 12,
-    stiffness: 200,
-    damping: 16,
+    strength: isActive ? 14 : 10,
+    stiffness: 170,
+    damping: 20,
   });
-  const rotateY = useTransform(x, [-18, 18], [-4.5, 4.5]);
-  const rotateX = useTransform(y, [-18, 18], [4.5, -4.5]);
+  const rotateY = useTransform(x, [-14, 14], [-3.2, 3.2]);
+  const rotateX = useTransform(y, [-14, 14], [3.2, -3.2]);
 
   return (
     <motion.a
@@ -40,10 +40,10 @@ function FeatureCard({
       }}
       animate={{
         scale: cardScale,
-        filter: isDimmed ? 'saturate(0.82) brightness(0.88)' : 'saturate(1) brightness(1)',
+        filter: isDimmed ? 'saturate(0.88) brightness(0.9)' : 'saturate(1) brightness(1)',
       }}
-      transition={{ type: 'spring', stiffness: 220, damping: 18, mass: 0.8 }}
-      className={`group relative flex h-full overflow-hidden rounded-2xl bg-surface-900/40 backdrop-blur-sm transition-[box-shadow,background-color] duration-300 transform-gpu ${
+      transition={{ type: 'spring', stiffness: 150, damping: 22, mass: 0.95 }}
+      className={`group relative flex h-full overflow-hidden rounded-2xl bg-surface-900/40 backdrop-blur-sm transition-[box-shadow,background-color] duration-500 transform-gpu will-change-transform ${
         isActive ? 'z-10 shadow-2xl shadow-black/35' : 'z-0 shadow-xl shadow-black/12'
       }`}
       onMouseEnter={() => onHoverStart(feature.slug)}
@@ -73,10 +73,10 @@ function FeatureCard({
           <img
             src={feature.coverSrc}
             alt={`${feature.title} 封面`}
-            className={`mt-8 min-h-[220px] w-full flex-1 rounded-xl object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03] ${colors.glow}`}
+            className={`mt-8 min-h-[220px] w-full flex-1 rounded-xl object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025] ${colors.glow}`}
           />
         ) : (
-          <div className={`mt-8 flex min-h-[220px] flex-1 items-center justify-center rounded-xl transition-transform duration-500 ease-out group-hover:scale-[1.03] ${colors.glow}`}>
+          <div className={`mt-8 flex min-h-[220px] flex-1 items-center justify-center rounded-xl transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025] ${colors.glow}`}>
             <feature.icon size={40} className="text-surface-600" />
           </div>
         )}
