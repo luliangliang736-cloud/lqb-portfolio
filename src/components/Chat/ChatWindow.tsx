@@ -93,7 +93,7 @@ export default function ChatWindow() {
     >
       {/* Header */}
       <motion.header
-        className="flex flex-wrap items-center gap-3 px-5 py-4 border-b border-surface-800/80 bg-surface-950/80 backdrop-blur-md"
+        className="flex flex-wrap items-center gap-3 bg-surface-850/78 px-5 py-4 backdrop-blur-md"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
@@ -109,7 +109,7 @@ export default function ChatWindow() {
         </div>
         <button
           onClick={handleOpenHistory}
-          className="inline-flex items-center gap-1.5 rounded-full border border-surface-700/70 bg-surface-900/60 px-3 py-1.5 text-xs text-surface-300 transition-colors hover:border-[#FFB8DF]/40 hover:text-[#FFB8DF]"
+          className="inline-flex items-center gap-1.5 rounded-full bg-surface-800/72 px-3 py-1.5 text-xs text-surface-300 transition-colors hover:bg-surface-700/90 hover:text-[#FFB8DF]"
           title="查看生图历史"
         >
           <Clock3 size={13} />
@@ -117,7 +117,7 @@ export default function ChatWindow() {
         </button>
         <button
           onClick={() => setIsFullscreen((prev) => !prev)}
-          className="inline-flex items-center gap-1.5 rounded-full border border-surface-700/70 bg-surface-900/60 px-3 py-1.5 text-xs text-surface-300 transition-colors hover:border-[#FFB8DF]/40 hover:text-[#FFB8DF]"
+          className="inline-flex items-center gap-1.5 rounded-full bg-surface-800/72 px-3 py-1.5 text-xs text-surface-300 transition-colors hover:bg-surface-700/90 hover:text-[#FFB8DF]"
           title={isFullscreen ? '退出全屏' : '全屏打开'}
         >
           {isFullscreen ? <Minimize2 size={13} /> : <Maximize2 size={13} />}

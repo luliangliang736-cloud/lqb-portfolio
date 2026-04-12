@@ -39,7 +39,7 @@ export default function DemoSection() {
 
         {/* Chat window */}
         <motion.div
-          className="w-full rounded-2xl border border-surface-800/80 bg-surface-900/60 backdrop-blur-xl overflow-hidden shadow-2xl shadow-black/40 h-[640px] relative"
+          className="relative h-[640px] w-full overflow-hidden rounded-2xl bg-[#0A0A0B] shadow-2xl shadow-black/35 backdrop-blur-xl"
           initial={{ opacity: 0, y: 40, scale: 0.97 }}
           animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
           transition={{ duration: 0.7, delay: 0.2 }}

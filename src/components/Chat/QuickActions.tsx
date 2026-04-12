@@ -21,8 +21,8 @@ export default function QuickActions({ onSelect }: QuickActionsProps) {
           key={action.label}
           onClick={() => onSelect(action.prompt)}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm
-            bg-surface-800/60 border border-surface-700/50 text-surface-300
-            hover:bg-surface-700/80 hover:text-[#FFB8DF] hover:border-[#FFB8DF]/40
+            bg-surface-800/60 text-surface-300
+            hover:bg-surface-700/80 hover:text-[#FFB8DF]
             transition-colors cursor-pointer"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}

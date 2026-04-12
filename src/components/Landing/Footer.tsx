@@ -95,7 +95,7 @@ export default function Footer() {
         {/* Bottom */}
         <div className="flex flex-col md:flex-row items-center justify-between mt-16 pt-8 border-t border-surface-800/40 gap-4">
           <span className="text-xs text-surface-600">
-            &copy; {new Date().getFullYear()} LQB · 设计部0号员工
+            &copy; {new Date().getFullYear()} LQB · 陆78创意化探索
           </span>
           <div className="flex items-center gap-5">
             {socialLinks.map((social) => (

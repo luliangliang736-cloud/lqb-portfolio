@@ -76,8 +76,8 @@ export default function MessageInput({ onSend, disabled }: MessageInputProps) {
   const canSend = value.trim().length > 0 && !disabled && (mode === 'text-to-image' || Boolean(selectedImage));
 
   return (
-    <div className="px-4 py-3 border-t border-surface-800/80">
-      <div className="flex items-end gap-2 bg-surface-800/50 border border-surface-700/50 rounded-2xl px-3 py-2 focus-within:border-[#FFB8DF]/50 transition-colors">
+    <div className="px-4 py-3">
+      <div className="flex items-end gap-2 rounded-2xl bg-black/82 px-3 py-2 transition-colors focus-within:bg-black/92">
         <button
           onClick={() => fileInputRef.current?.click()}
           className="flex-shrink-0 p-1.5 text-surface-500 hover:text-surface-300 transition-colors rounded-lg hover:bg-surface-700/50 cursor-pointer"
@@ -116,18 +116,18 @@ export default function MessageInput({ onSend, disabled }: MessageInputProps) {
         </motion.button>
       </div>
 
-      <div className="mb-3 rounded-2xl border border-surface-700/50 bg-surface-800/35 px-3 py-2.5">
+      <div className="mb-3 px-1 py-1">
         <div className="flex items-center justify-between gap-3">
-          <div>
+          <div className="w-[210px] text-left">
             <p className="text-[11px] uppercase tracking-[0.18em] text-surface-500">Nano 模型</p>
-            <p className="mt-1 text-sm text-surface-300">
+            <p className="mt-1 text-sm text-surface-300 leading-tight">
               {getNanoModelDescription(model)}
             </p>
           </div>
           <select
             value={model}
             onChange={(e) => setModel(e.target.value as NanoModelId)}
-            className="min-w-[210px] rounded-xl border border-surface-700/60 bg-surface-900 px-3 py-2 text-sm text-surface-100 outline-none focus:border-[#FFB8DF]/50"
+            className="min-w-[210px] rounded-xl bg-black/82 px-3 py-2 text-sm text-surface-100 outline-none"
           >
             {NANO_MODELS.map((item) => (
               <option key={item.id} value={item.id}>
@@ -139,10 +139,10 @@ export default function MessageInput({ onSend, disabled }: MessageInputProps) {
       </div>
 
       {mode === 'image-to-image' && (
-        <div className="mb-3 rounded-2xl border border-surface-700/50 bg-surface-800/35 p-3">
+        <div className="mb-3 rounded-2xl bg-black/72 p-3">
           {selectedImage ? (
             <div className="flex items-center gap-3">
-              <img src={selectedImage.url} alt={selectedImage.name} className="w-16 h-16 rounded-xl object-cover border border-surface-700/60" />
+              <img src={selectedImage.url} alt={selectedImage.name} className="h-16 w-16 rounded-xl object-cover" />
               <div className="min-w-0 flex-1">
                 <p className="text-xs uppercase tracking-[0.18em] text-[#FFB8DF]">参考图</p>
                 <p className="text-sm text-surface-200 truncate mt-1">{selectedImage.name}</p>
@@ -161,7 +161,7 @@ export default function MessageInput({ onSend, disabled }: MessageInputProps) {
           ) : (
             <button
               onClick={() => fileInputRef.current?.click()}
-                className="w-full flex items-center justify-center gap-2 rounded-xl border border-dashed border-surface-600/60 px-4 py-4 text-sm text-surface-300 hover:border-[#FFB8DF]/40 hover:text-[#FFB8DF] transition-colors"
+                className="w-full flex items-center justify-center gap-2 rounded-xl bg-black/78 px-4 py-4 text-sm text-surface-300 transition-colors hover:text-[#FFB8DF]"
             >
               <Paperclip size={16} />
               上传参考图后再描述你想怎么修改
@@ -177,7 +177,7 @@ export default function MessageInput({ onSend, disabled }: MessageInputProps) {
         </div>
       )}
 
-      <div className="mb-1 flex gap-2 flex-wrap">
+      <div className="mb-1 flex flex-wrap gap-2">
         <ModeButton
           active={mode === 'text-to-image'}
           icon={Sparkles}
@@ -213,10 +213,10 @@ function ModeButton({
   return (
     <button
       onClick={onClick}
-      className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm transition-colors ${
+      className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm transition-colors ${
         active
-          ? 'border-[#FFB8DF]/40 bg-[#FFB8DF]/12 text-[#FFB8DF]'
-          : 'border-surface-700/50 bg-surface-800/60 text-surface-400 hover:text-surface-200'
+          ? 'bg-[#FFB8DF]/12 text-[#FFB8DF]'
+          : 'bg-black/62 text-surface-400 hover:bg-black/78 hover:text-surface-200'
       }`}
     >
       <Icon size={14} />

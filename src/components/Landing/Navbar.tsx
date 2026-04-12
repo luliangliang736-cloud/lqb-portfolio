@@ -7,6 +7,9 @@ const navLinks = [
   { label: '作品', href: '#features' },
 ];
 
+const xiaohongshuUrl =
+  'https://www.xiaohongshu.com/user/profile/621301760000000021029445?m_source=pwa';
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -59,10 +62,12 @@ export default function Navbar() {
         {/* CTA */}
         <div className="hidden md:flex items-center gap-3">
           <a
-            href="#demo"
+            href={xiaohongshuUrl}
             className="text-sm font-medium tracking-[0.01em] px-5 py-2 rounded-full bg-[#FFB8DF] text-surface-950 hover:bg-[#FFCBE8] transition-colors"
+            target="_blank"
+            rel="noreferrer"
           >
-            体验更多
+            小红书
           </a>
         </div>
 
@@ -93,11 +98,13 @@ export default function Navbar() {
             </a>
           ))}
           <a
-            href="#demo"
+            href={xiaohongshuUrl}
             className="block text-sm font-medium tracking-[0.01em] text-center px-5 py-2.5 rounded-full bg-[#FFB8DF] text-surface-950"
+            target="_blank"
+            rel="noreferrer"
             onClick={() => setMobileOpen(false)}
           >
-            体验更多
+            小红书
           </a>
         </motion.div>
       )}

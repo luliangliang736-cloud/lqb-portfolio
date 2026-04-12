@@ -27,8 +27,8 @@ function FeatureCard({
     <motion.a
       ref={ref}
       href={`#showcase/${feature.slug}`}
-      className={`relative rounded-2xl border ${colors.border} bg-surface-900/40 backdrop-blur-sm overflow-hidden transition-colors group transform-gpu ${
-        isActive ? 'z-10 shadow-2xl shadow-black/30' : 'z-0'
+      className={`group relative overflow-hidden rounded-2xl bg-surface-900/40 backdrop-blur-sm transition-colors transform-gpu ${
+        isActive ? 'z-10 shadow-2xl shadow-black/35' : 'z-0 shadow-xl shadow-black/12'
       }`}
       initial={{ opacity: 0, y: 30, scale: 1 }}
       animate={isInView ? { opacity: 1, y: 0, scale: cardScale } : { scale: cardScale }}
@@ -58,10 +58,10 @@ function FeatureCard({
           <img
             src={feature.coverSrc}
             alt={`${feature.title} 封面`}
-            className={`flex-1 mt-8 min-h-[220px] w-full rounded-xl border border-surface-800/40 object-cover ${colors.glow}`}
+            className={`mt-8 flex-1 min-h-[220px] w-full rounded-xl object-cover ${colors.glow}`}
           />
         ) : (
-          <div className={`flex-1 mt-8 rounded-xl ${colors.glow} border border-surface-800/40 min-h-[220px] flex items-center justify-center`}>
+          <div className={`mt-8 flex min-h-[220px] flex-1 items-center justify-center rounded-xl ${colors.glow}`}>
             <feature.icon size={40} className="text-surface-600" />
           </div>
         )}
@@ -82,7 +82,7 @@ export default function Features() {
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
 
   return (
-    <section id="features" className="relative py-32 px-6">
+    <section id="features" className="relative px-6 pt-44 pb-32 md:pt-52">
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
         <div ref={headerRef} className="text-center max-w-5xl mx-auto mb-16">

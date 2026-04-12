@@ -8,7 +8,7 @@ export default function CTASection() {
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section className="relative py-32 px-6" ref={ref}>
+    <section className="relative px-6 pt-10 pb-20 md:pt-14 md:pb-24" ref={ref}>
       {/* Background glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary-600/8 rounded-full blur-[120px]" />
@@ -27,7 +27,7 @@ export default function CTASection() {
           />
         </motion.div>
         <motion.p
-          className="text-lg text-surface-400 mt-5 max-w-xl mx-auto"
+          className="mx-auto mt-2 max-w-xl text-lg text-surface-400"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.1 }}
@@ -35,7 +35,7 @@ export default function CTASection() {
           全速创作，让愿景成真
         </motion.p>
         <motion.div
-          className="mt-10"
+          className="mt-5"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -44,7 +44,7 @@ export default function CTASection() {
             href="#demo"
             className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-white text-surface-950 font-medium text-sm hover:bg-surface-100 transition-all shadow-lg shadow-white/10"
           >
-            免费开始
+            Design
             <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
           </a>
         </motion.div>
