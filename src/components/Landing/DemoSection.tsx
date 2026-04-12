@@ -17,9 +17,9 @@ export default function DemoSection() {
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-14">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            initial={{ opacity: 0, y: 38, filter: 'blur(10px)' }}
+            animate={isInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+            transition={{ duration: 0.65, delay: 0.06 }}
           >
             <InteractiveTitle
               src="/assets/lqb-ai-title.svg"
@@ -29,9 +29,9 @@ export default function DemoSection() {
           </motion.div>
           <motion.p
             className="text-lg text-surface-400 mt-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
+            animate={isInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+            transition={{ duration: 0.6, delay: 0.16 }}
           >
             输入你的设计需求，体验 AI 设计助手的工作方式
           </motion.p>
@@ -40,9 +40,9 @@ export default function DemoSection() {
         {/* Chat window */}
         <motion.div
           className="relative h-[640px] w-full overflow-hidden rounded-2xl bg-[#0A0A0B] shadow-2xl shadow-black/35 backdrop-blur-xl"
-          initial={{ opacity: 0, y: 40, scale: 0.97 }}
-          animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-          transition={{ duration: 0.7, delay: 0.2 }}
+          initial={{ opacity: 0, y: 54, scale: 0.965, filter: 'blur(12px)' }}
+          animate={isInView ? { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' } : {}}
+          transition={{ duration: 0.75, delay: 0.22 }}
         >
           <ChatWindow />
         </motion.div>

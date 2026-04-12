@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { useMagneticMotion } from '../../hooks/useMagneticMotion';
 
 const navLinks = [
   { label: '首页', href: '#hero' },
@@ -10,6 +11,11 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { x, y, handleMouseMove, handleMouseLeave } = useMagneticMotion({
+    strength: 10,
+    stiffness: 220,
+    damping: 18,
+  });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -58,12 +64,16 @@ export default function Navbar() {
 
         {/* CTA */}
         <div className="hidden md:flex items-center gap-3">
-          <a
+          <motion.a
             href="#demo"
             className="text-sm font-medium tracking-[0.01em] px-5 py-2 rounded-full bg-[#FFB8DF] text-surface-950 hover:bg-[#FFCBE8] transition-colors"
+            style={{ x, y }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            whileTap={{ scale: 0.98 }}
           >
             探索更多
-          </a>
+          </motion.a>
         </div>
 
         {/* Mobile toggle */}

@@ -11,6 +11,16 @@ import ProjectDetailPage from './components/Landing/ProjectDetailPage';
 import { showcaseMediaBySlug, showcases } from './content/showcases';
 
 const clickEmojis = ['✨', '💫', '🌟', '🎨', '🫧', '💥', '🌈', '🍀', '💖', '🎵'];
+const clickBlessings = [
+  '欢迎光临',
+  '哇，你又变帅了！',
+  '今天也灵感满格',
+  '祝你灵感大爆发',
+  '好审美正在发生',
+  '你今天状态很好',
+  '这次一定有惊喜',
+  '你的创意被看见了',
+];
 
 type EmojiBurst = {
   id: number;
@@ -21,6 +31,17 @@ type EmojiBurst = {
   dy: number;
   rotate: number;
   size: number;
+};
+
+type BlessingBurst = {
+  id: number;
+  text: string;
+  emoji: string;
+  x: number;
+  y: number;
+  dx: number;
+  dy: number;
+  rotate: number;
 };
 
 function getRouteState() {
@@ -60,6 +81,7 @@ function App() {
   const desktopMode = isDesktopMode();
   const [routeState, setRouteState] = useState(getRouteState());
   const [emojiBursts, setEmojiBursts] = useState<EmojiBurst[]>([]);
+  const [blessingBursts, setBlessingBursts] = useState<BlessingBurst[]>([]);
 
   useEffect(() => {
     if (desktopMode) {
@@ -86,6 +108,18 @@ function App() {
 
     return () => window.clearTimeout(timer);
   }, [desktopMode, emojiBursts]);
+
+  useEffect(() => {
+    if (desktopMode || !blessingBursts.length) {
+      return undefined;
+    }
+
+    const timer = window.setTimeout(() => {
+      setBlessingBursts((current) => current.slice(1));
+    }, 1500);
+
+    return () => window.clearTimeout(timer);
+  }, [desktopMode, blessingBursts]);
 
   useEffect(() => {
     if (!desktopMode) {
@@ -125,7 +159,9 @@ function App() {
 
     const chosenEmojis = [...clickEmojis]
       .sort(() => Math.random() - 0.5)
-      .slice(0, 6);
+      .slice(0, 4);
+    const leadEmoji = chosenEmojis[0] ?? '✨';
+    const blessing = clickBlessings[Math.floor(Math.random() * clickBlessings.length)] ?? '欢迎光临';
 
     const nextBursts = chosenEmojis.map((emoji, index) => ({
       id: Date.now() + index + Math.random(),
@@ -138,7 +174,19 @@ function App() {
       size: 18 + Math.random() * 14,
     }));
 
+    const nextBlessing = {
+      id: Date.now() + Math.random(),
+      text: blessing,
+      emoji: leadEmoji,
+      x: event.clientX,
+      y: event.clientY,
+      dx: (Math.random() - 0.5) * 28,
+      dy: -78 - Math.random() * 44,
+      rotate: (Math.random() - 0.5) * 10,
+    };
+
     setEmojiBursts((current) => [...current, ...nextBursts].slice(-30));
+    setBlessingBursts((current) => [...current, nextBlessing].slice(-8));
   };
 
   if (desktopMode) {
@@ -164,6 +212,22 @@ function App() {
         </>
       )}
       <div className="pointer-events-none fixed inset-0 z-[90] overflow-hidden">
+        {blessingBursts.map((burst) => (
+          <span
+            key={burst.id}
+            className="blessing-burst"
+            style={{
+              left: burst.x,
+              top: burst.y,
+              '--blessing-dx': `${burst.dx}px`,
+              '--blessing-dy': `${burst.dy}px`,
+              '--blessing-rotate': `${burst.rotate}deg`,
+            } as CSSProperties}
+          >
+            <span>{burst.emoji}</span>
+            <span>{burst.text}</span>
+          </span>
+        ))}
         {emojiBursts.map((burst) => (
           <span
             key={burst.id}
