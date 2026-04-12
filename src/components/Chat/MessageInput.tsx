@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Send, Paperclip, Sparkles, ImageUp, X } from 'lucide-react';
 import type { ChatSubmitPayload } from '../../hooks/useChat';
 import type { NanoModelId } from '../../types/chat';
-import { NANO_MODELS, getNanoModelDescription } from '../../constants/nano';
+import { NANO_MODELS } from '../../constants/nano';
 
 interface MessageInputProps {
   onSend: (payload: ChatSubmitPayload) => void;
@@ -116,28 +116,6 @@ export default function MessageInput({ onSend, disabled }: MessageInputProps) {
         </motion.button>
       </div>
 
-      <div className="mb-3 px-1 py-1">
-        <div className="flex items-center justify-between gap-3">
-          <div className="w-[210px] text-left">
-            <p className="text-[11px] uppercase tracking-[0.18em] text-surface-500">Nano 模型</p>
-            <p className="mt-1 text-sm text-surface-300 leading-tight">
-              {getNanoModelDescription(model)}
-            </p>
-          </div>
-          <select
-            value={model}
-            onChange={(e) => setModel(e.target.value as NanoModelId)}
-            className="min-w-[210px] rounded-xl bg-black/82 px-3 py-2 text-sm text-surface-100 outline-none"
-          >
-            {NANO_MODELS.map((item) => (
-              <option key={item.id} value={item.id}>
-                {item.label}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
       {mode === 'image-to-image' && (
         <div className="mb-3 rounded-2xl bg-black/72 p-3">
           {selectedImage ? (
@@ -177,22 +155,35 @@ export default function MessageInput({ onSend, disabled }: MessageInputProps) {
         </div>
       )}
 
-      <div className="mb-1 flex flex-wrap gap-2">
-        <ModeButton
-          active={mode === 'text-to-image'}
-          icon={Sparkles}
-          label="Nano 文生图"
-          onClick={() => setMode('text-to-image')}
-        />
-        <ModeButton
-          active={mode === 'image-to-image'}
-          icon={ImageUp}
-          label="Nano 图生图"
-          onClick={() => setMode('image-to-image')}
-        />
+      <div className="mt-2 mb-2 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap gap-2">
+          <ModeButton
+            active={mode === 'text-to-image'}
+            icon={Sparkles}
+            label="Nano 文生图"
+            onClick={() => setMode('text-to-image')}
+          />
+          <ModeButton
+            active={mode === 'image-to-image'}
+            icon={ImageUp}
+            label="Nano 图生图"
+            onClick={() => setMode('image-to-image')}
+          />
+        </div>
+        <select
+          value={model}
+          onChange={(e) => setModel(e.target.value as NanoModelId)}
+          className="min-w-[210px] rounded-xl bg-black/82 px-3 py-2 text-sm text-surface-100 outline-none"
+        >
+          {NANO_MODELS.map((item) => (
+            <option key={item.id} value={item.id}>
+              {item.label}
+            </option>
+          ))}
+        </select>
       </div>
 
-      <p className="text-[11px] text-surface-600 text-center mt-2">
+      <p className="mt-1 text-center text-[11px] text-surface-600">
         LQB · Nano 文生图 / 图生图均在当前对话内完成
       </p>
     </div>

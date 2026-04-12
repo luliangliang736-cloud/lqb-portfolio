@@ -22,7 +22,7 @@ const personalSections: FooterSection[] = [
     title: '社媒主页',
     items: [
       { label: '小红书', value: '搜索“陆78', href: '#' },
-      { label: '站酷', value: '暂无', href: '#' },
+      { label: 'Design', value: '暂无', href: '#' },
       { label: '微博 / 抖音', value: '暂无', href: '#' },
     ],
   },
@@ -38,7 +38,7 @@ const personalSections: FooterSection[] = [
 
 const socialLinks = [
   { label: '小红书', href: '#' },
-  { label: '站酷', href: '#' },
+  { label: 'Design', href: '#' },
   { label: 'GitHub', href: '#' },
 ];
 
