@@ -1,17 +1,40 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { heroVideos } from '../../content/heroMedia';
+import { heroVideosDesktop, heroVideosMobile } from '../../content/heroMedia';
 
 export default function Hero() {
+  const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 767px)').matches);
   const [activeIndex, setActiveIndex] = useState(0);
+  const heroVideos = isMobile ? heroVideosMobile : heroVideosDesktop;
+  const heroPoster = '/assets/hero-banner.png';
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 767px)');
+    const handleChange = (event: MediaQueryListEvent) => {
+      setIsMobile(event.matches);
+    };
+
+    setIsMobile(mediaQuery.matches);
+    mediaQuery.addEventListener('change', handleChange);
+
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  useEffect(() => {
+    if (heroVideos.length <= 1) return undefined;
+
     const timer = window.setInterval(() => {
       setActiveIndex((current) => (current + 1) % heroVideos.length);
     }, 5000);
 
     return () => window.clearInterval(timer);
-  }, []);
+  }, [heroVideos]);
+
+  useEffect(() => {
+    if (activeIndex >= heroVideos.length) {
+      setActiveIndex(0);
+    }
+  }, [activeIndex, heroVideos.length]);
 
   return (
     <section
@@ -30,6 +53,8 @@ export default function Hero() {
           <video
             src={heroVideos[activeIndex]}
             className="block h-full w-full object-cover"
+            poster={heroPoster}
+            preload={activeIndex === 0 ? 'auto' : 'metadata'}
             autoPlay
             muted
             loop
