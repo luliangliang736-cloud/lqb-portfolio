@@ -14,8 +14,36 @@ type ActiveImageState = {
   height: number;
 } | null;
 
+const accentSurfaceMap = {
+  primary: {
+    card: 'bg-[#0C110A]',
+    media: 'bg-[#141C11]',
+  },
+  violet: {
+    card: 'bg-[#110C12]',
+    media: 'bg-[#19121B]',
+  },
+  emerald: {
+    card: 'bg-[#091014]',
+    media: 'bg-[#10181D]',
+  },
+  amber: {
+    card: 'bg-[#121008]',
+    media: 'bg-[#1A1710]',
+  },
+  rose: {
+    card: 'bg-[#100B14]',
+    media: 'bg-[#18111D]',
+  },
+  sky: {
+    card: 'bg-[#09120D]',
+    media: 'bg-[#111A15]',
+  },
+} as const;
+
 export default function ProjectDetailPage({ showcase, project }: ProjectDetailPageProps) {
   const colors = accentMap[showcase.accent];
+  const accentSurface = accentSurfaceMap[showcase.accent];
   const projectMedia = project.detailMedia?.length ? project.detailMedia : [project.src];
   const [activeImage, setActiveImage] = useState<ActiveImageState>(null);
   const [previewScale, setPreviewScale] = useState(1);
@@ -65,7 +93,7 @@ export default function ProjectDetailPage({ showcase, project }: ProjectDetailPa
           返回{showcase.title}
         </a>
 
-        <section className={`mt-8 overflow-hidden rounded-[32px] border ${colors.border} bg-surface-900/45 p-8 md:p-10`}>
+        <section className="mt-8 overflow-hidden rounded-[32px] bg-surface-900/45 p-8 shadow-2xl shadow-black/20 md:p-10">
           <div className="max-w-4xl">
             <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs ${colors.tag}`}>
               <showcase.icon size={12} />
@@ -80,7 +108,7 @@ export default function ProjectDetailPage({ showcase, project }: ProjectDetailPa
               {projectMedia.map((src, index) => (
                 <motion.article
                   key={`${project.id ?? project.title}-${index}`}
-                  className="mb-4 inline-block w-full break-inside-avoid overflow-hidden rounded-[22px] border border-surface-800/60 bg-surface-900/55 align-top"
+                  className={`mb-4 inline-block w-full break-inside-avoid overflow-hidden rounded-[22px] align-top shadow-2xl shadow-black/20 ${accentSurface.card}`}
                   initial={{ opacity: 0, y: 18 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.35, delay: index * 0.06 }}
@@ -88,7 +116,7 @@ export default function ProjectDetailPage({ showcase, project }: ProjectDetailPa
                   {isVideoSrc(src) ? (
                     <video
                       src={src}
-                      className="block h-auto w-full bg-surface-950/60 object-contain"
+                      className={`block h-auto w-full object-contain shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
                       controls
                       playsInline
                     />
@@ -102,18 +130,10 @@ export default function ProjectDetailPage({ showcase, project }: ProjectDetailPa
                       <img
                         src={src}
                         alt={`${project.title} ${index + 1}`}
-                        className="block h-auto w-full bg-surface-950/60 object-contain"
+                        className={`block h-auto w-full object-contain shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
                       />
                     </button>
                   )}
-                  <div className="px-4 py-3">
-                    <p className="text-sm font-medium text-surface-200">
-                      {projectMedia.length > 1 ? `${project.title} ${String(index + 1).padStart(2, '0')}` : project.title}
-                    </p>
-                    <p className="mt-2 text-xs leading-relaxed text-surface-500">
-                      {project.description}
-                    </p>
-                  </div>
                 </motion.article>
               ))}
             </div>

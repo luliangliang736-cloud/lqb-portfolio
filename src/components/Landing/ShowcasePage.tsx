@@ -19,8 +19,36 @@ type ActiveImageState = {
   title: string;
 } | null;
 
+const accentSurfaceMap = {
+  primary: {
+    card: 'bg-[#0C110A]',
+    media: 'bg-[#141C11]',
+  },
+  violet: {
+    card: 'bg-[#110C12]',
+    media: 'bg-[#19121B]',
+  },
+  emerald: {
+    card: 'bg-[#091014]',
+    media: 'bg-[#10181D]',
+  },
+  amber: {
+    card: 'bg-[#121008]',
+    media: 'bg-[#1A1710]',
+  },
+  rose: {
+    card: 'bg-[#100B14]',
+    media: 'bg-[#18111D]',
+  },
+  sky: {
+    card: 'bg-[#09120D]',
+    media: 'bg-[#111A15]',
+  },
+} as const;
+
 export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
   const colors = accentMap[showcase.accent];
+  const accentSurface = accentSurfaceMap[showcase.accent];
   const mediaItems = showcaseMediaBySlug[showcase.slug] ?? [];
   const usesWaterfallLayout = showcase.slug === 'waterfall-collection' || showcase.slug === 'beyond-design';
   const [activeImage, setActiveImage] = useState<ActiveImageState>(null);
@@ -72,7 +100,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
           返回作品区
         </a>
 
-        <section className={`mt-8 overflow-hidden rounded-[32px] border ${colors.border} bg-surface-900/45 p-8 md:p-10`}>
+        <section className="mt-8 overflow-hidden rounded-[32px] bg-surface-900/45 p-8 shadow-2xl shadow-black/20 md:p-10">
           <div className="max-w-3xl">
             <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs ${colors.tag}`}>
               <showcase.icon size={12} />
@@ -86,7 +114,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
             </p>
           </div>
 
-          <div className={`mt-10 rounded-[28px] border border-surface-800/60 ${colors.glow} p-6 md:p-8`}>
+          <div className="mt-10">
             {usesWaterfallLayout ? (
               mediaItems.length ? (
                 <div className="columns-2 [column-gap:1rem] lg:columns-3 xl:columns-4">
@@ -100,7 +128,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                       <Wrapper
                         key={`${showcase.slug}-${item.title}-${index}`}
                         {...wrapperProps}
-                        className="mb-4 inline-block w-full break-inside-avoid overflow-hidden rounded-[22px] border border-surface-800/70 bg-black/25 align-top transition-colors hover:border-white/12"
+                        className="mb-4 inline-block w-full break-inside-avoid overflow-hidden rounded-[22px] bg-black/25 align-top shadow-xl shadow-black/10 transition-colors"
                         initial={{ opacity: 0, y: 18 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.35, delay: index * 0.04 }}
@@ -136,7 +164,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                 <div className="min-h-[260px]" />
               )
             ) : (
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+              <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-3">
                 {(mediaItems.length ? mediaItems : sectionLabels.map((label) => ({
                   id: undefined,
                   title: label,
@@ -147,7 +175,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                     <motion.a
                       key={`${showcase.slug}-${item.title}-${index}`}
                       href={`#showcase/${showcase.slug}/project/${item.id}`}
-                      className="rounded-2xl border border-surface-800/70 bg-black/25 p-4 transition-colors hover:border-white/12"
+                      className="self-start rounded-2xl bg-[#060607] p-4 transition-colors hover:bg-[#09090B]"
                       initial={{ opacity: 0, y: 18 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.35, delay: index * 0.06 }}
@@ -160,7 +188,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                         isVideoSrc(item.src) ? (
                           <video
                             src={item.src}
-                            className="mt-4 block aspect-[3/4] w-full rounded-xl border border-surface-800/60 bg-surface-950/60 object-cover"
+                            className={`mt-4 block aspect-[3/4] w-full rounded-xl object-cover shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
                             autoPlay
                             muted
                             loop
@@ -170,11 +198,11 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                           <img
                             src={item.src}
                             alt={item.title}
-                            className="mt-4 block aspect-[3/4] w-full rounded-xl border border-surface-800/60 object-cover bg-surface-950/60"
+                            className={`mt-4 block aspect-[3/4] w-full rounded-xl object-cover shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
                           />
                         )
                       ) : (
-                        <div className="mt-4 flex aspect-[3/4] items-center justify-center rounded-xl border border-surface-800/60 bg-surface-950/60">
+                        <div className={`mt-4 flex aspect-[3/4] items-center justify-center rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}>
                           <showcase.icon size={28} className="text-surface-600" />
                         </div>
                       )}
@@ -185,7 +213,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                   ) : (
                     <motion.article
                       key={`${showcase.slug}-${item.title}-${index}`}
-                      className="rounded-2xl border border-surface-800/70 bg-black/25 p-4"
+                      className="self-start rounded-2xl bg-[#060607] p-4"
                       initial={{ opacity: 0, y: 18 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.35, delay: index * 0.06 }}
@@ -198,7 +226,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                         isVideoSrc(item.src) ? (
                           <video
                             src={item.src}
-                            className="mt-4 block aspect-[3/4] w-full rounded-xl border border-surface-800/60 bg-surface-950/60 object-cover"
+                            className={`mt-4 block aspect-[3/4] w-full rounded-xl object-cover shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
                             autoPlay
                             muted
                             loop
@@ -208,11 +236,11 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                           <img
                             src={item.src}
                             alt={item.title}
-                            className="mt-4 block aspect-[3/4] w-full rounded-xl border border-surface-800/60 object-cover bg-surface-950/60"
+                            className={`mt-4 block aspect-[3/4] w-full rounded-xl object-cover shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
                           />
                         )
                       ) : (
-                        <div className="mt-4 flex aspect-[3/4] items-center justify-center rounded-xl border border-surface-800/60 bg-surface-950/60">
+                        <div className={`mt-4 flex aspect-[3/4] items-center justify-center rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}>
                           <showcase.icon size={28} className="text-surface-600" />
                         </div>
                       )}
@@ -227,7 +255,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
           </div>
         </section>
 
-        <section className="mt-8 rounded-[32px] border border-surface-800/70 bg-surface-900/35 p-6 md:p-8">
+        <section className="mt-8 rounded-[32px] bg-surface-900/35 p-6 shadow-2xl shadow-black/20 md:p-8">
           <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="text-sm uppercase tracking-[0.22em] text-surface-500">Showcases</p>
@@ -247,10 +275,10 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                 <motion.a
                   key={item.slug}
                   href={`#showcase/${item.slug}`}
-                  className={`rounded-2xl border p-5 transition-colors ${
+                  className={`rounded-2xl p-5 shadow-xl shadow-black/10 transition-colors ${
                     isActive
-                      ? `${itemColors.border} ${itemColors.glow}`
-                      : 'border-surface-800/70 bg-black/20 hover:border-white/12'
+                      ? `${itemColors.glow} bg-black/18`
+                      : 'bg-black/20'
                   }`}
                   initial={{ opacity: 0, y: 18 }}
                   animate={{ opacity: 1, y: 0 }}
