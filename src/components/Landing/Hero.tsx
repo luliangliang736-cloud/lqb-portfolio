@@ -6,6 +6,7 @@ export default function Hero() {
   const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 767px)').matches);
   const [activeIndex, setActiveIndex] = useState(0);
   const heroVideos = isMobile ? heroVideosMobile : heroVideosDesktop;
+  const nextVideo = heroVideos[(activeIndex + 1) % heroVideos.length];
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 767px)');
@@ -60,6 +61,19 @@ export default function Hero() {
           />
         </motion.div>
       </AnimatePresence>
+
+      {/* 移动端只预加载下一条视频，避免切换时黑屏等待。 */}
+      {isMobile && heroVideos.length > 1 ? (
+        <video
+          key={nextVideo}
+          src={nextVideo}
+          preload="auto"
+          muted
+          playsInline
+          aria-hidden="true"
+          className="hidden"
+        />
+      ) : null}
 
       <div className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 rounded-full bg-black/18 px-3 py-2 backdrop-blur-sm">
         {heroVideos.map((video, index) => (
