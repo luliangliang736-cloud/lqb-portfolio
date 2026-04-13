@@ -40,12 +40,12 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative h-[100svh] min-h-[100svh] overflow-hidden"
+      className="relative h-[100svh] min-h-[100svh] overflow-hidden bg-black"
     >
       <AnimatePresence mode="wait">
         <motion.div
           key={heroVideos[activeIndex]}
-          className="absolute inset-0"
+          className="absolute -inset-px"
           initial={{ opacity: 0, scale: 1.02 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 1.01 }}

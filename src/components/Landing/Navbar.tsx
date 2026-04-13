@@ -27,8 +27,8 @@ export default function Navbar() {
     <motion.nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-black/68 backdrop-blur-xl border-b border-white/8 shadow-lg shadow-black/30'
-          : 'bg-black/42 backdrop-blur-lg border-b border-white/6'
+          ? 'bg-black/68 backdrop-blur-xl shadow-lg shadow-black/30'
+          : 'bg-black/42 backdrop-blur-lg'
       }`}
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
