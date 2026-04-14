@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ArrowLeft, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { accentMap, isVideoSrc, type ShowcaseItem, type ShowcaseMediaItem } from '../../content/showcases';
@@ -47,6 +47,8 @@ export default function ProjectDetailPage({ showcase, project }: ProjectDetailPa
   const projectMedia = project.detailMedia?.length ? project.detailMedia : [project.src];
   const [activeImage, setActiveImage] = useState<ActiveImageState>(null);
   const [previewScale, setPreviewScale] = useState(1);
+  const [columnCount, setColumnCount] = useState(() => (typeof window !== 'undefined' && window.innerWidth < 768 ? 2 : 5));
+  const [mediaAspectRatios, setMediaAspectRatios] = useState<Record<string, number>>({});
   const canZoomIn = previewScale < 0.99;
   const canZoomOut = previewScale > 0.26;
 
@@ -64,6 +66,76 @@ export default function ProjectDetailPage({ showcase, project }: ProjectDetailPa
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [activeImage]);
+
+  useEffect(() => {
+    const updateColumnCount = () => {
+      setColumnCount(window.innerWidth < 768 ? 2 : 5);
+    };
+
+    updateColumnCount();
+    window.addEventListener('resize', updateColumnCount);
+    return () => window.removeEventListener('resize', updateColumnCount);
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadAspectRatios = async () => {
+      const results = await Promise.all(
+        projectMedia.map((src) => new Promise<[string, number]>((resolve) => {
+          if (isVideoSrc(src)) {
+            const video = document.createElement('video');
+            video.preload = 'metadata';
+            video.onloadedmetadata = () => {
+              const ratio = video.videoWidth && video.videoHeight ? video.videoHeight / video.videoWidth : 1.25;
+              resolve([src, ratio]);
+            };
+            video.onerror = () => resolve([src, 1.25]);
+            video.src = src;
+            return;
+          }
+
+          const image = new Image();
+          image.onload = () => {
+            const ratio = image.naturalWidth && image.naturalHeight ? image.naturalHeight / image.naturalWidth : 1.25;
+            resolve([src, ratio]);
+          };
+          image.onerror = () => resolve([src, 1.25]);
+          image.src = src;
+        })),
+      );
+
+      if (!cancelled) {
+        setMediaAspectRatios(Object.fromEntries(results));
+      }
+    };
+
+    void loadAspectRatios();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [projectMedia]);
+
+  const masonryColumns = useMemo(() => {
+    const columns = Array.from({ length: columnCount }, () => ({
+      height: 0,
+      items: [] as Array<{ src: string; index: number }>,
+    }));
+
+    projectMedia.forEach((src, index) => {
+      const estimatedHeight = mediaAspectRatios[src] ?? (isVideoSrc(src) ? 1.25 : 1.4);
+      const targetColumnIndex = columns.reduce(
+        (shortestIndex, column, currentIndex) => (column.height < columns[shortestIndex].height ? currentIndex : shortestIndex),
+        0,
+      );
+
+      columns[targetColumnIndex].items.push({ src, index });
+      columns[targetColumnIndex].height += estimatedHeight;
+    });
+
+    return columns.map((column) => column.items);
+  }, [columnCount, mediaAspectRatios, projectMedia]);
 
   const openImagePreview = (src: string) => {
     const image = new Image();
@@ -104,37 +176,44 @@ export default function ProjectDetailPage({ showcase, project }: ProjectDetailPa
           </div>
 
           <div className="mt-10">
-            <div className="columns-2 [column-gap:1rem] lg:columns-3 xl:columns-4">
-              {projectMedia.map((src, index) => (
-                <motion.article
-                  key={`${project.id ?? project.title}-${index}`}
-                  className={`mb-4 inline-block w-full break-inside-avoid overflow-hidden rounded-[22px] align-top shadow-2xl shadow-black/20 ${accentSurface.card}`}
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.35, delay: index * 0.06 }}
-                >
-                  {isVideoSrc(src) ? (
-                    <video
-                      src={src}
-                      className={`block h-auto w-full object-contain shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
-                      controls
-                      playsInline
-                    />
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => openImagePreview(src)}
-                      className="relative block w-full cursor-zoom-in overflow-hidden"
-                      aria-label={`全屏查看 ${project.title} ${index + 1}`}
+            <div
+              className="grid gap-4"
+              style={{ gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))` }}
+            >
+              {masonryColumns.map((column, columnIndex) => (
+                <div key={`${project.id ?? project.title}-column-${columnIndex}`} className="flex flex-col gap-4">
+                  {column.map(({ src, index }) => (
+                    <motion.article
+                      key={`${project.id ?? project.title}-${index}`}
+                      className={`w-full overflow-hidden rounded-[22px] shadow-2xl shadow-black/20 ${accentSurface.card}`}
+                      initial={{ opacity: 0, y: 18 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.35, delay: index * 0.06 }}
                     >
-                      <img
-                        src={src}
-                        alt={`${project.title} ${index + 1}`}
-                        className={`block h-auto w-full object-contain shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
-                      />
-                    </button>
-                  )}
-                </motion.article>
+                      {isVideoSrc(src) ? (
+                        <video
+                          src={src}
+                          className={`block h-auto w-full object-contain shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
+                          controls
+                          playsInline
+                        />
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => openImagePreview(src)}
+                          className="relative block w-full cursor-zoom-in overflow-hidden"
+                          aria-label={`全屏查看 ${project.title} ${index + 1}`}
+                        >
+                          <img
+                            src={src}
+                            alt={`${project.title} ${index + 1}`}
+                            className={`block h-auto w-full object-contain shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
+                          />
+                        </button>
+                      )}
+                    </motion.article>
+                  ))}
+                </div>
               ))}
             </div>
           </div>

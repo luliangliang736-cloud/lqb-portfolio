@@ -117,7 +117,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
           <div className="mt-10">
             {usesWaterfallLayout ? (
               mediaItems.length ? (
-                <div className="columns-2 [column-gap:1rem] lg:columns-3 xl:columns-4">
+                <div className="columns-2 [column-gap:1rem] md:columns-5">
                   {mediaItems.map((item, index) => {
                     const Wrapper = item.id ? motion.a : motion.article;
                     const wrapperProps = item.id

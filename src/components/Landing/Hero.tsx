@@ -110,6 +110,9 @@ export default function Hero() {
         </div>
       ) : null}
 
+      <div className="pointer-events-none absolute inset-0 z-[2] bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.16)_36%,rgba(0,0,0,0.38)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 z-[3] bg-[radial-gradient(circle_at_16%_56%,rgba(0,0,0,0.22),transparent_0_34%),radial-gradient(circle_at_24%_40%,rgba(255,255,255,0.04),transparent_0_18%),radial-gradient(circle_at_36%_50%,rgba(173,255,98,0.04),transparent_0_20%)]" />
+
       <div className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 rounded-full bg-black/18 px-3 py-2 backdrop-blur-sm">
         {heroVideos.map((video, index) => (
           <button
