@@ -12,7 +12,6 @@ export const heroVideosDesktop = [
   '/assets/4月12日(1)-1.mp4',
   '/assets/4月12日(1)-4.mp4',
   '/assets/4月12日(1)-5.mp4',
-  '/assets/4月12日(1)-9.mp4',
   '/assets/4月12日(1)-10.mp4',
 ];
 
