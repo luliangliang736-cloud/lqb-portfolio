@@ -221,6 +221,10 @@ export default function Features() {
           >
             <div className="absolute inset-0 scale-[1.16] md:scale-[1.2]">
               {collageCards.map((card, index) => {
+                  const isHovered = hoveredCollageIndex === index;
+                  const hoverTiltX = card.top < 50 ? 11 : -11;
+                  const hoverTiltY = card.left < 50 ? -14 : 14;
+
                   return (
                     <motion.div
                       key={`${card.alt}-${index}`}
@@ -257,12 +261,16 @@ export default function Features() {
                           x: card.scatter.x,
                           y: card.scatter.y,
                           rotate: card.angle - 360 + card.scatter.rotate,
-                          scale: hoveredCollageIndex === index ? 1.12 : 1.03,
+                          scale: isHovered ? 1.12 : 1.03,
+                          rotateX: isHovered ? hoverTiltX : 0,
+                          rotateY: isHovered ? hoverTiltY : 0,
                         } : {
                           x: 0,
                           y: 0,
                           rotate: collageInView ? card.angle - 360 : card.angle,
-                          scale: hoveredCollageIndex === index ? 1.08 : 1,
+                          scale: isHovered ? 1.08 : 1,
+                          rotateX: isHovered ? hoverTiltX * 0.7 : 0,
+                          rotateY: isHovered ? hoverTiltY * 0.7 : 0,
                         }}
                         transition={{
                           rotate: collageHovered
@@ -273,7 +281,10 @@ export default function Features() {
                           x: { type: 'spring', stiffness: 180, damping: 18, mass: 0.9, delay: index * 0.02 },
                           y: { type: 'spring', stiffness: 180, damping: 18, mass: 0.9, delay: index * 0.02 },
                           scale: { type: 'spring', stiffness: 180, damping: 18, mass: 0.9, delay: index * 0.02 },
+                          rotateX: { type: 'spring', stiffness: 210, damping: 20, mass: 0.85 },
+                          rotateY: { type: 'spring', stiffness: 210, damping: 20, mass: 0.85 },
                         }}
+                        style={{ transformPerspective: 1200, transformStyle: 'preserve-3d' }}
                       >
                         <div className="relative aspect-square w-full bg-[#1B1B1B]">
                           <img
