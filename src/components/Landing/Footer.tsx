@@ -63,7 +63,7 @@ export default function Footer() {
             </div>
             <p className="text-sm leading-relaxed text-surface-500">
               浪潮中思考与判断力愈发不可替⁠代⁠，无比的想象力和执行力
-              <span className="block">才是Ai时代的人的核心。</span>
+              <span className="block">才是Ai时代的人的核心</span>
             </p>
           </div>
 

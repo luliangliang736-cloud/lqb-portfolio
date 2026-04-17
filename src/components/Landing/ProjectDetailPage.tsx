@@ -165,7 +165,7 @@ export default function ProjectDetailPage({ showcase, project }: ProjectDetailPa
           返回{showcase.title}
         </a>
 
-        <section className="mt-8 overflow-hidden rounded-[32px] bg-surface-900/45 p-8 shadow-2xl shadow-black/20 md:p-10">
+        <section className="g2-card-xl mt-8 bg-surface-900/45 p-8 shadow-2xl shadow-black/20 md:p-10">
           <div className="max-w-4xl">
             <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs ${colors.tag}`}>
               <showcase.icon size={12} />
@@ -185,7 +185,7 @@ export default function ProjectDetailPage({ showcase, project }: ProjectDetailPa
                   {column.map(({ src, index }) => (
                     <motion.article
                       key={`${project.id ?? project.title}-${index}`}
-                      className={`w-full overflow-hidden rounded-[22px] shadow-2xl shadow-black/20 ${accentSurface.card}`}
+                      className={`g2-card-md w-full shadow-2xl shadow-black/20 ${accentSurface.card}`}
                       initial={{ opacity: 0, y: 18 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.35, delay: index * 0.06 }}
@@ -234,13 +234,13 @@ export default function ProjectDetailPage({ showcase, project }: ProjectDetailPa
             <X size={18} />
           </button>
           <div
-            className="max-h-[calc(100vh-9rem)] max-w-full overflow-auto rounded-2xl"
+            className="g2-card-lg max-h-[calc(100vh-9rem)] max-w-full overflow-auto"
             onClick={(event) => event.stopPropagation()}
           >
             <img
               src={activeImage.src}
               alt={`${project.title} 全屏预览`}
-              className="rounded-2xl object-contain shadow-2xl shadow-black/40"
+              className="g2-card-lg object-contain shadow-2xl shadow-black/40"
               style={{
                 width: `${Math.max(activeImage.width * previewScale, 1)}px`,
                 height: `${Math.max(activeImage.height * previewScale, 1)}px`,

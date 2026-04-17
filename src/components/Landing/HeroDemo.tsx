@@ -27,7 +27,7 @@ export default function HeroDemo() {
   }, []);
 
   return (
-    <div className="rounded-2xl border border-surface-800/80 bg-surface-900/60 backdrop-blur-xl overflow-hidden shadow-2xl shadow-black/40">
+    <div className="g2-card-xl border border-surface-800/80 bg-surface-900/60 backdrop-blur-xl shadow-2xl shadow-black/40">
       {/* Top bar */}
       <div className="flex items-center gap-2 px-5 py-3 border-b border-surface-800/60">
         <div className="flex gap-1.5">
@@ -133,12 +133,12 @@ export default function HeroDemo() {
                       {resultCards.map((card, i) => (
                         <motion.div
                           key={card.label}
-                          className="rounded-xl border border-surface-700/50 bg-surface-800/50 p-3 flex flex-col items-center gap-2"
+                          className="g2-card-lg border border-surface-700/50 bg-surface-800/50 p-3 flex flex-col items-center gap-2"
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: 0.15 * i, duration: 0.3 }}
                         >
-                          <div className="w-full aspect-[3/4] rounded-lg bg-gradient-to-br from-surface-700/50 to-surface-800 flex items-center justify-center">
+                          <div className="g2-card-sm w-full aspect-[3/4] bg-gradient-to-br from-surface-700/50 to-surface-800 flex items-center justify-center">
                             {i === 0 ? <Image size={20} className="text-surface-500" /> : <Layers size={20} className="text-surface-500" />}
                           </div>
                           <span className="text-xs text-surface-300">{card.label}</span>

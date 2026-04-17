@@ -45,6 +45,47 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+:root {
+  --radius-g2-xl: 36px;
+  --radius-g2-lg: 30px;
+  --radius-g2-md: 24px;
+  --radius-g2-sm: 18px;
+}
+
+.g2-card-xl,
+.g2-card-lg,
+.g2-card-md,
+.g2-card-sm {
+  overflow: hidden;
+  transform: translateZ(0);
+  isolation: isolate;
+}
+
+.g2-card-xl {
+  border-radius: var(--radius-g2-xl);
+}
+
+.g2-card-lg {
+  border-radius: var(--radius-g2-lg);
+}
+
+.g2-card-md {
+  border-radius: var(--radius-g2-md);
+}
+
+.g2-card-sm {
+  border-radius: var(--radius-g2-sm);
+}
+
+@supports (corner-shape: superellipse(1)) {
+  .g2-card-xl,
+  .g2-card-lg,
+  .g2-card-md,
+  .g2-card-sm {
+    corner-shape: superellipse(0.9);
+  }
+}
+
 #root {
   min-height: 100vh;
 }

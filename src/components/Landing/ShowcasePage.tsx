@@ -100,7 +100,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
           返回作品区
         </a>
 
-        <section className="mt-8 overflow-hidden rounded-[32px] bg-surface-900/45 p-8 shadow-2xl shadow-black/20 md:p-10">
+        <section className="g2-card-xl mt-8 bg-surface-900/45 p-8 shadow-2xl shadow-black/20 md:p-10">
           <div className="max-w-3xl">
             <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs ${colors.tag}`}>
               <showcase.icon size={12} />
@@ -128,7 +128,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                       <Wrapper
                         key={`${showcase.slug}-${item.title}-${index}`}
                         {...wrapperProps}
-                        className="mb-4 inline-block w-full break-inside-avoid overflow-hidden rounded-[22px] bg-black/25 align-top shadow-xl shadow-black/10 transition-colors"
+                        className="g2-card-md mb-4 inline-block w-full break-inside-avoid bg-black/25 align-top shadow-xl shadow-black/10 transition-colors"
                         initial={{ opacity: 0, y: 18 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.35, delay: index * 0.04 }}
@@ -175,7 +175,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                     <motion.a
                       key={`${showcase.slug}-${item.title}-${index}`}
                       href={`#showcase/${showcase.slug}/project/${item.id}`}
-                      className="self-start rounded-2xl bg-[#060607] p-4 transition-colors hover:bg-[#09090B]"
+                      className="g2-card-lg self-start bg-[#060607] p-4 transition-colors hover:bg-[#09090B]"
                       initial={{ opacity: 0, y: 18 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.35, delay: index * 0.06 }}
@@ -188,7 +188,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                         isVideoSrc(item.src) ? (
                           <video
                             src={item.src}
-                            className={`mt-4 block aspect-[3/4] w-full rounded-xl object-cover shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
+                            className={`g2-card-md mt-4 block aspect-[3/4] w-full object-cover shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
                             autoPlay
                             muted
                             loop
@@ -198,11 +198,11 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                           <img
                             src={item.src}
                             alt={item.title}
-                            className={`mt-4 block aspect-[3/4] w-full rounded-xl object-cover shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
+                            className={`g2-card-md mt-4 block aspect-[3/4] w-full object-cover shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
                           />
                         )
                       ) : (
-                        <div className={`mt-4 flex aspect-[3/4] items-center justify-center rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}>
+                        <div className={`g2-card-md mt-4 flex aspect-[3/4] items-center justify-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}>
                           <showcase.icon size={28} className="text-surface-600" />
                         </div>
                       )}
@@ -213,7 +213,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                   ) : (
                     <motion.article
                       key={`${showcase.slug}-${item.title}-${index}`}
-                      className="self-start rounded-2xl bg-[#060607] p-4"
+                      className="g2-card-lg self-start bg-[#060607] p-4"
                       initial={{ opacity: 0, y: 18 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.35, delay: index * 0.06 }}
@@ -226,7 +226,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                         isVideoSrc(item.src) ? (
                           <video
                             src={item.src}
-                            className={`mt-4 block aspect-[3/4] w-full rounded-xl object-cover shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
+                            className={`g2-card-md mt-4 block aspect-[3/4] w-full object-cover shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
                             autoPlay
                             muted
                             loop
@@ -236,11 +236,11 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                           <img
                             src={item.src}
                             alt={item.title}
-                            className={`mt-4 block aspect-[3/4] w-full rounded-xl object-cover shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
+                            className={`g2-card-md mt-4 block aspect-[3/4] w-full object-cover shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
                           />
                         )
                       ) : (
-                        <div className={`mt-4 flex aspect-[3/4] items-center justify-center rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}>
+                        <div className={`g2-card-md mt-4 flex aspect-[3/4] items-center justify-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}>
                           <showcase.icon size={28} className="text-surface-600" />
                         </div>
                       )}
@@ -255,7 +255,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
           </div>
         </section>
 
-        <section className="mt-8 rounded-[32px] bg-surface-900/35 p-6 shadow-2xl shadow-black/20 md:p-8">
+        <section className="g2-card-xl mt-8 bg-surface-900/35 p-6 shadow-2xl shadow-black/20 md:p-8">
           <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="text-sm uppercase tracking-[0.22em] text-surface-500">Showcases</p>
@@ -275,7 +275,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                 <motion.a
                   key={item.slug}
                   href={`#showcase/${item.slug}`}
-                  className={`rounded-2xl p-5 shadow-xl shadow-black/10 transition-colors ${
+                  className={`g2-card-lg p-5 shadow-xl shadow-black/10 transition-colors ${
                     isActive
                       ? `${itemColors.glow} bg-black/18`
                       : 'bg-black/20'
@@ -316,13 +316,13 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
             <X size={18} />
           </button>
           <div
-            className="max-h-[calc(100vh-9rem)] max-w-full overflow-auto rounded-2xl"
+            className="g2-card-lg max-h-[calc(100vh-9rem)] max-w-full overflow-auto"
             onClick={(event) => event.stopPropagation()}
           >
             <img
               src={activeImage.src}
               alt={`${activeImage.title} 全屏预览`}
-              className="rounded-2xl object-contain shadow-2xl shadow-black/40"
+              className="g2-card-lg object-contain shadow-2xl shadow-black/40"
               style={{
                 width: `${Math.max(activeImage.width * previewScale, 1)}px`,
                 height: `${Math.max(activeImage.height * previewScale, 1)}px`,

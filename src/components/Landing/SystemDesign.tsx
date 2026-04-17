@@ -68,13 +68,13 @@ export default function SystemDesign() {
           {cards.map((card, i) => (
             <motion.div
               key={card.title}
-              className={`rounded-2xl border ${card.border} bg-gradient-to-br ${card.gradient} backdrop-blur-sm p-5 flex flex-col justify-between aspect-[3/4] group hover:scale-[1.02] transition-transform`}
+              className={`g2-card-lg border ${card.border} bg-gradient-to-br ${card.gradient} backdrop-blur-sm p-5 flex flex-col justify-between aspect-[3/4] group hover:scale-[1.02] transition-transform`}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
             >
-              <div className="w-full flex-1 rounded-xl bg-surface-900/40 flex items-center justify-center">
-                <div className="w-12 h-12 rounded-xl bg-surface-800/60 border border-surface-700/40" />
+              <div className="g2-card-md w-full flex-1 bg-surface-900/40 flex items-center justify-center">
+                <div className="g2-card-sm w-12 h-12 bg-surface-800/60 border border-surface-700/40" />
               </div>
               <div className="mt-4">
                 <p className="text-sm font-medium text-surface-200">{card.title}</p>

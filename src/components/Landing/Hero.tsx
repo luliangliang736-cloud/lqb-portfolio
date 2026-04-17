@@ -78,7 +78,7 @@ export default function Hero() {
 
       {!isMobile ? (
         <div className="pointer-events-none absolute bottom-6 right-10 z-[8] sm:right-12 md:right-20 lg:right-24">
-          <div className="relative flex h-[44px] w-[118px] flex-col justify-between rounded-[16px] border border-white/8 bg-black/30 px-2 py-1.5 pr-[48px] backdrop-blur-md sm:h-[52px] sm:w-[148px] sm:pr-[58px] md:h-[72px] md:w-[220px] md:px-3 md:py-2 md:pr-[82px] lg:h-[84px] lg:w-[280px] lg:pr-[96px]">
+          <div className="g2-card-sm relative flex h-[44px] w-[118px] flex-col justify-between border border-white/8 bg-black/30 px-2 py-1.5 pr-[48px] backdrop-blur-md sm:h-[52px] sm:w-[148px] sm:pr-[58px] md:h-[72px] md:w-[220px] md:px-3 md:py-2 md:pr-[82px] lg:h-[84px] lg:w-[280px] lg:pr-[96px]">
             <div className="flex items-center justify-between gap-2 text-[7px] uppercase tracking-[0.18em] text-white/72 md:text-[9px]">
               <span>Now Playing</span>
               <span className="h-1.5 w-1.5 rounded-full bg-[#FF4D5E] shadow-[0_0_10px_rgba(255,77,94,0.65)]" />

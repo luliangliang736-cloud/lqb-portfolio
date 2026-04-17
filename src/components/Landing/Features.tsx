@@ -4,90 +4,106 @@ import { accentMap, showcases } from '../../content/showcases';
 import { useMagneticMotion } from '../../hooks/useMagneticMotion';
 import InteractiveTitle from '../common/InteractiveTitle';
 
-const collageCardSize = 21.5;
-const collageOuterLeft = -0.75;
-const collageInnerLeft = 18.25;
-const collageCenterLeft = 39.25;
-const collageInnerRight = 60.25;
-const collageOuterRight = 79.25;
+const collageCardSize = 23.5;
+const collageSpread = 1.12;
+
+function spreadFromCenter(value: number) {
+  return 50 + (value - 50) * collageSpread;
+}
+
+const collageOuterLeft = spreadFromCenter(-0.75);
+const collageInnerLeft = spreadFromCenter(18.25);
+const collageCenterLeft = spreadFromCenter(39.25);
+const collageInnerRight = spreadFromCenter(60.25);
+const collageOuterRight = spreadFromCenter(79.25);
 
 const collageCards = [
   {
     alt: '占位卡片 1',
+    imageSrc: '/assets/collage-cards/card-04.png',
     left: collageOuterLeft,
-    top: 11.5,
+    top: spreadFromCenter(11.5),
     size: collageCardSize,
     angle: -28,
     scatter: { x: -20, y: -10, rotate: -34 },
   },
   {
     alt: '占位卡片 2',
+    imageSrc: '/assets/collage-cards/card-01.png',
     left: collageInnerLeft,
-    top: 2,
+    top: spreadFromCenter(2),
     size: collageCardSize,
     angle: -12,
     scatter: { x: -15, y: -18, rotate: -18 },
   },
   {
     alt: '占位卡片 3',
+    imageSrc: '/assets/collage-cards/card-08.png',
     left: collageCenterLeft,
-    top: -3.5,
+    top: spreadFromCenter(-3.5),
     size: collageCardSize,
     angle: 0,
     scatter: { x: 0, y: -32, rotate: 0 },
   },
   {
     alt: '占位卡片 4',
+    imageSrc: '/assets/collage-cards/card-03.png',
     left: collageInnerRight,
-    top: 2,
+    top: spreadFromCenter(2),
     size: collageCardSize,
     angle: 12,
     scatter: { x: 15, y: -18, rotate: 18 },
   },
   {
     alt: '占位卡片 5',
+    imageSrc: '/assets/collage-cards/card-05.png',
     left: collageOuterRight,
-    top: 11.5,
+    top: spreadFromCenter(11.5),
     size: collageCardSize,
     angle: 28,
     scatter: { x: 20, y: -10, rotate: 34 },
   },
   {
     alt: '占位卡片 6',
+    imageSrc: '/assets/collage-cards/card-07.png',
     left: collageOuterLeft,
-    top: 67,
+    top: spreadFromCenter(67),
     size: collageCardSize,
     angle: 28,
     scatter: { x: -20, y: 14, rotate: 34 },
   },
   {
     alt: '占位卡片 7',
+    imageSrc: '/assets/collage-cards/card-10.png',
     left: collageInnerLeft,
-    top: 77,
+    top: spreadFromCenter(77),
     size: collageCardSize,
     angle: 12,
     scatter: { x: -14, y: 18, rotate: 18 },
   },
   {
     alt: '占位卡片 8',
+    imageSrc: '/assets/collage-cards/card-02.png',
     left: collageCenterLeft,
-    top: 82.5,
+    top: spreadFromCenter(82.5),
     size: collageCardSize,
     angle: 0,
     scatter: { x: 0, y: 30, rotate: 0 },
   },
   {
     alt: '占位卡片 9',
+    imageSrc: '/assets/collage-cards/card-06.png',
     left: collageInnerRight,
-    top: 77,
+    top: spreadFromCenter(77),
     size: collageCardSize,
     angle: -12,
     scatter: { x: 14, y: 18, rotate: -18 },
   },
   {
     alt: '占位卡片 10',
+    imageSrc: '/assets/collage-cards/card-09.png',
     left: collageOuterRight,
-    top: 67,
+    top: spreadFromCenter(67),
     size: collageCardSize,
     angle: -28,
     scatter: { x: 20, y: 14, rotate: -34 },
@@ -133,7 +149,7 @@ function FeatureCard({
         filter: isDimmed ? 'saturate(0.88) brightness(0.9)' : 'saturate(1) brightness(1)',
       }}
       transition={{ type: 'spring', stiffness: 150, damping: 22, mass: 0.95 }}
-      className={`group relative flex h-full overflow-hidden rounded-2xl bg-surface-900/40 backdrop-blur-sm transition-[box-shadow,background-color] duration-500 transform-gpu will-change-transform ${
+      className={`g2-card-lg group relative flex h-full bg-surface-900/40 backdrop-blur-sm transition-[box-shadow,background-color] duration-500 transform-gpu will-change-transform ${
         isActive ? 'z-10 shadow-2xl shadow-black/35' : 'z-0 shadow-xl shadow-black/12'
       }`}
       onMouseEnter={() => onHoverStart(feature.slug)}
@@ -163,10 +179,10 @@ function FeatureCard({
           <img
             src={feature.coverSrc}
             alt={`${feature.title} 封面`}
-            className={`mt-8 min-h-[220px] w-full flex-1 rounded-xl object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025] ${colors.glow}`}
+            className={`g2-card-md mt-8 min-h-[220px] w-full flex-1 object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025] ${colors.glow}`}
           />
         ) : (
-          <div className={`mt-8 flex min-h-[220px] flex-1 items-center justify-center rounded-xl transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025] ${colors.glow}`}>
+          <div className={`g2-card-md mt-8 flex min-h-[220px] flex-1 items-center justify-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025] ${colors.glow}`}>
             <feature.icon size={40} className="text-surface-600" />
           </div>
         )}
@@ -191,9 +207,9 @@ export default function Features() {
   const [collageCopyHovered, setCollageCopyHovered] = useState(false);
 
   return (
-    <section id="features" className="relative px-6 pt-44 pb-32 md:pt-52">
+    <section id="features" className="relative px-6 pt-72 pb-32 md:pt-96">
       <div className="mx-auto max-w-7xl">
-        <div className="relative mb-40 px-2 py-4 md:mb-52 md:px-0">
+        <div className="relative mb-36 px-2 py-4 md:mb-48 md:px-0">
           <div
             ref={collageRef}
             className="relative mx-auto aspect-square w-full max-w-[760px] md:max-w-[820px]"
@@ -203,68 +219,76 @@ export default function Features() {
               setHoveredCollageIndex(null);
             }}
           >
-            {collageCards.map((card, index) => {
-                return (
-                  <motion.div
-                    key={`${card.alt}-${index}`}
-                    className="absolute"
-                    style={{
-                      left: `${card.left}%`,
-                      top: `${card.top}%`,
-                      width: `${card.size}%`,
-                      transformOrigin: `${((50 - card.left) / card.size) * 100}% ${((50 - card.top) / card.size) * 100}%`,
-                      zIndex: hoveredCollageIndex === index ? 30 : 10,
-                    }}
-                    initial={{ opacity: 0, y: 24, scale: 0.94, rotate: 0 }}
-                    animate={collageInView ? {
-                      opacity: 1,
-                      y: 0,
-                      x: 0,
-                      scale: 1,
-                      rotate: 360,
-                    } : {}}
-                    transition={{
-                      opacity: { duration: 0.45, delay: 0.04 + index * 0.02 },
-                      x: { duration: 0.45, delay: 0.04 + index * 0.02, ease: 'easeOut' },
-                      y: { duration: 0.45, delay: 0.04 + index * 0.02, ease: 'easeOut' },
-                      scale: { duration: 0.45, delay: 0.06 + index * 0.03, ease: 'easeOut' },
-                      rotate: { duration: 2.2, delay: 0.06, ease: 'linear' },
-                    }}
-                  >
+            <div className="absolute inset-0 scale-[1.16] md:scale-[1.2]">
+              {collageCards.map((card, index) => {
+                  return (
                     <motion.div
-                      className="overflow-hidden rounded-[24px] border border-[#2A2A2A] bg-[#1B1B1B] shadow-[0_18px_40px_rgba(0,0,0,0.18)]"
-                      initial={{ rotate: card.angle }}
-                      onMouseEnter={() => setHoveredCollageIndex(index)}
-                      onMouseLeave={() => setHoveredCollageIndex((current) => (current === index ? null : current))}
-                      animate={collageHovered ? {
-                        x: card.scatter.x,
-                        y: card.scatter.y,
-                        rotate: card.angle - 360 + card.scatter.rotate,
-                        scale: hoveredCollageIndex === index ? 1.12 : 1.03,
-                      } : {
-                        x: 0,
-                        y: 0,
-                        rotate: collageInView ? card.angle - 360 : card.angle,
-                        scale: hoveredCollageIndex === index ? 1.08 : 1,
+                      key={`${card.alt}-${index}`}
+                      className="absolute"
+                      style={{
+                        left: `${card.left}%`,
+                        top: `${card.top}%`,
+                        width: `${card.size}%`,
+                        transformOrigin: `${((50 - card.left) / card.size) * 100}% ${((50 - card.top) / card.size) * 100}%`,
+                        zIndex: hoveredCollageIndex === index ? 30 : 10,
                       }}
+                      initial={{ opacity: 0, y: 24, scale: 0.94, rotate: 0 }}
+                      animate={collageInView ? {
+                        opacity: 1,
+                        y: 0,
+                        x: 0,
+                        scale: 1,
+                        rotate: 360,
+                      } : {}}
                       transition={{
-                        rotate: collageHovered
-                          ? { type: 'spring', stiffness: 180, damping: 18, mass: 0.9 }
-                          : collageInView
-                            ? { duration: 2.2, delay: 0.06, ease: 'linear' }
-                            : { duration: 0.45, ease: 'easeOut' },
-                        x: { type: 'spring', stiffness: 180, damping: 18, mass: 0.9, delay: index * 0.02 },
-                        y: { type: 'spring', stiffness: 180, damping: 18, mass: 0.9, delay: index * 0.02 },
-                        scale: { type: 'spring', stiffness: 180, damping: 18, mass: 0.9, delay: index * 0.02 },
+                        opacity: { duration: 0.45, delay: 0.04 + index * 0.02 },
+                        x: { duration: 0.45, delay: 0.04 + index * 0.02, ease: 'easeOut' },
+                        y: { duration: 0.45, delay: 0.04 + index * 0.02, ease: 'easeOut' },
+                        scale: { duration: 0.45, delay: 0.06 + index * 0.03, ease: 'easeOut' },
+                        rotate: { duration: 2.2, delay: 0.06, ease: 'linear' },
                       }}
                     >
-                      <div className="flex aspect-square w-full items-center justify-center bg-[#1B1B1B] text-xs tracking-[0.16em] text-surface-500 uppercase">
-                        Card
-                      </div>
+                      <motion.div
+                        className="collage-card-shell overflow-hidden rounded-[24px] bg-[#1B1B1B] shadow-[0_18px_40px_rgba(0,0,0,0.18)]"
+                        initial={{ rotate: card.angle }}
+                        onMouseEnter={() => setHoveredCollageIndex(index)}
+                        onMouseLeave={() => setHoveredCollageIndex((current) => (current === index ? null : current))}
+                        animate={collageHovered ? {
+                          x: card.scatter.x,
+                          y: card.scatter.y,
+                          rotate: card.angle - 360 + card.scatter.rotate,
+                          scale: hoveredCollageIndex === index ? 1.12 : 1.03,
+                        } : {
+                          x: 0,
+                          y: 0,
+                          rotate: collageInView ? card.angle - 360 : card.angle,
+                          scale: hoveredCollageIndex === index ? 1.08 : 1,
+                        }}
+                        transition={{
+                          rotate: collageHovered
+                            ? { type: 'spring', stiffness: 180, damping: 18, mass: 0.9 }
+                            : collageInView
+                              ? { duration: 2.2, delay: 0.06, ease: 'linear' }
+                              : { duration: 0.45, ease: 'easeOut' },
+                          x: { type: 'spring', stiffness: 180, damping: 18, mass: 0.9, delay: index * 0.02 },
+                          y: { type: 'spring', stiffness: 180, damping: 18, mass: 0.9, delay: index * 0.02 },
+                          scale: { type: 'spring', stiffness: 180, damping: 18, mass: 0.9, delay: index * 0.02 },
+                        }}
+                      >
+                        <div className="relative aspect-square w-full bg-[#1B1B1B]">
+                          <img
+                            src={card.imageSrc}
+                            alt={card.alt}
+                            className="h-full w-full object-contain transition-transform duration-500"
+                            loading="lazy"
+                            draggable={false}
+                          />
+                        </div>
+                      </motion.div>
                     </motion.div>
-                  </motion.div>
-                );
-              })}
+                  );
+                })}
+            </div>
 
             <motion.div
               className="absolute inset-x-0 top-1/2 z-10 -translate-y-1/2 text-center"
@@ -285,20 +309,23 @@ export default function Features() {
                 />
               </motion.div>
               <motion.div
-                className="mx-auto mt-4 max-w-md space-y-3 text-[10px] leading-5 text-surface-600 transition-[transform,color] duration-300 ease-out hover:text-surface-300 md:text-[11px] md:leading-5.5"
+                className="mx-auto mt-4 flex max-w-md flex-col gap-2 text-[10px] leading-[1.45] text-surface-600 transition-[transform,color] duration-300 ease-out hover:text-surface-300 md:text-[11px] md:leading-[1.5]"
                 onHoverStart={() => setCollageCopyHovered(true)}
                 onHoverEnd={() => setCollageCopyHovered(false)}
                 whileHover={{ scale: 1.3 }}
                 transition={{ type: 'spring', stiffness: 220, damping: 18 }}
               >
                 <p>
-                  我是陆78，这里不是一份被归档的静态作品，而是一处仍在生长中的实验现场。
+                  我是陆78，这里是一处仍在生长中的实验现场
                 </p>
                 <p>
-                  让技术成为放大 imagination 的引擎，而不是替代判断与感受力的答案。
+                  让技术成为放大 imagination 的引擎，而不是替代判断与感受力的答案
                 </p>
                 <p>
-                  我更关心 AI 如何参与创作、触发偏离、制造新秩序，而不是只追求更快地产出结果。这里是一些正在生长中的方向，而不是被固定下来的结论。
+                  我更关心 AI 如何参与创作、触发偏离、制造新秩序，这里是一些正在生长中的方向，
+                </p>
+                <p>
+                  而不是被固定下来的结论
                 </p>
               </motion.div>
             </motion.div>
