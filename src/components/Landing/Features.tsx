@@ -209,7 +209,7 @@ export default function Features() {
   return (
     <section id="features" className="relative px-6 pt-72 pb-32 md:pt-96">
       <div className="mx-auto max-w-7xl">
-        <div className="relative mb-36 px-2 py-4 md:mb-48 md:px-0">
+        <div className="relative mb-72 px-2 py-4 md:mb-[22rem] md:px-0">
           <div
             ref={collageRef}
             className="relative mx-auto aspect-square w-full max-w-[760px] md:max-w-[820px]"
