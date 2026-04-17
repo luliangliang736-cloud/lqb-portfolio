@@ -149,7 +149,7 @@ function FeatureCard({
         filter: isDimmed ? 'saturate(0.88) brightness(0.9)' : 'saturate(1) brightness(1)',
       }}
       transition={{ type: 'spring', stiffness: 150, damping: 22, mass: 0.95 }}
-      className={`g2-card-lg group relative flex h-full bg-surface-900/40 backdrop-blur-sm transition-[box-shadow,background-color] duration-500 transform-gpu will-change-transform ${
+      className={`feature-panel-shell group relative flex h-full bg-surface-900/40 backdrop-blur-sm transition-[box-shadow,background-color] duration-500 transform-gpu will-change-transform ${
         isActive ? 'z-10 shadow-2xl shadow-black/35' : 'z-0 shadow-xl shadow-black/12'
       }`}
       onMouseEnter={() => onHoverStart(feature.slug)}
@@ -179,10 +179,10 @@ function FeatureCard({
           <img
             src={feature.coverSrc}
             alt={`${feature.title} 封面`}
-            className={`g2-card-md mt-8 min-h-[220px] w-full flex-1 object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025] ${colors.glow}`}
+            className={`feature-panel-media mt-8 min-h-[220px] w-full flex-1 object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025] ${colors.glow}`}
           />
         ) : (
-          <div className={`g2-card-md mt-8 flex min-h-[220px] flex-1 items-center justify-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025] ${colors.glow}`}>
+          <div className={`feature-panel-media mt-8 flex min-h-[220px] flex-1 items-center justify-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025] ${colors.glow}`}>
             <feature.icon size={40} className="text-surface-600" />
           </div>
         )}

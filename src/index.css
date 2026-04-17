@@ -77,12 +77,31 @@ body {
   border-radius: var(--radius-g2-sm);
 }
 
+.feature-panel-shell {
+  overflow: hidden;
+  border-radius: 32px;
+  transform: translateZ(0);
+  isolation: isolate;
+}
+
+.feature-panel-media {
+  overflow: hidden;
+  border-radius: 28px;
+  transform: translateZ(0);
+  isolation: isolate;
+}
+
 @supports (corner-shape: superellipse(1)) {
   .g2-card-xl,
   .g2-card-lg,
   .g2-card-md,
   .g2-card-sm {
     corner-shape: superellipse(0.9);
+  }
+
+  .feature-panel-shell,
+  .feature-panel-media {
+    corner-shape: superellipse(0.92);
   }
 }
 
