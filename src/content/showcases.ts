@@ -309,11 +309,6 @@ const waterfallCollectionMedia: ShowcaseMediaItem[] = [
     src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/AI辅助的一些官网视觉 - 陆78.png',
   },
   {
-    title: 'Clipboard - 2026-04-12 11.27.42',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/Clipboard - 2026-04-12 11.27.42.png',
-  },
-  {
     title: 'Green - 陆78',
     description: '',
     src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/Green - 陆78.png',
@@ -342,11 +337,6 @@ const waterfallCollectionMedia: ShowcaseMediaItem[] = [
     title: 'tt',
     description: '',
     src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/tt.png',
-  },
-  {
-    title: '乘月 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/乘月 - 陆78.webp',
   },
   {
     title: '繁中取简 - 陆78',
