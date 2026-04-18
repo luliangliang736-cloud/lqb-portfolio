@@ -1,4 +1,4 @@
-import type { LucideIcon } from 'lucide-react';
+﻿import type { LucideIcon } from 'lucide-react';
 import { Clapperboard, ImageIcon, LayoutTemplate, PenTool, Rows3, Sparkles } from 'lucide-react';
 
 export type ShowcaseAccent = 'primary' | 'violet' | 'emerald' | 'amber' | 'rose' | 'sky';
@@ -306,142 +306,142 @@ const waterfallCollectionMedia: ShowcaseMediaItem[] = [
   {
     title: 'AI辅助的一些官网视觉 - 陆78',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/AI辅助的一些官网视觉 - 陆78.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-01.png',
   },
   {
     title: 'Green - 陆78',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/Green - 陆78.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-02.png',
   },
   {
     title: 'KV - 绿人',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/KV - 绿人.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-03.png',
   },
   {
     title: 'KV-后期1',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/KV-后期1.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-04.png',
   },
   {
     title: 'Music Time - 陆78',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/Music Time - 陆78.webp',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-05.webp',
   },
   {
     title: 'T',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/T.webp',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-06.webp',
   },
   {
     title: 'tt',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/tt.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-07.png',
   },
   {
     title: '繁中取简 - 陆78',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/繁中取简 - 陆78.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-08.png',
   },
   {
     title: '海外官网视觉丨手搓版 - 陆78',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/海外官网视觉丨手搓版 - 陆78.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-09.png',
   },
   {
     title: '好久不见 - 陆7806-20',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/好久不见 - 陆7806-20.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-10.png',
   },
   {
     title: '红包封面-2_画板 1 副本',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/红包封面-2_画板 1 副本.jpg',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-11.jpg',
   },
   {
     title: '零碎的记录 - 陆78',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/零碎的记录 - 陆78.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-12.png',
   },
   {
     title: '品牌形象创意化输出_画板 1 副本',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/品牌形象创意化输出_画板 1 副本.jpg',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-13.jpg',
   },
   {
     title: '三分钟我用Nano做了十套衣服（附教程） - 陆78',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/三分钟我用Nano做了十套衣服（附教程） - 陆78.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-14.png',
   },
   {
     title: '无忧IP形象-柚子版_画板 1 副本',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/无忧IP形象-柚子版_画板 1 副本.jpg',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-15.jpg',
   },
   {
     title: '无忧之夜+字体设计2_画板 1 副本',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/无忧之夜+字体设计2_画板 1 副本.jpg',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-16.jpg',
   },
   {
     title: '夏日贴纸系列-01',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/夏日贴纸系列-01.jpg',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-17.jpg',
   },
   {
     title: '小红书_画板 1',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/小红书_画板 1.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-18.png',
   },
   {
     title: '小红书-绿_画板 1 副本 3',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/小红书-绿_画板 1 副本 3.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-19.png',
   },
   {
     title: '小红书-绿_画板 1 副本',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/小红书-绿_画板 1 副本.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-20.png',
   },
   {
     title: '小红书-绿_画板 1',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/小红书-绿_画板 1.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-21.png',
   },
   {
     title: '印尼本地生活-三个单独版本-UI_画板 1 副本',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/印尼本地生活-三个单独版本-UI_画板 1 副本.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-22.png',
   },
   {
     title: '用Ai重构创意 - 陆78',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/用Ai重构创意 - 陆78.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-23.png',
   },
   {
     title: '运营视觉 - 陆78',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/运营视觉 - 陆78.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-24.png',
   },
   {
     title: '整合-白色底-01',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/整合-白色底-01.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-25.png',
   },
   {
     title: '整合-白色底-02',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/整合-白色底-02.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-26.png',
   },
   {
     title: '整合-白色底-03',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/整合-白色底-03.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-27.png',
   },
   {
     title: '整合-白色底-05',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/整合-白色底-05.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-28.png',
   },
 ];
 
@@ -470,3 +470,4 @@ export const showcases: ShowcaseItem[] = rawShowcases.map((item) => ({
 export const showcaseMediaBySlug: Record<string, ShowcaseMediaItem[]> = Object.fromEntries(
   Object.entries(rawShowcaseMediaBySlug).map(([slug, items]) => [slug, normalizeMediaItems(items)]),
 );
+
