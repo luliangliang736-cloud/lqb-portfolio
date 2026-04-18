@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { useMagneticMotion } from '../../hooks/useMagneticMotion';
+import { toAssetPath } from '../../utils/assetPath';
 
 const navLinks = [
   { label: '首页', href: '#hero' },
@@ -38,12 +39,12 @@ export default function Navbar() {
         {/* Logo */}
         <a href="#hero" className="flex items-center gap-2.5 group">
           <img
-            src="/assets/site-icon.png"
+            src={toAssetPath('/assets/site-icon.png')}
             alt="LQB icon"
             className="w-8 h-8 rounded-lg object-cover shadow-lg shadow-black/20"
           />
           <img
-            src="/assets/site-wordmark.svg"
+            src={toAssetPath('/assets/site-wordmark.svg')}
             alt="LQB"
             className="block h-6 w-auto shrink-0 object-contain object-left"
           />

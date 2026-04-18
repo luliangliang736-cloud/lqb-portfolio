@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { useMagneticMotion } from '../../hooks/useMagneticMotion';
+import { toAssetPath } from '../../utils/assetPath';
 import InteractiveTitle from '../common/InteractiveTitle';
 
 export default function CTASection() {
@@ -27,7 +28,7 @@ export default function CTASection() {
           transition={{ duration: 0.65 }}
         >
           <InteractiveTitle
-            src="/assets/third-title.svg"
+            src={toAssetPath('/assets/third-title.svg')}
             alt="用LQB设计"
             className="mx-auto h-auto w-full max-w-[460px] object-contain"
           />

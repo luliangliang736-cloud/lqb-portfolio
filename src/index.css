@@ -1,7 +1,39 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Urbanist';
+  src: url('./assets/fonts/urbanist/Urbanist-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Urbanist';
+  src: url('./assets/fonts/urbanist/Urbanist-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Urbanist';
+  src: url('./assets/fonts/urbanist/Urbanist-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Urbanist';
+  src: url('./assets/fonts/urbanist/Urbanist-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
-  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'Urbanist', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --color-primary-50: #f0f0ff;
   --color-primary-100: #e0e0ff;
@@ -41,8 +73,25 @@ html, body, #root {
 body {
   background: var(--color-surface-950);
   color: var(--color-surface-300);
+  font-family: 'Urbanist', system-ui, -apple-system, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Urbanist', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
 :root {

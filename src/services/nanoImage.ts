@@ -22,6 +22,7 @@ export interface NanoGenerateOptions {
 const DEFAULT_WIDTH = 1024;
 const DEFAULT_HEIGHT = 1024;
 const NANO_PROXY_URL = import.meta.env.VITE_NANO_PROXY_URL || '/api/nano-image';
+const URBANIST_STACK = "'Urbanist', Arial, sans-serif";
 
 function escapeXml(value: string) {
   return value
@@ -48,7 +49,7 @@ function buildMockImage(prompt: string) {
   const lineMarkup = lines
     .map(
       (line, index) =>
-        `<text x="72" y="${620 + index * 44}" fill="rgba(255,255,255,0.82)" font-size="30" font-family="Inter, Arial, sans-serif">${escapeXml(line)}</text>`,
+        `<text x="72" y="${620 + index * 44}" fill="rgba(255,255,255,0.82)" font-size="30" font-family="${URBANIST_STACK}">${escapeXml(line)}</text>`,
     )
     .join('');
 
@@ -73,15 +74,15 @@ function buildMockImage(prompt: string) {
       <circle cx="220" cy="220" r="240" fill="url(#glowA)" />
       <circle cx="760" cy="260" r="220" fill="url(#glowB)" />
       <rect x="64" y="64" width="896" height="896" rx="32" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.18)" />
-      <text x="72" y="120" fill="white" font-size="44" font-weight="700" font-family="Inter, Arial, sans-serif">Nano Banana 预览</text>
-      <text x="72" y="172" fill="rgba(255,255,255,0.72)" font-size="24" font-family="Inter, Arial, sans-serif">当前未配置真实接口，先展示聊天生图卡片与结果流。</text>
-      <text x="72" y="260" fill="rgba(255,255,255,0.92)" font-size="26" font-family="Inter, Arial, sans-serif">Prompt</text>
+      <text x="72" y="120" fill="white" font-size="44" font-weight="700" font-family="${URBANIST_STACK}">Nano Banana 预览</text>
+      <text x="72" y="172" fill="rgba(255,255,255,0.72)" font-size="24" font-family="${URBANIST_STACK}">当前未配置真实接口，先展示聊天生图卡片与结果流。</text>
+      <text x="72" y="260" fill="rgba(255,255,255,0.92)" font-size="26" font-family="${URBANIST_STACK}">Prompt</text>
       <foreignObject x="72" y="292" width="880" height="250">
-        <div xmlns="http://www.w3.org/1999/xhtml" style="color: rgba(255,255,255,0.86); font-size: 34px; line-height: 1.45; font-family: Inter, Arial, sans-serif;">
+        <div xmlns="http://www.w3.org/1999/xhtml" style="color: rgba(255,255,255,0.86); font-size: 34px; line-height: 1.45; font-family: ${URBANIST_STACK};">
           ${safePrompt}
         </div>
       </foreignObject>
-      <text x="72" y="560" fill="rgba(255,255,255,0.6)" font-size="22" font-family="Inter, Arial, sans-serif">生成结果将来可由后端代理替换</text>
+      <text x="72" y="560" fill="rgba(255,255,255,0.6)" font-size="22" font-family="${URBANIST_STACK}">生成结果将来可由后端代理替换</text>
       ${lineMarkup}
     </svg>
   `;

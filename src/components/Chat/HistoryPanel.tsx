@@ -99,16 +99,16 @@ function FullscreenViewer({ item, onClose }: ViewerProps) {
     <div className="fixed inset-0 z-[9999] flex flex-col bg-black/90 backdrop-blur-sm">
       {/* Top bar */}
       <div className="flex shrink-0 items-center justify-between border-b border-white/10 bg-black/60 px-5 py-3">
-        <div className="flex items-center gap-3 text-xs">
-          <span className="inline-flex items-center gap-1 rounded-full border border-primary-500/30 bg-primary-500/10 px-2.5 py-1 text-primary-200">
+        <div className="flex items-center gap-3 text-[11px]">
+          <span className="inline-flex items-center gap-1 rounded-full border border-primary-500/30 bg-primary-500/10 px-2.5 py-1 font-medium text-primary-200">
             <Sparkles size={12} />
             {getNanoOperationLabel(item.operation)}
           </span>
-          <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-surface-300">
+          <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-medium text-surface-300">
             {getNanoModelLabel(item.model)}
           </span>
           {item.hasSourceImage && (
-            <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-surface-300">
+            <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-medium text-surface-300">
               含参考图
             </span>
           )}
@@ -118,7 +118,7 @@ function FullscreenViewer({ item, onClose }: ViewerProps) {
         <div className="flex items-center gap-2">
           <button
             onClick={() => navigator.clipboard.writeText(item.prompt)}
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-surface-200 transition-colors hover:bg-white/10"
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[12px] font-medium text-surface-200 transition-colors hover:bg-white/10"
           >
             <Copy size={12} />
             复制提示词
@@ -126,7 +126,7 @@ function FullscreenViewer({ item, onClose }: ViewerProps) {
           <a
             href={item.imageUrl}
             download
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-surface-200 transition-colors hover:bg-white/10"
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[12px] font-medium text-surface-200 transition-colors hover:bg-white/10"
           >
             <Download size={12} />
             下载
@@ -169,13 +169,13 @@ function FullscreenViewer({ item, onClose }: ViewerProps) {
 
       {/* Bottom bar */}
       <div className="flex shrink-0 items-center justify-between border-t border-white/10 bg-black/60 px-5 py-3">
-        <p className="max-w-[50%] truncate text-sm text-surface-300" title={item.prompt}>
+        <p className="max-w-[50%] truncate text-sm leading-6 text-surface-300" title={item.prompt}>
           {item.prompt}
         </p>
 
         <div className="flex items-center gap-2">
           {zoom > 1 && (
-            <span className="mr-1 flex items-center gap-1 text-xs text-surface-500">
+            <span className="mr-1 flex items-center gap-1 text-[11px] text-surface-500">
               <Move size={12} />
               拖拽平移
             </span>
@@ -183,25 +183,25 @@ function FullscreenViewer({ item, onClose }: ViewerProps) {
           <button
             onClick={() => handleZoom(-ZOOM_STEP)}
             disabled={zoom <= ZOOM_MIN}
-            className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-surface-200 transition-colors hover:bg-white/10 disabled:opacity-30 disabled:pointer-events-none"
+            className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[12px] font-medium text-surface-200 transition-colors hover:bg-white/10 disabled:pointer-events-none disabled:opacity-30"
           >
             <ZoomOut size={12} />
             缩小
           </button>
-          <span className="min-w-[48px] text-center text-xs text-surface-300">
+          <span className="min-w-[48px] text-center text-[11px] text-surface-300">
             {Math.round(zoom * 100)}%
           </span>
           <button
             onClick={() => handleZoom(ZOOM_STEP)}
             disabled={zoom >= ZOOM_MAX}
-            className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-surface-200 transition-colors hover:bg-white/10 disabled:opacity-30 disabled:pointer-events-none"
+            className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[12px] font-medium text-surface-200 transition-colors hover:bg-white/10 disabled:pointer-events-none disabled:opacity-30"
           >
             <ZoomIn size={12} />
             放大
           </button>
           <button
             onClick={resetView}
-            className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-surface-200 transition-colors hover:bg-white/10"
+            className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[12px] font-medium text-surface-200 transition-colors hover:bg-white/10"
           >
             <RotateCcw size={12} />
             重置
@@ -246,8 +246,8 @@ export default function HistoryPanel({ open, items, loading, onClose }: HistoryP
                   <div className="flex items-center gap-2">
                     <Clock3 size={16} className="text-primary-300" />
                     <div>
-                      <p className="text-sm font-medium text-surface-100">生图历史</p>
-                      <p className="text-xs text-surface-500">点击图片可全屏查看，支持缩放与拖拽</p>
+                      <p className="text-sm font-semibold text-surface-100">生图历史</p>
+                      <p className="text-[11px] text-surface-500">点击图片可全屏查看，支持缩放与拖拽</p>
                     </div>
                   </div>
                   <button
@@ -260,17 +260,17 @@ export default function HistoryPanel({ open, items, loading, onClose }: HistoryP
 
                 <div className="flex-1 overflow-y-auto p-4">
                   {loading ? (
-                    <div className="rounded-2xl border border-surface-800/70 bg-surface-900/60 p-4 text-sm text-surface-400">
+                    <div className="rounded-2xl border border-surface-800/70 bg-surface-900/60 p-4 text-sm leading-6 text-surface-400">
                       正在加载历史记录...
                     </div>
                   ) : items.length ? (
                     <div className="rounded-2xl border border-surface-800/70 bg-surface-900/60 p-3">
                       <div className="mb-3 flex items-center justify-between">
                         <div>
-                          <p className="text-sm font-medium text-surface-100">图片图库</p>
-                          <p className="text-xs text-surface-500">点击图片全屏查看</p>
+                          <p className="text-sm font-semibold text-surface-100">图片图库</p>
+                          <p className="text-[11px] text-surface-500">点击图片全屏查看</p>
                         </div>
-                        <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] text-surface-300">
+                        <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] font-medium text-surface-300">
                           共 {items.length} 张
                         </span>
                       </div>
@@ -288,7 +288,7 @@ export default function HistoryPanel({ open, items, loading, onClose }: HistoryP
                               className="aspect-square w-full bg-surface-900 object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                             />
                             <div className="space-y-2 p-3">
-                              <div className="flex flex-wrap items-center gap-2 text-[11px]">
+                              <div className="flex flex-wrap items-center gap-2 text-[10px]">
                                 <span className="inline-flex items-center gap-1 rounded-full border border-primary-500/20 bg-primary-500/10 px-2 py-0.5 text-primary-200">
                                   <Sparkles size={12} />
                                   {getNanoOperationLabel(item.operation)}
@@ -297,8 +297,8 @@ export default function HistoryPanel({ open, items, loading, onClose }: HistoryP
                                   {getNanoModelLabel(item.model)}
                                 </span>
                               </div>
-                              <p className="line-clamp-2 text-sm leading-relaxed text-surface-100">{item.prompt}</p>
-                              <div className="flex items-center justify-between text-[11px] text-surface-500">
+                              <p className="line-clamp-2 text-sm leading-6 text-surface-100">{item.prompt}</p>
+                              <div className="flex items-center justify-between text-[10px] text-surface-500">
                                 <span>{item.width} x {item.height}</span>
                                 <span>{formatDate(item.createdAt)}</span>
                               </div>
@@ -310,8 +310,8 @@ export default function HistoryPanel({ open, items, loading, onClose }: HistoryP
                   ) : (
                     <div className="rounded-2xl border border-dashed border-surface-700/60 bg-surface-900/40 p-6 text-center">
                       <ImageIcon size={22} className="mx-auto text-surface-500" />
-                      <p className="mt-3 text-sm text-surface-300">还没有生成历史</p>
-                      <p className="mt-1 text-xs text-surface-500">生成后的图片会自动记录在这里</p>
+                      <p className="mt-3 text-sm font-medium text-surface-300">还没有生成历史</p>
+                      <p className="mt-1 text-[11px] text-surface-500">生成后的图片会自动记录在这里</p>
                     </div>
                   )}
                 </div>

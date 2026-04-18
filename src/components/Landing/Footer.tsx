@@ -1,3 +1,5 @@
+import { toAssetPath } from '../../utils/assetPath';
+
 type FooterItem = {
   label: string;
   value: string;
@@ -51,12 +53,12 @@ export default function Footer() {
           <div className="max-w-[220px]">
             <div className="mb-4 flex min-h-8 items-center gap-2.5">
               <img
-                src="/assets/site-icon.png"
+                src={toAssetPath('/assets/site-icon.png')}
                 alt="LQB icon"
                 className="w-8 h-8 rounded-lg object-cover"
               />
               <img
-                src="/assets/site-wordmark.svg"
+                src={toAssetPath('/assets/site-wordmark.svg')}
                 alt="LQB"
                 className="block h-7 w-auto shrink-0 object-contain object-left"
               />

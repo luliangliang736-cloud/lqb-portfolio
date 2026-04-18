@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Pause, Play, SkipBack, SkipForward } from 'lucide-react';
 import { heroVideosDesktop, heroVideosMobile } from '../../content/heroMedia';
+import { toAssetPath } from '../../utils/assetPath';
 
 export default function Hero() {
   const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 767px)').matches);
@@ -101,7 +102,7 @@ export default function Hero() {
               </span>
             </div>
             <img
-              src="/assets/vinyl-record.png"
+              src={toAssetPath('/assets/vinyl-record.png')}
               alt=""
               aria-hidden="true"
               className="absolute bottom-[4px] right-[4px] w-[36px] max-w-none select-none rounded-full opacity-95 mix-blend-screen drop-shadow-[0_12px_24px_rgba(0,0,0,0.26)] animate-[spin_18s_linear_infinite] sm:bottom-[4px] sm:right-[4px] sm:w-[44px] md:bottom-[6px] md:right-[6px] md:w-[58px] lg:bottom-[8px] lg:right-[8px] lg:w-[68px]"

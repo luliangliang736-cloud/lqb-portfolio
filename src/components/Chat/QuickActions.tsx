@@ -20,7 +20,7 @@ export default function QuickActions({ onSelect }: QuickActionsProps) {
         <motion.button
           key={action.label}
           onClick={() => onSelect(action.prompt)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm
+          className="flex h-8 items-center gap-1.5 rounded-full px-3 text-[10px] font-medium
             bg-surface-800/60 text-surface-300
             hover:bg-surface-700/80 hover:text-[#FFB8DF]
             transition-colors cursor-pointer"
@@ -30,7 +30,7 @@ export default function QuickActions({ onSelect }: QuickActionsProps) {
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
         >
-          <action.icon size={14} />
+          <action.icon size={12} />
           {action.label}
         </motion.button>
       ))}

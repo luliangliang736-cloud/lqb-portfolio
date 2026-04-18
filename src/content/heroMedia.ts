@@ -1,3 +1,5 @@
+import { toAssetPath } from '../utils/assetPath';
+
 // 首页首屏轮播视频。
 // 你以后如果想手动修改这一块，只改下面这两个数组就行：
 // - `heroVideosDesktop`：桌面端完整轮播
@@ -13,10 +15,10 @@ export const heroVideosDesktop = [
   '/assets/4月12日(1)-4.mp4',
   '/assets/4月12日(1)-5.mp4',
   '/assets/4月12日(1)-10.mp4',
-];
+].map(toAssetPath);
 
 // 移动端只加载精简视频，减少首屏等待。
 export const heroVideosMobile = [
   '/assets/mobile-hero-1.mp4',
   '/assets/mobile-hero-2.mp4',
-];
+].map(toAssetPath);

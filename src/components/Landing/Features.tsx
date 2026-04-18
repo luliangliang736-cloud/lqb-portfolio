@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { motion, useInView, useTransform } from 'framer-motion';
 import { accentMap, showcases } from '../../content/showcases';
 import { useMagneticMotion } from '../../hooks/useMagneticMotion';
+import { toAssetPath } from '../../utils/assetPath';
 import InteractiveTitle from '../common/InteractiveTitle';
 
 const collageCardSize = 23.5;
@@ -20,7 +21,7 @@ const collageOuterRight = spreadFromCenter(79.25);
 const collageCards = [
   {
     alt: '占位卡片 1',
-    imageSrc: '/assets/collage-cards/card-04.png',
+    imageSrc: toAssetPath('/assets/collage-cards/card-04.png'),
     left: collageOuterLeft,
     top: spreadFromCenter(11.5),
     size: collageCardSize,
@@ -29,7 +30,7 @@ const collageCards = [
   },
   {
     alt: '占位卡片 2',
-    imageSrc: '/assets/collage-cards/card-01.png',
+    imageSrc: toAssetPath('/assets/collage-cards/card-01.png'),
     left: collageInnerLeft,
     top: spreadFromCenter(2),
     size: collageCardSize,
@@ -38,7 +39,7 @@ const collageCards = [
   },
   {
     alt: '占位卡片 3',
-    imageSrc: '/assets/collage-cards/card-08.png',
+    imageSrc: toAssetPath('/assets/collage-cards/card-08.png'),
     left: collageCenterLeft,
     top: spreadFromCenter(-3.5),
     size: collageCardSize,
@@ -47,7 +48,7 @@ const collageCards = [
   },
   {
     alt: '占位卡片 4',
-    imageSrc: '/assets/collage-cards/card-03.png',
+    imageSrc: toAssetPath('/assets/collage-cards/card-03.png'),
     left: collageInnerRight,
     top: spreadFromCenter(2),
     size: collageCardSize,
@@ -56,7 +57,7 @@ const collageCards = [
   },
   {
     alt: '占位卡片 5',
-    imageSrc: '/assets/collage-cards/card-05.png',
+    imageSrc: toAssetPath('/assets/collage-cards/card-05.png'),
     left: collageOuterRight,
     top: spreadFromCenter(11.5),
     size: collageCardSize,
@@ -65,7 +66,7 @@ const collageCards = [
   },
   {
     alt: '占位卡片 6',
-    imageSrc: '/assets/collage-cards/card-07.png',
+    imageSrc: toAssetPath('/assets/collage-cards/card-07.png'),
     left: collageOuterLeft,
     top: spreadFromCenter(67),
     size: collageCardSize,
@@ -74,7 +75,7 @@ const collageCards = [
   },
   {
     alt: '占位卡片 7',
-    imageSrc: '/assets/collage-cards/card-10.png',
+    imageSrc: toAssetPath('/assets/collage-cards/card-10.png'),
     left: collageInnerLeft,
     top: spreadFromCenter(77),
     size: collageCardSize,
@@ -83,7 +84,7 @@ const collageCards = [
   },
   {
     alt: '占位卡片 8',
-    imageSrc: '/assets/collage-cards/card-02.png',
+    imageSrc: toAssetPath('/assets/collage-cards/card-02.png'),
     left: collageCenterLeft,
     top: spreadFromCenter(82.5),
     size: collageCardSize,
@@ -92,7 +93,7 @@ const collageCards = [
   },
   {
     alt: '占位卡片 9',
-    imageSrc: '/assets/collage-cards/card-06.png',
+    imageSrc: toAssetPath('/assets/collage-cards/card-06.png'),
     left: collageInnerRight,
     top: spreadFromCenter(77),
     size: collageCardSize,
@@ -101,7 +102,7 @@ const collageCards = [
   },
   {
     alt: '占位卡片 10',
-    imageSrc: '/assets/collage-cards/card-09.png',
+    imageSrc: toAssetPath('/assets/collage-cards/card-09.png'),
     left: collageOuterRight,
     top: spreadFromCenter(67),
     size: collageCardSize,
@@ -314,7 +315,7 @@ export default function Features() {
                 transition={{ duration: 0.32, ease: 'easeOut' }}
               >
                 <InteractiveTitle
-                  src="/assets/creativeAI.svg"
+                  src={toAssetPath('/assets/creativeAI.svg')}
                   alt="Creative AI"
                   className="mx-auto h-[42px] w-auto object-contain sm:h-[54px] md:h-[72px]"
                 />
@@ -333,7 +334,10 @@ export default function Features() {
                   让技术成为放大 imagination 的引擎，而不是替代判断与感受力的答案
                 </p>
                 <p>
-                  我更关心 AI 如何参与创作、触发偏离、制造新秩序，这里是一些正在生长中的方向，
+                  我更关心 AI 如何参与创作、触发偏离、制造新秩序，
+                </p>
+                <p>
+                  这里是一些正在生长中的方向，
                 </p>
                 <p>
                   而不是被固定下来的结论
@@ -350,7 +354,7 @@ export default function Features() {
             transition={{ duration: 0.65, delay: 0.08 }}
           >
             <InteractiveTitle
-              src="/assets/creative-work-title.svg"
+              src={toAssetPath('/assets/creative-work-title.svg')}
               alt="Creative Work"
               className="mx-auto h-auto w-full max-w-[600px] object-contain"
             />

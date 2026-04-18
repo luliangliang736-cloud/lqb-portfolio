@@ -100,27 +100,27 @@ export default function ChatWindow() {
       >
         <CharacterAvatar size="lg" status={agentStatus} showStatus />
         <div className="flex-1 min-w-0">
-          <h1 className="text-base font-semibold text-surface-50 leading-tight">
+          <h1 className="text-sm font-semibold tracking-[0.01em] text-surface-50 leading-tight">
             LQB
           </h1>
-          <p className="text-xs text-surface-400 mt-0.5">
+          <p className="mt-0.5 text-[11px] leading-4 text-surface-400">
             设计部 · 0号员工
           </p>
         </div>
         <button
           onClick={handleOpenHistory}
-          className="inline-flex items-center gap-1.5 rounded-full bg-surface-800/72 px-3 py-1.5 text-xs text-surface-300 transition-colors hover:bg-surface-700/90 hover:text-[#FFB8DF]"
+          className="inline-flex h-8 items-center gap-1.5 rounded-full bg-surface-800/72 px-3 text-[10px] font-medium text-surface-300 transition-colors hover:bg-surface-700/90 hover:text-[#FFB8DF]"
           title="查看生图历史"
         >
-          <Clock3 size={13} />
+          <Clock3 size={12} />
           生图历史
         </button>
         <button
           onClick={() => setIsFullscreen((prev) => !prev)}
-          className="inline-flex items-center gap-1.5 rounded-full bg-surface-800/72 px-3 py-1.5 text-xs text-surface-300 transition-colors hover:bg-surface-700/90 hover:text-[#FFB8DF]"
+          className="inline-flex h-8 items-center gap-1.5 rounded-full bg-surface-800/72 px-3 text-[10px] font-medium text-surface-300 transition-colors hover:bg-surface-700/90 hover:text-[#FFB8DF]"
           title={isFullscreen ? '退出全屏' : '全屏打开'}
         >
-          {isFullscreen ? <Minimize2 size={13} /> : <Maximize2 size={13} />}
+          {isFullscreen ? <Minimize2 size={12} /> : <Maximize2 size={12} />}
           {isFullscreen ? '退出全屏' : '全屏'}
         </button>
         <StatusPill status={agentStatus} />
@@ -183,7 +183,7 @@ function StatusPill({ status }: { status: import('../../types/chat').AgentStatus
   return (
     <motion.span
       key={status}
-      className={`text-xs px-2.5 py-1 rounded-full ring-1 ${color}`}
+      className={`inline-flex h-8 items-center rounded-full px-3 text-[10px] font-medium ring-1 ${color}`}
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.2 }}

@@ -27,6 +27,23 @@ export function isVideoSrc(src: string) {
   return /\.(mp4|webm|mov|m4v)$/i.test(src);
 }
 
+function resolveAssetPath(src: string) {
+  if (!src.startsWith('/assets/')) {
+    return src;
+  }
+
+  const baseUrl = import.meta.env.BASE_URL || './';
+  return `${baseUrl}${src.slice(1)}`;
+}
+
+function normalizeMediaItems(items: ShowcaseMediaItem[]): ShowcaseMediaItem[] {
+  return items.map((item) => ({
+    ...item,
+    src: resolveAssetPath(item.src),
+    detailMedia: item.detailMedia?.map(resolveAssetPath),
+  }));
+}
+
 // 首页四个分类卡片的数据。
 // 这里控制首页作品区看到的四个大卡片：
 // - tag: 小标签
@@ -34,7 +51,7 @@ export function isVideoSrc(src: string) {
 // - description: 首页副标题
 // - coverSrc: 首页封面图
 // 如果你想改首页上看到的“创意视觉 / 构成设计 / IP及场景 / 动态视觉”，改这里。
-export const showcases: ShowcaseItem[] = [
+const rawShowcases: ShowcaseItem[] = [
   {
     id: 'creative-visuals',
     slug: 'creative-visuals',
@@ -631,6 +648,51 @@ const waterfallCollectionMedia: ShowcaseMediaItem[] = [
     description: '',
     src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/风格化探索 - 陆78.png',
   },
+  {
+    title: 'AIGC-SOP_画板 1 副本',
+    description: '',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/AIGC-SOP_画板 1 副本.jpg',
+  },
+  {
+    title: 'tt_画板 1',
+    description: '',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/tt_画板 1.jpg',
+  },
+  {
+    title: '阿里巴巴设计周-01',
+    description: '',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/阿里巴巴设计周-01.jpg',
+  },
+  {
+    title: '红包封面-2_画板 1 副本',
+    description: '',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/红包封面-2_画板 1 副本.jpg',
+  },
+  {
+    title: '品牌形象创意化输出_画板 1 副本',
+    description: '',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/品牌形象创意化输出_画板 1 副本.jpg',
+  },
+  {
+    title: '收藏到 A typography',
+    description: '',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/收藏到 A typography.png',
+  },
+  {
+    title: '无忧IP形象-柚子版_画板 1 副本',
+    description: '',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/无忧IP形象-柚子版_画板 1 副本.jpg',
+  },
+  {
+    title: '无忧之夜+字体设计2_画板 1 副本',
+    description: '',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/无忧之夜+字体设计2_画板 1 副本.jpg',
+  },
+  {
+    title: '夏日贴纸系列-01',
+    description: '',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/夏日贴纸系列-01.jpg',
+  },
 ];
 
 const beyondDesignMedia: ShowcaseMediaItem[] = [
@@ -641,7 +703,7 @@ const beyondDesignMedia: ShowcaseMediaItem[] = [
   },
 ];
 
-export const showcaseMediaBySlug: Record<string, ShowcaseMediaItem[]> = {
+const rawShowcaseMediaBySlug: Record<string, ShowcaseMediaItem[]> = {
   'creative-visuals': creativeVisualsMedia,
   'form-design': formDesignMedia,
   'ip-scenario': ipScenarioMedia,
@@ -649,3 +711,12 @@ export const showcaseMediaBySlug: Record<string, ShowcaseMediaItem[]> = {
   'waterfall-collection': waterfallCollectionMedia,
   'beyond-design': beyondDesignMedia,
 };
+
+export const showcases: ShowcaseItem[] = rawShowcases.map((item) => ({
+  ...item,
+  coverSrc: item.coverSrc ? resolveAssetPath(item.coverSrc) : item.coverSrc,
+}));
+
+export const showcaseMediaBySlug: Record<string, ShowcaseMediaItem[]> = Object.fromEntries(
+  Object.entries(rawShowcaseMediaBySlug).map(([slug, items]) => [slug, normalizeMediaItems(items)]),
+);

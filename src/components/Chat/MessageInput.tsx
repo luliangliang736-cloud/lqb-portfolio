@@ -99,7 +99,7 @@ export default function MessageInput({ onSend, disabled }: MessageInputProps) {
           }
           rows={1}
           disabled={disabled}
-          className="flex-1 bg-transparent resize-none outline-none text-[15px] text-surface-100 placeholder:text-surface-500 max-h-[120px] py-1 leading-snug"
+          className="max-h-[120px] flex-1 resize-none bg-transparent py-1 text-sm leading-6 text-surface-100 outline-none placeholder:text-sm placeholder:text-surface-500"
         />
 
         <motion.button
@@ -122,8 +122,8 @@ export default function MessageInput({ onSend, disabled }: MessageInputProps) {
             <div className="flex items-center gap-3">
               <img src={selectedImage.url} alt={selectedImage.name} className="h-16 w-16 rounded-xl object-cover" />
               <div className="min-w-0 flex-1">
-                <p className="text-xs uppercase tracking-[0.18em] text-[#FFB8DF]">参考图</p>
-                <p className="text-sm text-surface-200 truncate mt-1">{selectedImage.name}</p>
+                <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-[#FFB8DF]">参考图</p>
+                <p className="mt-1 truncate text-sm text-surface-200">{selectedImage.name}</p>
               </div>
               <button
                 onClick={() => {
@@ -139,7 +139,7 @@ export default function MessageInput({ onSend, disabled }: MessageInputProps) {
           ) : (
             <button
               onClick={() => fileInputRef.current?.click()}
-                className="w-full flex items-center justify-center gap-2 rounded-xl bg-black/78 px-4 py-4 text-sm text-surface-300 transition-colors hover:text-[#FFB8DF]"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-black/78 px-4 py-4 text-sm font-medium text-surface-300 transition-colors hover:text-[#FFB8DF]"
             >
               <Paperclip size={16} />
               上传参考图后再描述你想怎么修改
@@ -155,7 +155,7 @@ export default function MessageInput({ onSend, disabled }: MessageInputProps) {
         </div>
       )}
 
-      <div className="mt-2 mb-2 flex flex-wrap items-center justify-between gap-3">
+      <div className="mt-2 mb-2 flex flex-wrap items-center justify-between gap-2.5">
         <div className="flex flex-wrap gap-2">
           <ModeButton
             active={mode === 'text-to-image'}
@@ -173,7 +173,7 @@ export default function MessageInput({ onSend, disabled }: MessageInputProps) {
         <select
           value={model}
           onChange={(e) => setModel(e.target.value as NanoModelId)}
-          className="min-w-[210px] rounded-xl bg-black/82 px-3 py-2 text-sm text-surface-100 outline-none"
+          className="h-8 min-w-[176px] rounded-full bg-black/82 px-3 text-[10px] font-medium text-surface-100 outline-none"
         >
           {NANO_MODELS.map((item) => (
             <option key={item.id} value={item.id}>
@@ -183,7 +183,7 @@ export default function MessageInput({ onSend, disabled }: MessageInputProps) {
         </select>
       </div>
 
-      <p className="mt-1 text-center text-[11px] text-surface-600">
+      <p className="mt-1 text-center text-[10px] text-surface-600">
         LQB · Nano 文生图 / 图生图均在当前对话内完成
       </p>
     </div>
@@ -204,13 +204,13 @@ function ModeButton({
   return (
     <button
       onClick={onClick}
-      className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm transition-colors ${
+      className={`inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-[10px] font-medium transition-colors ${
         active
           ? 'bg-[#FFB8DF]/12 text-[#FFB8DF]'
           : 'bg-black/62 text-surface-400 hover:bg-black/78 hover:text-surface-200'
       }`}
     >
-      <Icon size={14} />
+      <Icon size={12} />
       {label}
     </button>
   );
