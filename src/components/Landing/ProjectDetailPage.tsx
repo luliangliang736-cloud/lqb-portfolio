@@ -14,6 +14,8 @@ type ActiveImageState = {
   height: number;
 } | null;
 
+const MAX_PREVIEW_SCALE = 3;
+
 const accentSurfaceMap = {
   primary: {
     card: 'bg-[#0C110A]',
@@ -49,7 +51,7 @@ export default function ProjectDetailPage({ showcase, project }: ProjectDetailPa
   const [previewScale, setPreviewScale] = useState(1);
   const [columnCount, setColumnCount] = useState(() => (typeof window !== 'undefined' && window.innerWidth < 768 ? 2 : 5));
   const [mediaAspectRatios, setMediaAspectRatios] = useState<Record<string, number>>({});
-  const canZoomIn = previewScale < 0.99;
+  const canZoomIn = previewScale < MAX_PREVIEW_SCALE;
   const canZoomOut = previewScale > 0.26;
 
   useEffect(() => {
@@ -234,7 +236,7 @@ export default function ProjectDetailPage({ showcase, project }: ProjectDetailPa
             <X size={18} />
           </button>
           <div
-            className="g2-card-lg max-h-[calc(100vh-9rem)] max-w-full overflow-auto"
+            className="max-h-[calc(100vh-9rem)] max-w-full overflow-auto rounded-[var(--radius-g2-lg)]"
             onClick={(event) => event.stopPropagation()}
           >
             <img
@@ -272,7 +274,7 @@ export default function ProjectDetailPage({ showcase, project }: ProjectDetailPa
             </button>
             <button
               type="button"
-              onClick={() => setPreviewScale((value) => Math.min(1, Number((value + 0.25).toFixed(2))))}
+              onClick={() => setPreviewScale((value) => Math.min(MAX_PREVIEW_SCALE, Number((value + 0.25).toFixed(2))))}
               disabled={!canZoomIn}
               className={`rounded-full px-3 py-2 transition-colors ${
                 canZoomIn ? 'hover:bg-white/10' : 'cursor-not-allowed text-surface-500'

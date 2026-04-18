@@ -101,8 +101,8 @@ const rawShowcases: ShowcaseItem[] = [
     slug: 'waterfall-collection',
     icon: Rows3,
     tag: 'Waterfall Collection',
-    title: '瀑布流合集',
-    description: '连续浏览的多图内容集合，系列视觉与灵感碎片。',
+    title: '作品合集',
+    description: '2019-2026设计工作轨迹，走过一些弯路依旧保持passion',
     cta: '查看作品',
     accent: 'sky',
     coverSrc: '/assets/showcases/waterfallCollectionMedia/Cover.png',
@@ -304,99 +304,14 @@ const dynamicVisionMedia: ShowcaseMediaItem[] = [
 
 const waterfallCollectionMedia: ShowcaseMediaItem[] = [
   {
-    title: 'Ai创意化视觉探索 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/Ai创意化视觉探索 - 陆78.png',
-  },
-  {
-    title: 'Ai是仆从不是牢笼 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/Ai是仆从不是牢笼 - 陆78.png',
-  },
-  {
-    title: 'AI毛毡 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/AI毛毡 - 陆78.webp',
-  },
-  {
-    title: 'Ai生成多人物风格化卡通动画实测 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/Ai生成多人物风格化卡通动画实测 - 陆78.mp4',
-  },
-  {
     title: 'AI辅助的一些官网视觉 - 陆78',
     description: '',
     src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/AI辅助的一些官网视觉 - 陆78.png',
   },
   {
-    title: 'ai风格化探索 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/ai风格化探索 - 陆78.png',
-  },
-  {
-    title: 'Ai风格化运营视觉 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/Ai风格化运营视觉 - 陆78.png',
-  },
-  {
-    title: 'Autumn Outing - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/Autumn Outing - 陆78.webp',
-  },
-  {
-    title: 'Balmy Autumn - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/Balmy Autumn - 陆78.webp',
-  },
-  {
-    title: 'Black - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/Black - 陆78.png',
-  },
-  {
-    title: 'Clipboard - 2026-04-12 11.10.26',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/Clipboard - 2026-04-12 11.10.26.png',
-  },
-  {
-    title: 'Clipboard - 2026-04-12 11.10.29',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/Clipboard - 2026-04-12 11.10.29.png',
-  },
-  {
-    title: 'Clipboard - 2026-04-12 11.10.32',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/Clipboard - 2026-04-12 11.10.32.png',
-  },
-  {
-    title: 'Clipboard - 2026-04-12 11.27.39',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/Clipboard - 2026-04-12 11.27.39.png',
-  },
-  {
     title: 'Clipboard - 2026-04-12 11.27.42',
     description: '',
     src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/Clipboard - 2026-04-12 11.27.42.png',
-  },
-  {
-    title: 'Coupons - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/Coupons - 陆78.webp',
-  },
-  {
-    title: 'End of 2024 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/End of 2024 - 陆78.webp',
-  },
-  {
-    title: 'EXPLORE - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/EXPLORE - 陆78.webp',
-  },
-  {
-    title: 'Free Gifts  - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/Free Gifts  - 陆78.webp',
   },
   {
     title: 'Green - 陆78',
@@ -419,49 +334,14 @@ const waterfallCollectionMedia: ShowcaseMediaItem[] = [
     src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/Music Time - 陆78.webp',
   },
   {
-    title: 'Nano Pro生成风格化运营视觉 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/Nano Pro生成风格化运营视觉 - 陆78.png',
-  },
-  {
     title: 'T',
     description: '',
     src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/T.webp',
   },
   {
-    title: 'Travel - 陆78',
+    title: 'tt',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/Travel - 陆78.webp',
-  },
-  {
-    title: '《时间之外》我的第一部动画MV - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/《时间之外》我的第一部动画MV - 陆78.mp4',
-  },
-  {
-    title: '一点小东西 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/一点小东西 - 陆78.png',
-  },
-  {
-    title: '一组分镜海报 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/一组分镜海报 - 陆78.png',
-  },
-  {
-    title: '一键出拼豆丨10种材质合集 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/一键出拼豆丨10种材质合集 - 陆78.png',
-  },
-  {
-    title: '三分钟我用Ai做了一百套衣服 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/三分钟我用Ai做了一百套衣服 - 陆78.png',
-  },
-  {
-    title: '三分钟我用Nano做了十套衣服（附教程） - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/三分钟我用Nano做了十套衣服（附教程） - 陆78.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/tt.png',
   },
   {
     title: '乘月 - 陆78',
@@ -469,34 +349,59 @@ const waterfallCollectionMedia: ShowcaseMediaItem[] = [
     src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/乘月 - 陆78.webp',
   },
   {
-    title: '创意设计合集 - 陆78',
+    title: '繁中取简 - 陆78',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/创意设计合集 - 陆78.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/繁中取简 - 陆78.png',
   },
   {
-    title: '动态丨多种材质效果转场 - 陆78',
+    title: '海外官网视觉丨手搓版 - 陆78',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/动态丨多种材质效果转场 - 陆78.mp4',
-  },
-  {
-    title: '印尼本地生活-三个单独版本-UI_画板 1 副本',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/印尼本地生活-三个单独版本-UI_画板 1 副本.png',
-  },
-  {
-    title: '圣诞Christmas - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/圣诞Christmas - 陆78.webp',
-  },
-  {
-    title: '圣诞情侣头像 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/圣诞情侣头像 - 陆78.webp',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/海外官网视觉丨手搓版 - 陆78.png',
   },
   {
     title: '好久不见 - 陆7806-20',
     description: '',
     src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/好久不见 - 陆7806-20.png',
+  },
+  {
+    title: '红包封面-2_画板 1 副本',
+    description: '',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/红包封面-2_画板 1 副本.jpg',
+  },
+  {
+    title: '零碎的记录 - 陆78',
+    description: '',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/零碎的记录 - 陆78.png',
+  },
+  {
+    title: '品牌形象创意化输出_画板 1 副本',
+    description: '',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/品牌形象创意化输出_画板 1 副本.jpg',
+  },
+  {
+    title: '三分钟我用Nano做了十套衣服（附教程） - 陆78',
+    description: '',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/三分钟我用Nano做了十套衣服（附教程） - 陆78.png',
+  },
+  {
+    title: '无忧IP形象-柚子版_画板 1 副本',
+    description: '',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/无忧IP形象-柚子版_画板 1 副本.jpg',
+  },
+  {
+    title: '无忧之夜+字体设计2_画板 1 副本',
+    description: '',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/无忧之夜+字体设计2_画板 1 副本.jpg',
+  },
+  {
+    title: '夏日贴纸系列-01',
+    description: '',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/夏日贴纸系列-01.jpg',
+  },
+  {
+    title: '小红书_画板 1',
+    description: '',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/小红书_画板 1.png',
   },
   {
     title: '小红书-绿_画板 1 副本 3',
@@ -514,39 +419,19 @@ const waterfallCollectionMedia: ShowcaseMediaItem[] = [
     src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/小红书-绿_画板 1.png',
   },
   {
-    title: '小红书_画板 1',
+    title: '印尼本地生活-三个单独版本-UI_画板 1 副本',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/小红书_画板 1.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/印尼本地生活-三个单独版本-UI_画板 1 副本.png',
   },
   {
-    title: '年度总结丨记录2025那些手搓片段 - 陆78',
+    title: '用Ai重构创意 - 陆78',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/年度总结丨记录2025那些手搓片段 - 陆78.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/用Ai重构创意 - 陆78.png',
   },
   {
-    title: '心动冲出屏幕 - 陆78',
+    title: '运营视觉 - 陆78',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/心动冲出屏幕 - 陆78.webp',
-  },
-  {
-    title: '撞色 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/撞色 - 陆78.png',
-  },
-  {
-    title: '教程丨两步学会毛毡风格 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/教程丨两步学会毛毡风格 - 陆78.png',
-  },
-  {
-    title: '教程丨用Ai制作张力拉满的创意视觉 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/教程丨用Ai制作张力拉满的创意视觉 - 陆78.png',
-  },
-  {
-    title: '教程丨用Ai制作风格化视觉 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/教程丨用Ai制作风格化视觉 - 陆78.png',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/运营视觉 - 陆78.png',
   },
   {
     title: '整合-白色底-01',
@@ -567,131 +452,6 @@ const waterfallCollectionMedia: ShowcaseMediaItem[] = [
     title: '整合-白色底-05',
     description: '',
     src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/整合-白色底-05.png',
-  },
-  {
-    title: '最近很火的大透视风格 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/最近很火的大透视风格 - 陆78.png',
-  },
-  {
-    title: '流动的线条边缘暗藏着蓬勃的生命力 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/流动的线条边缘暗藏着蓬勃的生命力 - 陆78.png',
-  },
-  {
-    title: '海外官网视觉丨手搓版 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/海外官网视觉丨手搓版 - 陆78.png',
-  },
-  {
-    title: '用Ai重构创意 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/用Ai重构创意 - 陆78.png',
-  },
-  {
-    title: '秋日出游 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/秋日出游 - 陆78.png',
-  },
-  {
-    title: '繁中取简 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/繁中取简 - 陆78.png',
-  },
-  {
-    title: '运营视觉 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/运营视觉 - 陆78.png',
-  },
-  {
-    title: '近期创意设计合集 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/近期创意设计合集 - 陆78.mp4',
-  },
-  {
-    title: '近期小结 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/近期小结 - 陆78.webp',
-  },
-  {
-    title: '近期探索 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/近期探索 - 陆78.webp',
-  },
-  {
-    title: '近期灵感合集 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/近期灵感合集 - 陆78.webp',
-  },
-  {
-    title: '长图_画板 1 副本 5',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/长图_画板 1 副本 5.jpg',
-  },
-  {
-    title: '陆78 - 小红书',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/陆78 - 小红书.webp',
-  },
-  {
-    title: '零碎的记录 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/零碎的记录 - 陆78.png',
-  },
-  {
-    title: '预告丨我的第一个IP - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/预告丨我的第一个IP - 陆78.mp4',
-  },
-  {
-    title: '风格化探索 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/风格化探索 - 陆78.png',
-  },
-  {
-    title: 'AIGC-SOP_画板 1 副本',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/AIGC-SOP_画板 1 副本.jpg',
-  },
-  {
-    title: 'tt_画板 1',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/tt_画板 1.jpg',
-  },
-  {
-    title: '阿里巴巴设计周-01',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/阿里巴巴设计周-01.jpg',
-  },
-  {
-    title: '红包封面-2_画板 1 副本',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/红包封面-2_画板 1 副本.jpg',
-  },
-  {
-    title: '品牌形象创意化输出_画板 1 副本',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/品牌形象创意化输出_画板 1 副本.jpg',
-  },
-  {
-    title: '收藏到 A typography',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/收藏到 A typography.png',
-  },
-  {
-    title: '无忧IP形象-柚子版_画板 1 副本',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/无忧IP形象-柚子版_画板 1 副本.jpg',
-  },
-  {
-    title: '无忧之夜+字体设计2_画板 1 副本',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/无忧之夜+字体设计2_画板 1 副本.jpg',
-  },
-  {
-    title: '夏日贴纸系列-01',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/夏日贴纸系列-01.jpg',
   },
 ];
 
