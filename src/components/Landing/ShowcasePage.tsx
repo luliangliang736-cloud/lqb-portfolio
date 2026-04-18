@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowLeft, ChevronRight, X } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { accentMap, isVideoSrc, showcaseMediaBySlug, showcases, type ShowcaseItem, type ShowcaseMediaItem } from '../../content/showcases';
+import { accentMap, isVideoSrc, recentShowcaseMedia, showcaseMediaBySlug, showcases, type ShowcaseItem, type ShowcaseMediaItem } from '../../content/showcases';
 import { toAssetPath } from '../../utils/assetPath';
 
 const sectionLabels = [
@@ -73,7 +73,8 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
           title: '近期作品',
           subtitle: 'Recent Work',
           description: '聚焦最近阶段推进的商业表达',
-          items: [],
+          coverSrc: toAssetPath('/assets/showcases/recent-works/cover.png?v=20260418b'),
+          items: recentShowcaseMedia,
         },
         {
           id: 'archive' as const,
@@ -189,9 +190,9 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                                 {section.description}
                               </p>
                             </div>
-                            <div className="mt-5 flex min-h-0 flex-1 flex-col overflow-hidden rounded-[24px] bg-black/22 p-2">
-                              {section.items.length && previewItem ? (
-                                <div className="relative h-full min-h-[220px] overflow-hidden rounded-[18px] bg-surface-950/70">
+                            <div className="mt-5 flex min-h-0 flex-1 flex-col overflow-hidden rounded-[24px]">
+                              {previewItem ? (
+                                <div className="relative h-full min-h-[220px] overflow-hidden rounded-[24px]">
                                   {isVideoSrc(previewItem.src) ? (
                                     <video
                                       src={previewItem.src}

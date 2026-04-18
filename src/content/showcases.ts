@@ -302,6 +302,314 @@ const dynamicVisionMedia: ShowcaseMediaItem[] = [
   },
 ];
 
+const recentWorksMedia: ShowcaseMediaItem[] = [
+  {
+    title: '近期合集 01',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (1).png',
+  },
+  {
+    title: '近期合集 02',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (2).png',
+  },
+  {
+    title: '近期合集 03',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (3).png',
+  },
+  {
+    title: '近期合集 04',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (4).png',
+  },
+  {
+    title: '近期合集 05',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (5).png',
+  },
+  {
+    title: '近期合集 06',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (6).png',
+  },
+  {
+    title: '近期合集 07',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (7).png',
+  },
+  {
+    title: '近期合集 08',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (8).png',
+  },
+  {
+    title: '近期合集 09',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (9).png',
+  },
+  {
+    title: '近期合集 10',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (10).png',
+  },
+  {
+    title: '近期合集 11',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (11).png',
+  },
+  {
+    title: '近期合集 12',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (12).png',
+  },
+  {
+    title: '近期合集 13',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (13).png',
+  },
+  {
+    title: '近期合集 14',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (14).png',
+  },
+  {
+    title: '近期合集 15',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (15).png',
+  },
+  {
+    title: '近期合集 16',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (16).png',
+  },
+  {
+    title: '近期合集 17',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (17).png',
+  },
+  {
+    title: '近期合集 18',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (18).png',
+  },
+  {
+    title: '近期合集 19',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (19).png',
+  },
+  {
+    title: '近期合集 20',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (20).png',
+  },
+  {
+    title: '近期合集 21',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (21).png',
+  },
+  {
+    title: '近期合集 22',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (22).png',
+  },
+  {
+    title: '近期合集 23',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (23).png',
+  },
+  {
+    title: '近期合集 24',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (24).png',
+  },
+  {
+    title: '近期合集 25',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (25).png',
+  },
+  {
+    title: '近期合集 26',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (26).png',
+  },
+  {
+    title: '近期合集 27',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (27).png',
+  },
+  {
+    title: '近期合集 28',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (28).png',
+  },
+  {
+    title: '近期合集 29',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (29).png',
+  },
+  {
+    title: '近期合集 30',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (30).png',
+  },
+  {
+    title: '近期合集 31',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (31).png',
+  },
+  {
+    title: '近期合集 32',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (32).png',
+  },
+  {
+    title: '近期合集 33',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (33).png',
+  },
+  {
+    title: '近期合集 34',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (34).png',
+  },
+  {
+    title: '近期合集 35',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (35).png',
+  },
+  {
+    title: '近期合集 36',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (36).png',
+  },
+  {
+    title: '近期合集 37',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (37).png',
+  },
+  {
+    title: '近期合集 38',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (38).png',
+  },
+  {
+    title: '近期合集 39',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (39).png',
+  },
+  {
+    title: '近期合集 40',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (40).png',
+  },
+  {
+    title: '近期合集 41',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (41).png',
+  },
+  {
+    title: '近期合集 42',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (42).png',
+  },
+  {
+    title: '近期合集 43',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (43).png',
+  },
+  {
+    title: '近期合集 44',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (44).png',
+  },
+  {
+    title: '近期合集 45',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (45).png',
+  },
+  {
+    title: '近期合集 46',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (46).png',
+  },
+  {
+    title: '近期合集 47',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (47).png',
+  },
+  {
+    title: '近期合集 48',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (48).png',
+  },
+  {
+    title: '近期合集 49',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (49).png',
+  },
+  {
+    title: '近期合集 50',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (50).png',
+  },
+  {
+    title: '近期合集 51',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (51).png',
+  },
+  {
+    title: '近期合集 52',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (52).png',
+  },
+  {
+    title: '近期合集 53',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (53).png',
+  },
+  {
+    title: '近期合集 54',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (54).png',
+  },
+  {
+    title: '近期合集 55',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (55).png',
+  },
+  {
+    title: '近期合集 56',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (56).png',
+  },
+  {
+    title: '近期合集 57',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (57).png',
+  },
+  {
+    title: '近期合集 58',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (58).png',
+  },
+  {
+    title: '近期合集 59',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (59).png',
+  },
+  {
+    title: '近期合集 60',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (60).png',
+  },
+  {
+    title: '近期合集 61',
+    description: '',
+    src: '/assets/showcases/recent-works/recent-collection/1 (61).png',
+  },
+];
+
 const waterfallCollectionMedia: ShowcaseMediaItem[] = [
   {
     title: 'Green - 陆78',
@@ -465,4 +773,6 @@ export const showcases: ShowcaseItem[] = rawShowcases.map((item) => ({
 export const showcaseMediaBySlug: Record<string, ShowcaseMediaItem[]> = Object.fromEntries(
   Object.entries(rawShowcaseMediaBySlug).map(([slug, items]) => [slug, normalizeMediaItems(items)]),
 );
+
+export const recentShowcaseMedia: ShowcaseMediaItem[] = normalizeMediaItems(recentWorksMedia);
 
