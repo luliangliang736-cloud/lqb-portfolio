@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { ArrowLeft, ChevronRight, X } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { accentMap, isVideoSrc, showcaseMediaBySlug, showcases, type ShowcaseItem } from '../../content/showcases';
+import { accentMap, isVideoSrc, showcaseMediaBySlug, showcases, type ShowcaseItem, type ShowcaseMediaItem } from '../../content/showcases';
+import { toAssetPath } from '../../utils/assetPath';
 
 const sectionLabels = [
   '封面精选',
@@ -20,6 +21,16 @@ type ActiveImageState = {
 } | null;
 
 type WaterfallSectionId = 'recent' | 'archive';
+
+type WaterfallSection = {
+  id: WaterfallSectionId;
+  title: string;
+  subtitle: string;
+  description: string;
+  items: ShowcaseMediaItem[];
+  coverTitle?: string;
+  coverSrc?: string;
+};
 
 const MAX_PREVIEW_SCALE = 3;
 
@@ -55,7 +66,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
   const accentSurface = accentSurfaceMap[showcase.accent];
   const mediaItems = showcaseMediaBySlug[showcase.slug] ?? [];
   const usesWaterfallLayout = showcase.slug === 'waterfall-collection' || showcase.slug === 'beyond-design';
-  const waterfallSections = showcase.slug === 'waterfall-collection'
+  const waterfallSections: WaterfallSection[] = showcase.slug === 'waterfall-collection'
     ? [
         {
           id: 'recent' as const,
@@ -69,6 +80,8 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
           title: '往期作品',
           subtitle: 'Selected Archive',
           description: '往日的工作设计片段及阶段性产出',
+          coverTitle: '封面',
+          coverSrc: toAssetPath('/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/cover.png?v=20260418b'),
           items: mediaItems,
         },
       ]
@@ -144,7 +157,12 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                 <div className="space-y-8">
                   {showcase.slug === 'waterfall-collection' ? (
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                      {waterfallSections.map((section, index) => (
+                      {waterfallSections.map((section, index) => {
+                        const previewItem = section.coverSrc
+                          ? { src: section.coverSrc, title: section.coverTitle ?? section.title }
+                          : section.items[0];
+
+                        return (
                         <motion.button
                           key={section.title}
                           type="button"
@@ -172,31 +190,31 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                               </p>
                             </div>
                             <div className="mt-5 flex min-h-0 flex-1 flex-col overflow-hidden rounded-[24px] bg-black/22 p-2">
-                              {section.items.length ? (
-                                <div className="columns-3 gap-2 overflow-hidden">
-                                  {section.items.slice(0, 9).map((item, itemIndex) => (
-                                    <div
-                                      key={`${section.id}-${item.title}-${itemIndex}`}
-                                      className="mb-2 break-inside-avoid overflow-hidden rounded-[14px] bg-surface-950/70"
-                                    >
-                                      {isVideoSrc(item.src) ? (
-                                        <video
-                                          src={item.src}
-                                          className="block h-auto w-full object-cover"
-                                          autoPlay
-                                          muted
-                                          loop
-                                          playsInline
-                                        />
-                                      ) : (
-                                        <img
-                                          src={item.src}
-                                          alt={item.title}
-                                          className="block h-auto w-full object-cover"
-                                        />
-                                      )}
+                              {section.items.length && previewItem ? (
+                                <div className="relative h-full min-h-[220px] overflow-hidden rounded-[18px] bg-surface-950/70">
+                                  {isVideoSrc(previewItem.src) ? (
+                                    <video
+                                      src={previewItem.src}
+                                      className="block h-full w-full object-cover"
+                                      autoPlay
+                                      muted
+                                      loop
+                                      playsInline
+                                    />
+                                  ) : (
+                                    <img
+                                      src={previewItem.src}
+                                      alt={section.coverSrc ? '' : previewItem.title}
+                                      className="block h-full w-full object-cover"
+                                    />
+                                  )}
+                                  {section.coverSrc ? null : (
+                                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-4">
+                                      <p className="text-sm font-medium text-surface-50">
+                                        {previewItem.title}
+                                      </p>
                                     </div>
-                                  ))}
+                                  )}
                                 </div>
                               ) : (
                                 <div className="flex h-full min-h-[220px] items-center justify-center rounded-[18px] border border-white/6 bg-black/20 px-6 text-center text-[12px] leading-relaxed text-surface-500 md:text-[13px]">
@@ -206,7 +224,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                             </div>
                           </div>
                         </motion.button>
-                      ))}
+                      )})}
                     </div>
                   ) : null}
                   {showcase.slug === 'waterfall-collection' ? null : (

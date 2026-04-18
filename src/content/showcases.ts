@@ -304,11 +304,6 @@ const dynamicVisionMedia: ShowcaseMediaItem[] = [
 
 const waterfallCollectionMedia: ShowcaseMediaItem[] = [
   {
-    title: 'AI辅助的一些官网视觉 - 陆78',
-    description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-01.png',
-  },
-  {
     title: 'Green - 陆78',
     description: '',
     src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-02.png',
@@ -331,7 +326,7 @@ const waterfallCollectionMedia: ShowcaseMediaItem[] = [
   {
     title: 'T',
     description: '',
-    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-06.webp',
+    src: '/assets/showcases/waterfallCollectionMedia/waterfallCollectionMedia/archive-06.png',
   },
   {
     title: 'tt',
