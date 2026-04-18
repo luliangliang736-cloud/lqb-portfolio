@@ -321,7 +321,7 @@ export default function Features() {
                 />
               </motion.div>
               <motion.div
-                className="mx-auto mt-4 flex max-w-md flex-col gap-2 text-[10px] leading-[1.45] text-surface-600 transition-[transform,color] duration-300 ease-out hover:text-surface-300 md:text-[11px] md:leading-[1.5]"
+                className="mx-auto mt-4 flex max-w-[680px] flex-col gap-2 text-[10px] leading-[1.45] text-surface-600 transition-[transform,color] duration-300 ease-out hover:text-surface-300 md:text-[11px] md:leading-[1.5]"
                 onHoverStart={() => setCollageCopyHovered(true)}
                 onHoverEnd={() => setCollageCopyHovered(false)}
                 whileHover={{ scale: 1.3 }}
@@ -336,11 +336,8 @@ export default function Features() {
                 <p>
                   我更关心 AI 如何参与创作、触发偏离、制造新秩序，
                 </p>
-                <p>
-                  这里是一些正在生长中的方向，
-                </p>
-                <p>
-                  而不是被固定下来的结论
+                <p className="whitespace-nowrap">
+                  这里是一些正在生长中的方向，而不是被固定下来的结论
                 </p>
               </motion.div>
             </motion.div>
