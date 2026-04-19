@@ -24,9 +24,10 @@ type CanvasMetrics = {
 };
 
 const TILE_COORDINATES = [-1, 0, 1];
+const galleryAssetVersion = '20260419-2';
 const gallerySources = Array.from(
-  { length: 72 },
-  (_, index) => toAssetPath(`/assets/more-gallery-placeholders/canvas-${String(index + 1).padStart(2, '0')}.png`),
+  { length: 77 },
+  (_, index) => toAssetPath(`/assets/more-gallery-placeholders/canvas-${String(index + 1).padStart(2, '0')}.png?v=${galleryAssetVersion}`),
 );
 
 function wrapOffset(value: number, size: number) {
@@ -51,7 +52,7 @@ function wrapOffset(value: number, size: number) {
 function getCanvasMetrics(viewportWidth: number): CanvasMetrics {
   if (viewportWidth >= 1600) {
     const columns = 7;
-    const rows = 5;
+    const rows = Math.ceil(gallerySources.length / columns);
     const cellSize = 198;
     const gap = 104;
 
@@ -67,7 +68,7 @@ function getCanvasMetrics(viewportWidth: number): CanvasMetrics {
 
   if (viewportWidth >= 1200) {
     const columns = 6;
-    const rows = 5;
+    const rows = Math.ceil(gallerySources.length / columns);
     const cellSize = 188;
     const gap = 80;
 
@@ -83,7 +84,7 @@ function getCanvasMetrics(viewportWidth: number): CanvasMetrics {
 
   if (viewportWidth >= 768) {
     const columns = 4;
-    const rows = 6;
+    const rows = Math.ceil(gallerySources.length / columns);
     const cellSize = 176;
     const gap = 56;
 
@@ -98,7 +99,7 @@ function getCanvasMetrics(viewportWidth: number): CanvasMetrics {
   }
 
   const columns = 2;
-  const rows = 8;
+  const rows = Math.ceil(gallerySources.length / columns);
   const cellSize = 154;
   const gap = 44;
 
@@ -141,11 +142,11 @@ export default function MoreGalleryPage() {
   });
   const metrics = useMemo(() => getCanvasMetrics(viewportWidth), [viewportWidth]);
   const galleryItems = useMemo(
-    () => Array.from({ length: metrics.columns * metrics.rows }, (_, index) => ({
+    () => gallerySources.map((src, index) => ({
       title: `占位框 ${index + 1}`,
-      src: gallerySources[index % gallerySources.length] ?? gallerySources[0],
+      src,
     })),
-    [metrics.columns, metrics.rows],
+    [],
   );
 
   const applyTransform = useCallback((offset: CanvasOffset) => {
