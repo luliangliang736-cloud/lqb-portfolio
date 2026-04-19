@@ -8,6 +8,7 @@ import Footer from './components/Landing/Footer';
 import DesktopCompanion from './components/Desktop/DesktopCompanion';
 import ShowcasePage from './components/Landing/ShowcasePage';
 import ProjectDetailPage from './components/Landing/ProjectDetailPage';
+import MoreGalleryPage from './components/Landing/MoreGalleryPage';
 import { showcaseMediaBySlug, showcases } from './content/showcases';
 
 const clickEmojis = ['✨', '💫', '🌟', '🎨', '🫧', '💥', '🌈', '🍀', '💖', '🎵'];
@@ -47,6 +48,15 @@ type BlessingBurst = {
 function getRouteState() {
   if (typeof window === 'undefined') {
     return {
+      page: null,
+      showcaseSlug: null,
+      projectId: null,
+    };
+  }
+
+  if (window.location.hash === '#more-gallery') {
+    return {
+      page: 'more-gallery',
       showcaseSlug: null,
       projectId: null,
     };
@@ -56,6 +66,7 @@ function getRouteState() {
 
   if (projectMatch) {
     return {
+      page: null,
       showcaseSlug: projectMatch[1] ?? null,
       projectId: projectMatch[2] ?? null,
     };
@@ -64,6 +75,7 @@ function getRouteState() {
   const showcaseMatch = window.location.hash.match(/^#showcase\/([^/]+)$/);
 
   return {
+    page: null,
     showcaseSlug: showcaseMatch?.[1] ?? null,
     projectId: null,
   };
@@ -142,9 +154,10 @@ function App() {
   const activeProject = activeShowcase && routeState.projectId
     ? (showcaseMediaBySlug[activeShowcase.slug] ?? []).find((item) => item.id === routeState.projectId) ?? null
     : null;
+  const activeStandalonePage = routeState.page;
 
   const handleBackgroundClick = (event: MouseEvent<HTMLDivElement>) => {
-    if (desktopMode) {
+    if (desktopMode || activeStandalonePage) {
       return;
     }
 
@@ -196,7 +209,9 @@ function App() {
   return (
     <div onClick={handleBackgroundClick}>
       <Navbar />
-      {activeShowcase && activeProject ? (
+      {activeStandalonePage === 'more-gallery' ? (
+        <MoreGalleryPage />
+      ) : activeShowcase && activeProject ? (
         <ProjectDetailPage showcase={activeShowcase} project={activeProject} />
       ) : activeShowcase ? (
         <ShowcasePage showcase={activeShowcase} />

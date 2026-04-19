@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { motion, useInView, useTransform } from 'framer-motion';
+import { ChevronRight } from 'lucide-react';
 import { accentMap, showcases } from '../../content/showcases';
 import { useMagneticMotion } from '../../hooks/useMagneticMotion';
 import { toAssetPath } from '../../utils/assetPath';
@@ -321,25 +322,31 @@ export default function Features() {
                 />
               </motion.div>
               <motion.div
-                className="mx-auto mt-4 flex max-w-[680px] flex-col gap-2 text-[10px] leading-[1.45] text-surface-600 transition-[transform,color] duration-300 ease-out hover:text-surface-300 md:text-[11px] md:leading-[1.5]"
+                className="mx-auto mt-4 flex max-w-[820px] flex-col items-center gap-3 text-[10px] leading-[1.45] text-surface-600 transition-[transform,color] duration-300 ease-out hover:text-surface-300 md:text-[11px] md:leading-[1.5]"
                 onHoverStart={() => setCollageCopyHovered(true)}
                 onHoverEnd={() => setCollageCopyHovered(false)}
                 whileHover={{ scale: 1.3 }}
                 transition={{ type: 'spring', stiffness: 220, damping: 18 }}
               >
-                <p>
-                  我是陆78，这里是一处仍在生长中的实验现场
+                <p className="md:whitespace-nowrap">
+                  我是陆78，这里是一处仍在生长中的实验现场，让技术成为放大 imagination 的引擎，而不是替代判断与感受力的答案
                 </p>
-                <p>
-                  让技术成为放大 imagination 的引擎，而不是替代判断与感受力的答案
-                </p>
-                <p>
-                  我更关心 AI 如何参与创作、触发偏离、制造新秩序，
-                </p>
-                <p className="whitespace-nowrap">
-                  这里是一些正在生长中的方向，而不是被固定下来的结论
+                <p className="md:whitespace-nowrap">
+                  我更关心 AI 如何参与创作、触发偏离、制造新秩序，这里是一些正在生长中的方向，而不是被固定下来的结论
                 </p>
               </motion.div>
+              <motion.a
+                href="#more-gallery"
+                className="group mt-6 inline-flex min-h-[46px] items-center gap-2 rounded-full border border-white/75 bg-white px-6 py-2 text-[13px] font-medium text-black transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/92"
+                initial={{ opacity: 0, y: 12 }}
+                animate={collageInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.45, delay: 0.16 }}
+              >
+                <span>查看更多</span>
+                <span className="inline-flex items-center justify-center text-black">
+                  <ChevronRight size={16} strokeWidth={2.2} />
+                </span>
+              </motion.a>
             </motion.div>
           </div>
         </div>
@@ -367,7 +374,7 @@ export default function Features() {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+        <div id="features-grid" className="grid grid-cols-1 gap-5 md:grid-cols-2">
           {showcases.map((feature) => (
             <FeatureCard
               key={feature.tag}
