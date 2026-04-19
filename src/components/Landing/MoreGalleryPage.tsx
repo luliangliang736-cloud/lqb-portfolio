@@ -25,7 +25,7 @@ type CanvasMetrics = {
 
 const TILE_COORDINATES = [-1, 0, 1];
 const gallerySources = Array.from(
-  { length: 39 },
+  { length: 72 },
   (_, index) => toAssetPath(`/assets/more-gallery-placeholders/canvas-${String(index + 1).padStart(2, '0')}.png`),
 );
 
