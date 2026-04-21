@@ -23,8 +23,21 @@ type CanvasMetrics = {
   height: number;
 };
 
+type DragTrailSegment = {
+  id: number;
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+  createdAt: number;
+  width: number;
+};
+
 const TILE_COORDINATES = [-1, 0, 1];
 const galleryAssetVersion = '20260419-2';
+const DRAG_TRAIL_COLOR = '#9CFF3F';
+const DRAG_TRAIL_LIFETIME = 220;
+const DRAG_TRAIL_MAX_SEGMENTS = 16;
 const gallerySources = Array.from(
   { length: 77 },
   (_, index) => toAssetPath(`/assets/more-gallery-placeholders/canvas-${String(index + 1).padStart(2, '0')}.png?v=${galleryAssetVersion}`),
@@ -128,11 +141,14 @@ function getCardPosition(index: number, metrics: CanvasMetrics) {
 export default function MoreGalleryPage() {
   const [viewportWidth, setViewportWidth] = useState(() => window.innerWidth);
   const [isDragging, setIsDragging] = useState(false);
+  const [dragTrail, setDragTrail] = useState<DragTrailSegment[]>([]);
   const canvasRef = useRef<HTMLDivElement | null>(null);
   const animationFrameRef = useRef<number | null>(null);
+  const trailCleanupFrameRef = useRef<number | null>(null);
   const currentOffsetRef = useRef<CanvasOffset>({ x: 0, y: 0 });
   const targetOffsetRef = useRef<CanvasOffset>({ x: 0, y: 0 });
   const velocityRef = useRef<CanvasOffset>({ x: 0, y: 0 });
+  const lastTrailPointRef = useRef<{ x: number; y: number } | null>(null);
   const dragStateRef = useRef({
     active: false,
     pointerId: null as number | null,
@@ -254,6 +270,54 @@ export default function MoreGalleryPage() {
     startAnimation();
   }, [metrics.height, metrics.width, normalizeOffset, startAnimation]);
 
+  const ensureTrailCleanup = useCallback(() => {
+    if (trailCleanupFrameRef.current !== null) {
+      return;
+    }
+
+    const tick = () => {
+      const now = performance.now();
+
+      setDragTrail((current) => {
+        const next = current.filter((segment) => now - segment.createdAt < DRAG_TRAIL_LIFETIME);
+
+        if (!next.length) {
+          trailCleanupFrameRef.current = null;
+        } else {
+          trailCleanupFrameRef.current = window.requestAnimationFrame(tick);
+        }
+
+        return next;
+      });
+    };
+
+    trailCleanupFrameRef.current = window.requestAnimationFrame(tick);
+  }, []);
+
+  const appendTrailSegment = useCallback((x1: number, y1: number, x2: number, y2: number) => {
+    const distance = Math.hypot(x2 - x1, y2 - y1);
+
+    if (distance < 4) {
+      return;
+    }
+
+    const now = performance.now();
+
+    setDragTrail((current) => [
+      ...current.filter((segment) => now - segment.createdAt < DRAG_TRAIL_LIFETIME),
+      {
+        id: now + Math.random(),
+        x1,
+        y1,
+        x2,
+        y2,
+        createdAt: now,
+        width: Math.min(2.2, Math.max(1, distance * 0.035)),
+      },
+    ].slice(-DRAG_TRAIL_MAX_SEGMENTS));
+    ensureTrailCleanup();
+  }, [ensureTrailCleanup]);
+
   useEffect(() => {
     const handleResize = () => setViewportWidth(window.innerWidth);
 
@@ -271,6 +335,9 @@ export default function MoreGalleryPage() {
   useEffect(() => () => {
     if (animationFrameRef.current !== null) {
       window.cancelAnimationFrame(animationFrameRef.current);
+    }
+    if (trailCleanupFrameRef.current !== null) {
+      window.cancelAnimationFrame(trailCleanupFrameRef.current);
     }
   }, []);
 
@@ -295,6 +362,9 @@ export default function MoreGalleryPage() {
       lastTime: performance.now(),
     };
     velocityRef.current = { x: 0, y: 0 };
+    lastTrailPointRef.current = event.pointerType === 'touch'
+      ? null
+      : { x: event.clientX, y: event.clientY };
     setIsDragging(true);
     event.currentTarget.setPointerCapture(event.pointerId);
     startAnimation();
@@ -322,8 +392,18 @@ export default function MoreGalleryPage() {
       y: velocityRef.current.y * 0.6 + measuredVelocity.y * 0.4,
     };
 
+    if (event.pointerType !== 'touch') {
+      const lastTrailPoint = lastTrailPointRef.current;
+
+      if (lastTrailPoint) {
+        appendTrailSegment(lastTrailPoint.x, lastTrailPoint.y, event.clientX, event.clientY);
+      }
+
+      lastTrailPointRef.current = { x: event.clientX, y: event.clientY };
+    }
+
     shiftCanvas(dx, dy);
-  }, [shiftCanvas]);
+  }, [appendTrailSegment, shiftCanvas]);
 
   const finishDrag = useCallback((event?: ReactPointerEvent<HTMLDivElement>) => {
     if (
@@ -336,6 +416,7 @@ export default function MoreGalleryPage() {
 
     dragStateRef.current.active = false;
     dragStateRef.current.pointerId = null;
+    lastTrailPointRef.current = null;
     setIsDragging(false);
     startAnimation();
   }, [startAnimation]);
@@ -351,6 +432,41 @@ export default function MoreGalleryPage() {
           onPointerUp={finishDrag}
           onPointerCancel={finishDrag}
         >
+          <div className="pointer-events-none absolute inset-0 z-20 overflow-hidden">
+            <svg className="h-full w-full">
+              {dragTrail.map((segment) => {
+                const age = performance.now() - segment.createdAt;
+                const progress = Math.max(0, 1 - age / DRAG_TRAIL_LIFETIME);
+                const glowOpacity = progress * 0.22;
+                const coreOpacity = progress * 0.95;
+
+                return (
+                  <g key={segment.id}>
+                    <line
+                      x1={segment.x1}
+                      y1={segment.y1}
+                      x2={segment.x2}
+                      y2={segment.y2}
+                      stroke={DRAG_TRAIL_COLOR}
+                      strokeWidth={segment.width * 2.4}
+                      strokeLinecap="round"
+                      opacity={glowOpacity}
+                    />
+                    <line
+                      x1={segment.x1}
+                      y1={segment.y1}
+                      x2={segment.x2}
+                      y2={segment.y2}
+                      stroke={DRAG_TRAIL_COLOR}
+                      strokeWidth={segment.width}
+                      strokeLinecap="round"
+                      opacity={coreOpacity}
+                    />
+                  </g>
+                );
+              })}
+            </svg>
+          </div>
           <div
             ref={canvasRef}
             className="absolute left-1/2 top-1/2 will-change-transform"

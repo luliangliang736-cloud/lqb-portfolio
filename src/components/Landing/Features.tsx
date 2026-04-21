@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
-import { motion, useInView, useTransform } from 'framer-motion';
-import { ChevronRight } from 'lucide-react';
+import { motion, useInView, useMotionTemplate, useScroll, useTransform } from 'framer-motion';
+import { ChevronDown, ChevronRight } from 'lucide-react';
 import { accentMap, showcases } from '../../content/showcases';
 import { useMagneticMotion } from '../../hooks/useMagneticMotion';
 import { toAssetPath } from '../../utils/assetPath';
@@ -112,6 +112,8 @@ const collageCards = [
   },
 ];
 
+const parallaxPanelImage = toAssetPath('/assets/parallax-theater.png');
+
 function FeatureCard({
   feature,
   activeSlug,
@@ -201,12 +203,20 @@ function FeatureCard({
 export default function Features() {
   const headerRef = useRef(null);
   const collageRef = useRef<HTMLDivElement | null>(null);
+  const parallaxRef = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(headerRef, { once: true, margin: '-80px' });
   const collageInView = useInView(collageRef, { once: true, margin: '-120px' });
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
   const [collageHovered, setCollageHovered] = useState(false);
   const [hoveredCollageIndex, setHoveredCollageIndex] = useState<number | null>(null);
   const [collageCopyHovered, setCollageCopyHovered] = useState(false);
+  const { scrollYProgress: parallaxProgress } = useScroll({
+    target: parallaxRef,
+    offset: ['start 88%', 'end 12%'],
+  });
+  const parallaxImageScale = useTransform(parallaxProgress, [0, 0.5, 1], [1.52, 1.18, 1.52]);
+  const parallaxObjectY = useTransform(parallaxProgress, [0, 1], ['73%', '-11%']);
+  const parallaxObjectPosition = useMotionTemplate`50% ${parallaxObjectY}`;
 
   return (
     <section id="features" className="relative px-6 pt-72 pb-32 md:pt-96">
@@ -321,20 +331,6 @@ export default function Features() {
                   className="mx-auto h-[42px] w-auto object-contain sm:h-[54px] md:h-[72px]"
                 />
               </motion.div>
-              <motion.div
-                className="mx-auto mt-4 flex max-w-[820px] flex-col items-center gap-3 text-[10px] leading-[1.45] text-surface-600 transition-[transform,color] duration-300 ease-out hover:text-surface-300 md:text-[11px] md:leading-[1.5]"
-                onHoverStart={() => setCollageCopyHovered(true)}
-                onHoverEnd={() => setCollageCopyHovered(false)}
-                whileHover={{ scale: 1.3 }}
-                transition={{ type: 'spring', stiffness: 220, damping: 18 }}
-              >
-                <p className="md:whitespace-nowrap">
-                  我是陆78，这里是一处仍在生长中的实验现场，让技术成为放大 imagination 的引擎，而不是替代判断与感受力的答案
-                </p>
-                <p className="md:whitespace-nowrap">
-                  我更关心 AI 如何参与创作、触发偏离、制造新秩序，这里是一些正在生长中的方向，而不是被固定下来的结论
-                </p>
-              </motion.div>
               <motion.a
                 href="#more-gallery"
                 className="group mt-6 inline-flex min-h-[46px] items-center gap-2 rounded-full border border-white/75 bg-white px-6 py-2 text-[13px] font-medium text-black transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/92"
@@ -349,6 +345,39 @@ export default function Features() {
               </motion.a>
             </motion.div>
           </div>
+        </div>
+
+        <div ref={parallaxRef} className="mb-48 w-full md:mb-52">
+          <div className="mb-8 flex justify-center text-white/72 md:mb-10" aria-hidden="true">
+            <ChevronDown size={28} strokeWidth={1.9} />
+          </div>
+          <motion.div
+            className="mx-auto mb-10 flex max-w-5xl flex-col items-center gap-3 text-center text-[11px] leading-[1.9] text-surface-500 transition-[transform,color] duration-300 ease-out hover:text-surface-300 md:mb-12 md:text-[15px]"
+            onHoverStart={() => setCollageCopyHovered(true)}
+            onHoverEnd={() => setCollageCopyHovered(false)}
+            whileHover={{ scale: 1.3 }}
+            transition={{ type: 'spring', stiffness: 220, damping: 18 }}
+          >
+            <p>
+              我是陆78，这里是一处仍在生长中的实验现场，让技术成为放大 imagination 的引擎，而不是替代判断与感受力的答案
+            </p>
+            <p>
+              我更关心 AI 如何参与创作、触发偏离、制造新秩序，这里是一些正在生长中的方向，而不是被固定下来的结论
+            </p>
+          </motion.div>
+          <motion.div
+            className="relative h-[260px] overflow-hidden rounded-[34px] bg-[#080809] md:h-[360px]"
+          >
+            <motion.img
+              src={parallaxPanelImage}
+              alt="Parallax cover"
+              className="absolute inset-0 h-full w-full object-cover will-change-transform"
+              style={{
+                scale: parallaxImageScale,
+                objectPosition: parallaxObjectPosition,
+              }}
+            />
+          </motion.div>
         </div>
 
         <div ref={headerRef} className="mx-auto mb-16 max-w-5xl text-center">
