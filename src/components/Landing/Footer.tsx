@@ -54,8 +54,8 @@ export default function Footer() {
     target: parallaxRef,
     offset: ['start 98%', 'end 18%'],
   });
-  const parallaxScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.24, 1.08, 1.24]);
-  const parallaxObjectY = useTransform(scrollYProgress, [0, 1], ['58%', '-10%']);
+  const parallaxScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.14, 1.03, 1.14]);
+  const parallaxObjectY = useTransform(scrollYProgress, [0, 1], ['45%', '-17%']);
   const parallaxObjectPosition = useMotionTemplate`50% ${parallaxObjectY}`;
 
   return (
