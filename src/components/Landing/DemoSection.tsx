@@ -16,6 +16,7 @@ export default function DemoSection() {
   const rotateY = useTransform(x, [-14, 14], [-3, 3]);
   const rotateX = useTransform(y, [-14, 14], [3, -3]);
   const bannerVideoSrc = toAssetPath('/assets/demo-banner-lqb.mp4');
+  const bannerPosterSrc = toAssetPath('/assets/demo-banner-lqb.webp');
   const primaryButtonHref = 'https://easycreative.netlify.app/';
   const secondaryButtonHref = '#';
 
@@ -29,7 +30,7 @@ export default function DemoSection() {
   };
 
   return (
-    <section id="demo" className="relative px-6 pt-4 pb-32 md:pt-8" ref={ref}>
+    <section id="demo" className="relative px-6 pt-20 pb-44 md:pt-28 md:pb-56" ref={ref}>
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[#FFB8DF]/8 rounded-full blur-[120px]" />
       </div>
@@ -79,12 +80,13 @@ export default function DemoSection() {
           >
             <video
               src={bannerVideoSrc}
+              poster={bannerPosterSrc}
               className="block aspect-[16/9] w-full rounded-[36px] object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
               autoPlay
               muted
               loop
               playsInline
-              preload="auto"
+              preload="metadata"
               aria-label="LQB 作品横幅视频"
             />
             <div className="absolute inset-x-0 bottom-[11%] z-10 flex justify-center px-6">

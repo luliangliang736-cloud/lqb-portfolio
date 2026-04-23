@@ -12,9 +12,6 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [isMoreGalleryRoute, setIsMoreGalleryRoute] = useState(() => window.location.hash === '#more-gallery');
-  const [navHovered, setNavHovered] = useState(false);
-  const [navVisible, setNavVisible] = useState(() => window.location.hash !== '#more-gallery');
   const { x, y, handleMouseMove, handleMouseLeave } = useMagneticMotion({
     strength: 10,
     stiffness: 220,
@@ -27,75 +24,16 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => {
-    const syncRoute = () => {
-      const onMoreGalleryRoute = window.location.hash === '#more-gallery';
-      setIsMoreGalleryRoute(onMoreGalleryRoute);
-      setNavVisible(!onMoreGalleryRoute);
-    };
-
-    syncRoute();
-    window.addEventListener('hashchange', syncRoute);
-    return () => window.removeEventListener('hashchange', syncRoute);
-  }, []);
-
-  useEffect(() => {
-    if (!isMoreGalleryRoute) {
-      setNavVisible(true);
-      return undefined;
-    }
-
-    const handleMouseMove = (event: MouseEvent) => {
-      if (mobileOpen) {
-        setNavVisible(true);
-        return;
-      }
-
-      if (event.buttons > 0) {
-        return;
-      }
-
-      if (event.clientY <= 40) {
-        setNavVisible(true);
-        return;
-      }
-
-      if (!navHovered) {
-        setNavVisible(false);
-      }
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [isMoreGalleryRoute, mobileOpen, navHovered]);
-
-  const shouldShowNav = !isMoreGalleryRoute || navVisible || navHovered || mobileOpen;
-
   return (
     <motion.nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? 'bg-black/68 backdrop-blur-xl shadow-lg shadow-black/30'
           : 'bg-black/42 backdrop-blur-lg'
-      } ${shouldShowNav ? 'pointer-events-auto' : 'pointer-events-none'}`}
+      } pointer-events-auto`}
       initial={{ opacity: 0, y: -20 }}
-      animate={{
-        opacity: shouldShowNav ? 1 : 0,
-        y: shouldShowNav ? 0 : -16,
-      }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.22, ease: 'easeOut' }}
-      onMouseEnter={() => {
-        setNavHovered(true);
-        if (isMoreGalleryRoute) {
-          setNavVisible(true);
-        }
-      }}
-      onMouseLeave={() => {
-        setNavHovered(false);
-        if (isMoreGalleryRoute && !mobileOpen) {
-          setNavVisible(false);
-        }
-      }}
     >
       <div className="relative max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}

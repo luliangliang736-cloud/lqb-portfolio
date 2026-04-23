@@ -34,13 +34,13 @@ type DragTrailSegment = {
 };
 
 const TILE_COORDINATES = [-1, 0, 1];
-const galleryAssetVersion = '20260419-2';
+const galleryAssetVersion = '20260423-1';
 const DRAG_TRAIL_COLOR = '#9CFF3F';
 const DRAG_TRAIL_LIFETIME = 220;
 const DRAG_TRAIL_MAX_SEGMENTS = 16;
 const gallerySources = Array.from(
   { length: 77 },
-  (_, index) => toAssetPath(`/assets/more-gallery-placeholders/canvas-${String(index + 1).padStart(2, '0')}.png?v=${galleryAssetVersion}`),
+  (_, index) => toAssetPath(`/assets/more-gallery-placeholders/canvas-${String(index + 1).padStart(2, '0')}.webp?v=${galleryAssetVersion}`),
 );
 
 function wrapOffset(value: number, size: number) {
