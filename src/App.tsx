@@ -110,6 +110,20 @@ function App() {
   }, [desktopMode]);
 
   useEffect(() => {
+    if (desktopMode) {
+      return;
+    }
+
+    if (!routeState.showcaseSlug && routeState.page !== 'more-gallery') {
+      return;
+    }
+
+    window.requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    });
+  }, [desktopMode, routeState.page, routeState.projectId, routeState.showcaseSlug]);
+
+  useEffect(() => {
     if (desktopMode || !emojiBursts.length) {
       return undefined;
     }
