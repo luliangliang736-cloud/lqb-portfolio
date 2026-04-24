@@ -909,6 +909,7 @@ export default function Features() {
                   src={toAssetPath('/assets/creativeAI.svg')}
                   alt="Creative AI"
                   className="mx-auto h-[42px] w-auto object-contain sm:h-[54px] md:h-[72px]"
+                  spinOnHover
                 />
               </motion.div>
               <motion.a
@@ -998,6 +999,7 @@ export default function Features() {
               src={toAssetPath('/assets/creative-work-title.svg')}
               alt="Creative Work"
               className="mx-auto h-auto w-full max-w-[600px] object-contain"
+              spinOnHover
             />
           </motion.div>
 

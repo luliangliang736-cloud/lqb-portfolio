@@ -24,6 +24,7 @@ export default function CTASection() {
             src={toAssetPath('/assets/third-title.svg')}
             alt="用LQB设计"
             className="mx-auto h-auto w-full max-w-[320px] object-contain sm:max-w-[390px] xl:max-w-[460px]"
+            spinOnHover
           />
         </motion.div>
         <motion.p

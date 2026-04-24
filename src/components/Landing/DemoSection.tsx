@@ -46,6 +46,7 @@ export default function DemoSection() {
               src={toAssetPath('/assets/lqb-ai-title.svg')}
               alt="与LQB数字人对话"
               className="mx-auto h-auto w-full max-w-[220px] object-contain sm:max-w-[240px] xl:max-w-[250px]"
+              spinOnHover
             />
           </motion.div>
           <motion.p
