@@ -59,10 +59,10 @@ export default function Footer() {
   const parallaxObjectPosition = useMotionTemplate`50% ${parallaxObjectY}`;
 
   return (
-    <footer className="bg-surface-950 pt-10 md:pt-14">
+    <footer className="bg-surface-950 pt-8 sm:pt-10 lg:pt-12 xl:pt-14">
       <div
         ref={parallaxRef}
-        className="relative left-1/2 mb-10 w-screen -translate-x-1/2 overflow-hidden bg-[#080809] md:mb-14"
+        className="relative left-1/2 mb-8 w-screen -translate-x-1/2 overflow-hidden bg-[#080809] sm:mb-10 lg:mb-12 xl:mb-14"
       >
         <motion.img
           src={footerParallaxImage}
@@ -75,8 +75,8 @@ export default function Footer() {
         />
         <div className="absolute inset-0 bg-black/50" />
 
-        <div className="relative mx-auto max-w-7xl px-6 py-12 md:h-[320px]">
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-[220px_repeat(3,minmax(0,220px))] md:justify-between md:gap-8">
+        <div className="relative mx-auto max-w-7xl px-5 py-10 sm:px-6 sm:py-12 lg:h-[280px] xl:h-[320px]">
+          <div className="grid grid-cols-1 gap-8 sm:gap-10 lg:grid-cols-[200px_repeat(3,minmax(0,200px))] lg:justify-between lg:gap-6 xl:grid-cols-[220px_repeat(3,minmax(0,220px))] xl:gap-8">
             <div className="max-w-[220px]">
               <div className="mb-4 flex min-h-8 items-center gap-2.5">
                 <img
@@ -90,7 +90,7 @@ export default function Footer() {
                   className="block h-7 w-auto shrink-0 object-contain object-left"
                 />
               </div>
-              <p className="text-sm leading-relaxed text-white/72">
+              <p className="text-[13px] leading-relaxed text-white/72 sm:text-sm">
                 浪潮中思考与判断力愈发不可替⁠代⁠，无比的想象力和执行力
                 <span className="block">才是Ai时代的人的核心</span>
               </p>
@@ -98,10 +98,10 @@ export default function Footer() {
 
             {personalSections.map((section) => (
               <div key={section.title} className="max-w-[220px]">
-                <h4 className="mb-4 flex min-h-8 items-center text-sm font-medium text-white/88">{section.title}</h4>
+                <h4 className="mb-4 flex min-h-8 items-center text-[13px] font-medium text-white/88 sm:text-sm">{section.title}</h4>
                 <ul className="space-y-3">
                   {section.items.map((item) => (
-                    <li key={`${section.title}-${item.label}`} className="text-sm leading-relaxed">
+                    <li key={`${section.title}-${item.label}`} className="text-[13px] leading-relaxed sm:text-sm">
                       <span className="block text-white/42">{item.label}</span>
                       {item.href ? (
                         <a
@@ -125,7 +125,7 @@ export default function Footer() {
       </div>
 
       <div>
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 pt-3 pb-10 md:flex-row md:pt-2 md:pb-12">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-5 pt-3 pb-8 sm:px-6 sm:pb-10 lg:flex-row lg:pt-2 xl:pb-12">
           <span className="text-xs text-surface-600">
             &copy; {new Date().getFullYear()} LQB · 陆78创意化探索
           </span>

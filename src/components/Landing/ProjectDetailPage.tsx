@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ArrowLeft, X } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { accentMap, isVideoSrc, type ShowcaseItem, type ShowcaseMediaItem } from '../../content/showcases';
+import { isVideoSrc, type ShowcaseItem, type ShowcaseMediaItem } from '../../content/showcases';
 
 type ProjectDetailPageProps = {
   showcase: ShowcaseItem;
@@ -43,8 +43,22 @@ const accentSurfaceMap = {
   },
 } as const;
 
+const projectHeadingLineVariants = {
+  rest: {
+    x: 0,
+    y: 0,
+    rotate: 0,
+    scale: 1,
+  },
+  hover: {
+    x: 18,
+    y: -8,
+    rotate: -1.2,
+    scale: 1.02,
+  },
+};
+
 export default function ProjectDetailPage({ showcase, project }: ProjectDetailPageProps) {
-  const colors = accentMap[showcase.accent];
   const accentSurface = accentSurfaceMap[showcase.accent];
   const projectMedia = project.detailMedia?.length ? project.detailMedia : [project.src];
   const [activeImage, setActiveImage] = useState<ActiveImageState>(null);
@@ -157,27 +171,46 @@ export default function ProjectDetailPage({ showcase, project }: ProjectDetailPa
   };
 
   return (
-    <main className="min-h-screen bg-surface-950 px-6 pt-28 pb-16">
-      <div className="mx-auto max-w-7xl">
-        <a
-          href={`#showcase/${showcase.slug}`}
-          className="inline-flex items-center gap-2 rounded-full border border-surface-700/70 bg-surface-900/60 px-4 py-2 text-sm text-surface-300 transition-colors hover:border-white/15 hover:text-surface-100"
-        >
-          <ArrowLeft size={16} />
-          返回{showcase.title}
-        </a>
-
-        <section className="g2-card-xl mt-8 bg-surface-900/45 p-8 shadow-2xl shadow-black/20 md:p-10">
-          <div className="max-w-4xl">
-            <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs ${colors.tag}`}>
-              <showcase.icon size={12} />
-              {showcase.tag}
-            </span>
-            <h1 className="mt-6 text-4xl font-semibold tracking-tight text-surface-50 md:text-6xl">{project.title}</h1>
-            <p className="mt-5 max-w-3xl text-lg leading-relaxed text-surface-400">{project.description}</p>
+    <main className="min-h-screen bg-surface-950 px-4 pt-28 pb-16 sm:px-5 lg:px-6 xl:px-8">
+      <div className="mx-auto w-full max-w-[1560px]">
+        <section className="mt-20 px-1 md:mt-24 md:px-0">
+          <div className="max-w-none">
+            <motion.div
+              className="mt-6 flex items-start justify-between gap-4"
+              initial="rest"
+              whileHover="hover"
+            >
+              <motion.h1
+                className="text-[1.95rem] font-medium leading-[0.9] tracking-[-0.08em] text-[#F2F0E8] sm:text-[2.5rem] lg:text-[4.6rem] xl:text-[5.8rem]"
+                variants={projectHeadingLineVariants}
+                transition={{ type: 'spring', stiffness: 220, damping: 18, mass: 0.9 }}
+              >
+                {project.title}
+              </motion.h1>
+              <motion.svg
+                width="116"
+                height="116"
+                viewBox="0 0 116 116"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="mt-1 h-9 w-9 shrink-0 sm:h-10 sm:w-10 lg:h-12 lg:w-12 xl:h-14 xl:w-14"
+                aria-hidden="true"
+                variants={{ rest: { scaleX: 1 }, hover: { scaleX: -1 } }}
+                transition={{ duration: 0.28, ease: 'easeInOut' }}
+              >
+                <rect x="15.6719" y="84.0684" width="22.1632" height="22.1632" rx="4" transform="rotate(45 15.6719 84.0684)" fill="#D9D9D9" />
+                <rect x="71.7207" y="84.0684" width="22.1632" height="22.1632" rx="4" transform="rotate(45 71.7207 84.0684)" fill="#D9D9D9" />
+                <rect x="43.6914" y="84.0684" width="22.1632" height="22.1632" rx="4" transform="rotate(45 43.6914 84.0684)" fill="#D9D9D9" />
+                <rect x="99.7402" y="84.0684" width="22.1632" height="22.1632" rx="4" transform="rotate(45 99.7402 84.0684)" fill="#D9D9D9" />
+                <rect x="115.412" y="15.6719" width="22.1632" height="22.1632" rx="4" transform="rotate(135 115.412 15.6719)" fill="#D9D9D9" />
+                <rect x="115.412" y="71.7207" width="22.1632" height="22.1632" rx="4" transform="rotate(135 115.412 71.7207)" fill="#D9D9D9" />
+                <rect x="115.412" y="43.6914" width="22.1632" height="22.1632" rx="4" transform="rotate(135 115.412 43.6914)" fill="#D9D9D9" />
+                <path d="M6.09675 15.7026L13.928 7.77433C15.4648 6.21843 17.9663 6.18522 19.5439 7.69977L84.3828 69.947C86.0246 71.5232 86.0222 74.1498 84.3775 75.723L75.0053 84.6877C73.434 86.1907 70.95 86.1632 69.4123 84.6259L6.11443 21.3423C4.55883 19.7871 4.55093 17.2676 6.09675 15.7026Z" fill="#D9D9D9" />
+              </motion.svg>
+            </motion.div>
           </div>
 
-          <div className="mt-10">
+          <div className="mt-48 md:mt-56">
             <div
               className="grid gap-4"
               style={{ gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))` }}
@@ -218,6 +251,16 @@ export default function ProjectDetailPage({ showcase, project }: ProjectDetailPa
                 </div>
               ))}
             </div>
+          </div>
+
+          <div className="mt-10 flex justify-end">
+            <a
+              href={`#showcase/${showcase.slug}`}
+              className="inline-flex items-center gap-2 text-sm text-surface-300 transition-colors hover:text-surface-100"
+            >
+              <ArrowLeft size={16} />
+              返回{showcase.title}
+            </a>
           </div>
         </section>
       </div>

@@ -39,7 +39,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative h-[100svh] min-h-[100svh] overflow-hidden bg-black"
+      className="relative min-h-screen h-[100dvh] overflow-hidden bg-black"
     >
       <AnimatePresence mode="wait">
         <motion.div

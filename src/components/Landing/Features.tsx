@@ -463,14 +463,14 @@ function RecentWorksLoop() {
   };
 
   return (
-    <section className="relative left-1/2 right-1/2 mt-24 mb-52 w-screen -translate-x-1/2 md:mt-32 md:mb-64">
-      <div className="mt-8 pt-32 mb-72 flex items-start justify-between gap-4 px-6 md:mt-12 md:pt-36 md:mb-[24rem] md:px-10">
+    <section className="relative left-1/2 right-1/2 mt-20 mb-36 w-screen -translate-x-1/2 lg:mt-28 lg:mb-48 xl:mt-32 xl:mb-64">
+      <div className="mt-6 mb-44 flex items-start justify-between gap-4 px-5 pt-24 sm:mt-8 sm:px-6 sm:pt-28 lg:mt-12 lg:mb-72 lg:px-8 lg:pt-32 xl:mb-[24rem] xl:px-10 xl:pt-36">
         <motion.div
           className="relative"
           initial="rest"
           whileHover="hover"
         >
-          <h3 className="text-[2.2rem] font-medium uppercase leading-[0.9] tracking-[-0.08em] text-[#F2F0E8] md:text-[5.8rem]">
+          <h3 className="text-[1.95rem] font-medium uppercase leading-[0.9] tracking-[-0.08em] text-[#F2F0E8] sm:text-[2.5rem] lg:text-[4.6rem] xl:text-[5.8rem]">
             <span className="block">
             <motion.span
               className="inline-block origin-left"
@@ -486,7 +486,7 @@ function RecentWorksLoop() {
               >
                 Recent
               </motion.span>
-              <span className="inline-block w-[0.18em] md:w-[0.22em]" aria-hidden="true" />
+              <span className="inline-block w-[0.18em] lg:w-[0.22em]" aria-hidden="true" />
               <motion.span
                 className="inline-block"
                 variants={headingWordVariants}
@@ -496,9 +496,9 @@ function RecentWorksLoop() {
                 W<span className="text-[#9CFF3F]">O</span>r<span className="text-[#9CFF3F]">K</span>s
               </motion.span>
             </motion.span></span>
-            <span className="mt-3 block md:mt-4">
+            <span className="mt-3 block lg:mt-4">
             <motion.span
-              className="inline-flex origin-left items-baseline gap-[0.22em] md:gap-[0.28em]"
+              className="inline-flex origin-left items-baseline gap-[0.22em] lg:gap-[0.28em]"
               variants={headingLineVariants}
               custom={1}
               transition={{ type: 'spring', stiffness: 220, damping: 18, mass: 0.9, delay: 0.02 }}
@@ -528,9 +528,9 @@ function RecentWorksLoop() {
                 Design
               </motion.span>
             </motion.span></span>
-            <span className="mt-3 block md:mt-4">
+            <span className="mt-3 block lg:mt-4">
             <motion.span
-              className="inline-flex origin-left items-baseline gap-[0.2em] md:gap-[0.26em]"
+              className="inline-flex origin-left items-baseline gap-[0.2em] lg:gap-[0.26em]"
               variants={headingLineVariants}
               custom={2}
               transition={{ type: 'spring', stiffness: 220, damping: 18, mass: 0.9, delay: 0.04 }}
@@ -568,7 +568,7 @@ function RecentWorksLoop() {
           viewBox="0 0 116 116"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="mt-1 h-10 w-10 shrink-0 md:h-14 md:w-14"
+          className="mt-1 h-9 w-9 shrink-0 sm:h-10 sm:w-10 lg:h-12 lg:w-12 xl:h-14 xl:w-14"
           aria-hidden="true"
           whileHover={{ scaleX: -1 }}
           transition={{ duration: 0.28, ease: 'easeInOut' }}
@@ -709,18 +709,18 @@ function FeatureCard({
         onHoverEnd();
       }}
     >
-      <div className="flex h-full flex-col p-8 md:p-10 [transform:translateZ(0)]">
+      <div className="flex h-full flex-col p-6 sm:p-8 xl:p-10 [transform:translateZ(0)]">
         <div>
           <span className={`mb-6 inline-flex self-start items-center gap-1.5 rounded-full border px-3 py-1 text-xs ${colors.tag}`}>
             <feature.icon size={12} />
             {feature.tag}
           </span>
 
-          <h3 className="whitespace-pre-line text-2xl font-semibold leading-tight text-surface-50 md:text-3xl">
+          <h3 className="whitespace-pre-line text-[1.35rem] font-semibold leading-tight text-surface-50 sm:text-2xl xl:text-3xl">
             {feature.title}
           </h3>
 
-          <p className="mt-4 max-w-lg leading-relaxed text-surface-400">
+          <p className="mt-4 max-w-lg text-sm leading-relaxed text-surface-400 sm:text-base">
             {feature.description}
           </p>
         </div>
@@ -729,10 +729,10 @@ function FeatureCard({
           <img
             src={feature.coverSrc}
             alt={`${feature.title} 封面`}
-            className={`feature-panel-media mt-8 min-h-[220px] w-full flex-1 object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025] ${colors.glow}`}
+            className={`feature-panel-media mt-8 min-h-[200px] w-full flex-1 object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025] sm:min-h-[220px] ${colors.glow}`}
           />
         ) : (
-          <div className={`feature-panel-media mt-8 flex min-h-[220px] flex-1 items-center justify-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025] ${colors.glow}`}>
+          <div className={`feature-panel-media mt-8 flex min-h-[200px] flex-1 items-center justify-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025] sm:min-h-[220px] ${colors.glow}`}>
             <feature.icon size={40} className="text-surface-600" />
           </div>
         )}

@@ -61,11 +61,120 @@ const accentSurfaceMap = {
   },
 } as const;
 
+const showcaseHeadingMap: Record<string, string> = {
+  'creative-visuals': 'Creative Design',
+  'form-design': 'Form Design',
+  'ip-scenario': 'IP & Scenario',
+  'dynamic-vision': 'Dynamic Vision',
+  'waterfall-collection': 'Work Collection',
+  'beyond-design': 'Beyond Design',
+};
+
+const showcaseHeadingAccentCharMap: Record<string, string> = {
+  'creative-visuals': 'g',
+  'form-design': 'o',
+  'ip-scenario': 'p',
+  'dynamic-vision': 'v',
+  'waterfall-collection': 'k',
+  'beyond-design': 'y',
+};
+
+const continueBrowsingHeading = 'Continue browsing';
+const continueBrowsingAccentChar = 'o';
+
+const headingLineVariants = {
+  rest: {
+    x: 0,
+    y: 0,
+    rotate: 0,
+    scale: 1,
+  },
+  hover: {
+    x: 18,
+    y: -8,
+    rotate: -1.2,
+    scale: 1.02,
+  },
+};
+
+const headingWordVariants = {
+  rest: {
+    x: 0,
+    y: 0,
+    rotate: 0,
+    scale: 1,
+  },
+  hover: (index: number) => {
+    const layouts = [
+      { x: -12, y: -8, rotate: -2.2, scale: 1.02 },
+      { x: 16, y: 8, rotate: 1.4, scale: 0.985 },
+      { x: -8, y: 12, rotate: -1.2, scale: 1.01 },
+      { x: 14, y: -10, rotate: 2, scale: 1.03 },
+      { x: -16, y: 6, rotate: -1.6, scale: 0.99 },
+      { x: 10, y: 10, rotate: 1.1, scale: 1.015 },
+    ];
+
+    return layouts[index] ?? layouts[0];
+  },
+};
+
+function renderHeadingWithAccent(heading: string, accentChar: string | undefined, accentColorClass = 'text-[#9CFF3F]', keyPrefix = heading) {
+  const normalizedAccentChar = accentChar?.toLowerCase();
+  let accentApplied = false;
+  let wordIndex = 0;
+
+  return heading.split(' ').map((word, index) => {
+    const currentWordIndex = wordIndex;
+    wordIndex += 1;
+
+    return (
+      <motion.span
+        key={`${keyPrefix}-${word}-${index}`}
+        className="inline-block"
+        variants={headingWordVariants}
+        custom={currentWordIndex}
+        transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8, delay: currentWordIndex * 0.02 }}
+      >
+        {word.split('').map((char, charIndex) => {
+          const shouldAccent = !accentApplied && char.toLowerCase() === normalizedAccentChar;
+
+          if (shouldAccent) {
+            accentApplied = true;
+          }
+
+          return (
+            <span key={`${keyPrefix}-${word}-${char}-${charIndex}`} className={shouldAccent ? accentColorClass : undefined}>
+              {char}
+            </span>
+          );
+        })}
+        {index < heading.split(' ').length - 1 ? <span className="inline-block w-[0.22em]" aria-hidden="true" /> : null}
+      </motion.span>
+    );
+  });
+}
+
 export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
-  const colors = accentMap[showcase.accent];
   const accentSurface = accentSurfaceMap[showcase.accent];
   const mediaItems = showcaseMediaBySlug[showcase.slug] ?? [];
   const usesWaterfallLayout = showcase.slug === 'waterfall-collection' || showcase.slug === 'beyond-design';
+  const showcaseHeading = showcaseHeadingMap[showcase.slug] ?? showcase.title;
+  const showcaseGridItems = mediaItems.length
+    ? [
+        ...mediaItems,
+        ...Array.from({ length: (4 - (mediaItems.length % 4)) % 4 }, (_, index) => ({
+          id: undefined,
+          title: sectionLabels[(mediaItems.length + index) % sectionLabels.length] ?? `预留内容 ${index + 1}`,
+          description: '这里可以继续放入该板块对应的作品封面、过程图、视频缩略图或案例详情。',
+          src: '',
+        })),
+      ]
+    : sectionLabels.map((label) => ({
+        id: undefined,
+        title: label,
+        description: '这里可以继续放入该板块对应的作品封面、过程图、视频缩略图或案例详情。',
+        src: '',
+      }));
   const waterfallSections: WaterfallSection[] = showcase.slug === 'waterfall-collection'
     ? [
         {
@@ -128,31 +237,45 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
   };
 
   return (
-    <main className="min-h-screen bg-surface-950 px-6 pt-28 pb-16">
-      <div className="mx-auto max-w-7xl">
-        <a
-          href="#features"
-          className="inline-flex items-center gap-2 rounded-full border border-surface-700/70 bg-surface-900/60 px-4 py-2 text-sm text-surface-300 transition-colors hover:border-white/15 hover:text-surface-100"
-        >
-          <ArrowLeft size={16} />
-          返回作品区
-        </a>
+    <main className="min-h-screen bg-surface-950 px-4 pt-28 pb-16 sm:px-5 lg:px-6 xl:px-8">
+      <div className="mx-auto w-full max-w-[1560px]">
+        <div className="mt-20 max-w-none px-1 md:mt-24 md:px-0">
+          <motion.div
+            className="mt-6 flex items-start justify-between gap-4"
+            initial="rest"
+            whileHover="hover"
+          >
+            <motion.h1
+              className="text-[1.95rem] font-medium uppercase leading-[0.9] tracking-[-0.08em] text-[#F2F0E8] sm:text-[2.5rem] lg:text-[4.6rem] xl:text-[5.8rem]"
+              variants={headingLineVariants}
+              transition={{ type: 'spring', stiffness: 220, damping: 18, mass: 0.9 }}
+            >
+              {renderHeadingWithAccent(showcaseHeading, showcaseHeadingAccentCharMap[showcase.slug], 'text-[#9CFF3F]', showcase.slug)}
+            </motion.h1>
+            <motion.svg
+              width="116"
+              height="116"
+              viewBox="0 0 116 116"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="mt-1 h-9 w-9 shrink-0 sm:h-10 sm:w-10 lg:h-12 lg:w-12 xl:h-14 xl:w-14"
+              aria-hidden="true"
+              variants={{ rest: { scaleX: 1 }, hover: { scaleX: -1 } }}
+              transition={{ duration: 0.28, ease: 'easeInOut' }}
+            >
+              <rect x="15.6719" y="84.0684" width="22.1632" height="22.1632" rx="4" transform="rotate(45 15.6719 84.0684)" fill="#D9D9D9" />
+              <rect x="71.7207" y="84.0684" width="22.1632" height="22.1632" rx="4" transform="rotate(45 71.7207 84.0684)" fill="#D9D9D9" />
+              <rect x="43.6914" y="84.0684" width="22.1632" height="22.1632" rx="4" transform="rotate(45 43.6914 84.0684)" fill="#D9D9D9" />
+              <rect x="99.7402" y="84.0684" width="22.1632" height="22.1632" rx="4" transform="rotate(45 99.7402 84.0684)" fill="#D9D9D9" />
+              <rect x="115.412" y="15.6719" width="22.1632" height="22.1632" rx="4" transform="rotate(135 115.412 15.6719)" fill="#D9D9D9" />
+              <rect x="115.412" y="71.7207" width="22.1632" height="22.1632" rx="4" transform="rotate(135 115.412 71.7207)" fill="#D9D9D9" />
+              <rect x="115.412" y="43.6914" width="22.1632" height="22.1632" rx="4" transform="rotate(135 115.412 43.6914)" fill="#D9D9D9" />
+              <path d="M6.09675 15.7026L13.928 7.77433C15.4648 6.21843 17.9663 6.18522 19.5439 7.69977L84.3828 69.947C86.0246 71.5232 86.0222 74.1498 84.3775 75.723L75.0053 84.6877C73.434 86.1907 70.95 86.1632 69.4123 84.6259L6.11443 21.3423C4.55883 19.7871 4.55093 17.2676 6.09675 15.7026Z" fill="#D9D9D9" />
+            </motion.svg>
+          </motion.div>
+        </div>
 
-        <section className="g2-card-xl mt-8 bg-surface-900/45 p-8 shadow-2xl shadow-black/20 md:p-10">
-          <div className="max-w-3xl">
-            <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs ${colors.tag}`}>
-              <showcase.icon size={12} />
-              {showcase.tag}
-            </span>
-            <h1 className="mt-6 text-4xl font-semibold tracking-tight text-surface-50 md:text-6xl">
-              {showcase.title}
-            </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-surface-400">
-              {showcase.description}
-            </p>
-          </div>
-
-          <div className="mt-10">
+        <div className="mt-48 px-1 md:mt-56 md:px-0">
             {usesWaterfallLayout ? (
               mediaItems.length ? (
                 <div className="space-y-8">
@@ -180,10 +303,8 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                                 <h2 className="text-[22px] font-medium tracking-tight text-surface-50 md:text-[30px]">
                                   {section.title}
                                 </h2>
-                                <span className="inline-flex h-6 w-14 shrink-0 items-center justify-end rounded-full bg-white/[0.05] pr-[3px] transition-colors group-hover:bg-white/[0.08]">
-                                  <span className="inline-flex h-[18px] w-[18px] items-center justify-center rounded-full bg-black/40 text-white/55 transition-colors group-hover:text-white/75">
-                                    <ChevronRight size={12} />
-                                  </span>
+                                <span className="inline-flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-black/40 text-white/55 transition-colors group-hover:text-white/75">
+                                  <ChevronRight size={12} />
                                 </span>
                               </div>
                               <p className="mt-2.5 max-w-sm text-[11px] leading-relaxed text-surface-400 md:text-[13px]">
@@ -278,28 +399,29 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                 <div className="min-h-[260px]" />
               )
             ) : (
-              <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-3">
-                {(mediaItems.length ? mediaItems : sectionLabels.map((label) => ({
-                  id: undefined,
-                  title: label,
-                  description: '这里可以继续放入该板块对应的作品封面、过程图、视频缩略图或案例详情。',
-                  src: '',
-                }))).map((item, index) => (
+              <div className="grid grid-cols-2 items-start gap-4 md:grid-cols-4 lg:gap-5">
+                {showcaseGridItems.map((item, index) => (
                   item.id ? (
                     <motion.a
                       key={`${showcase.slug}-${item.title}-${index}`}
                       href={`#showcase/${showcase.slug}/project/${item.id}`}
-                      className="group g2-card-lg self-start bg-[#060607] p-4 transition-colors hover:bg-[#09090B]"
+                      className="group g2-card-lg self-start bg-[#1E1E1E] p-4 transition-colors hover:bg-[#1E1E1E]"
                       initial={{ opacity: 0, y: 18 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.35, delay: index * 0.06 }}
+                      whileHover={{
+                        y: -10,
+                        scale: 1.03,
+                        rotateX: 3.6,
+                        rotateY: index % 2 === 0 ? -3 : 3,
+                        boxShadow: '0 26px 54px rgba(0,0,0,0.3)',
+                      }}
+                      transition={{ type: 'spring', stiffness: 170, damping: 18, mass: 1, delay: index * 0.06 }}
+                      style={{ transformPerspective: 1400, transformStyle: 'preserve-3d' }}
                     >
                       <div className="flex items-center justify-between gap-3">
-                        <span className="text-sm font-medium leading-5 text-surface-200">{item.title}</span>
-                        <span className="inline-flex h-5 w-12 shrink-0 items-center justify-end rounded-full bg-white/[0.05] pr-[2px] transition-colors group-hover:bg-white/[0.08]">
-                          <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-black/40 text-white/55 transition-colors group-hover:text-white/75">
-                            <ChevronRight size={10} />
-                          </span>
+                        <span className="text-sm font-medium leading-5 text-surface-200 transition-colors duration-300 group-hover:text-surface-50">{item.title}</span>
+                        <span className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-black/40 text-white/55 transition-colors duration-300 group-hover:bg-black/55 group-hover:text-white/75">
+                          <ChevronRight size={10} />
                         </span>
                       </div>
                       {item.src ? (
@@ -321,20 +443,28 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                         )
                       ) : (
                         <div className={`g2-card-md mt-4 flex aspect-[3/4] items-center justify-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}>
-                          <showcase.icon size={28} className="text-surface-600" />
+                          <showcase.icon size={28} className="text-surface-600 transition-colors duration-300 group-hover:text-surface-400" />
                         </div>
                       )}
                     </motion.a>
                   ) : (
                     <motion.article
                       key={`${showcase.slug}-${item.title}-${index}`}
-                      className="g2-card-lg self-start bg-[#060607] p-4"
+                      className="group g2-card-lg self-start bg-[#1E1E1E] p-4"
                       initial={{ opacity: 0, y: 18 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.35, delay: index * 0.06 }}
+                      whileHover={{
+                        y: -8,
+                        scale: 1.022,
+                        rotateX: 3,
+                        rotateY: index % 2 === 0 ? -2.4 : 2.4,
+                        boxShadow: '0 22px 44px rgba(0,0,0,0.24)',
+                      }}
+                      transition={{ type: 'spring', stiffness: 170, damping: 18, mass: 1, delay: index * 0.06 }}
+                      style={{ transformPerspective: 1400, transformStyle: 'preserve-3d' }}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium text-surface-200">{item.title}</span>
+                        <span className="text-sm font-medium text-surface-200 transition-colors duration-300 group-hover:text-surface-50">{item.title}</span>
                       </div>
                       {item.src ? (
                         isVideoSrc(item.src) ? (
@@ -355,7 +485,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                         )
                       ) : (
                         <div className={`g2-card-md mt-4 flex aspect-[3/4] items-center justify-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}>
-                          <showcase.icon size={28} className="text-surface-600" />
+                          <showcase.icon size={28} className="text-surface-600 transition-colors duration-300 group-hover:text-surface-400" />
                         </div>
                       )}
                     </motion.article>
@@ -364,17 +494,27 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
               </div>
             )}
           </div>
-        </section>
 
-        <section className="g2-card-xl mt-8 bg-surface-900/35 p-6 shadow-2xl shadow-black/20 md:p-8">
+          <div className="mt-10 flex justify-end">
+            <a
+              href="#features"
+              className="inline-flex items-center gap-2 text-sm text-surface-300 transition-colors hover:text-surface-100"
+            >
+              <ArrowLeft size={16} />
+              返回作品区
+            </a>
+          </div>
+
+        <section className="mt-[12.5rem] px-1 md:px-0">
           <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="text-sm uppercase tracking-[0.22em] text-surface-500">Showcases</p>
-              <h2 className="mt-2 text-2xl font-semibold text-surface-50 md:text-3xl">继续浏览其它板块</h2>
+              <h2 className="text-[1.95rem] font-medium leading-[0.9] tracking-[-0.08em] text-[#F2F0E8] sm:text-[2.5rem] lg:text-[4.6rem] xl:text-[5.8rem]">
+                {renderHeadingWithAccent(continueBrowsingHeading, continueBrowsingAccentChar, 'text-[#FFB8DF]', 'continue-browsing')}
+              </h2>
             </div>
           </div>
 
-          <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-[7.5rem] grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6 lg:gap-3.5 xl:gap-4">
             {showcases.map((item) => {
               const itemColors = accentMap[item.accent];
               const isActive = item.slug === showcase.slug;
@@ -383,7 +523,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                 <motion.a
                   key={item.slug}
                   href={`#showcase/${item.slug}`}
-                  className={`group g2-card-lg relative overflow-hidden p-5 shadow-xl shadow-black/25 transition-colors ${
+                  className={`group g2-card-lg relative overflow-hidden p-4 shadow-xl shadow-black/25 transition-colors xl:p-5 ${
                     isActive
                       ? `${itemColors.glow} bg-black/38`
                       : 'bg-black/42'
@@ -410,8 +550,8 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                     </span>
                     <div className="mt-4 flex items-start justify-between gap-3">
                       <div>
-                        <h3 className="text-lg font-semibold text-surface-50">{item.title}</h3>
-                        <p className="mt-2 text-sm leading-relaxed text-surface-400 transition-colors duration-300 group-hover:text-surface-200">
+                        <h3 className="text-base font-semibold text-surface-50 xl:text-lg">{item.title}</h3>
+                        <p className="mt-2 text-xs leading-relaxed text-surface-400 transition-colors duration-300 group-hover:text-surface-200 xl:text-sm">
                           {item.description}
                         </p>
                       </div>
