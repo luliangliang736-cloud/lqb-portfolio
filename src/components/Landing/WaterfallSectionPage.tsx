@@ -362,7 +362,7 @@ export default function WaterfallSectionPage({ showcase, sectionId }: WaterfallS
 
   if (!currentSection) {
     return (
-      <main className="min-h-screen bg-white px-4 pt-28 pb-16 sm:px-5 lg:px-6 xl:px-8">
+      <main className="min-h-screen bg-[#F1F1F1] px-4 pt-28 pb-16 sm:px-5 lg:px-6 xl:px-8">
         <div className="mx-auto mt-20 w-full max-w-[1560px] px-1 md:mt-24 md:px-0">
           <p className="text-sm text-slate-500">当前分组不存在。</p>
           <div className="mt-6">
@@ -380,7 +380,7 @@ export default function WaterfallSectionPage({ showcase, sectionId }: WaterfallS
   }
 
   return (
-    <main className={`min-h-screen px-4 pt-28 pb-16 sm:px-5 lg:px-6 xl:px-8 ${usesDarkTheme ? 'bg-surface-950' : 'bg-white'}`}>
+    <main className={`min-h-screen px-4 pt-28 pb-16 sm:px-5 lg:px-6 xl:px-8 ${usesDarkTheme ? 'bg-surface-950' : 'bg-[#F1F1F1]'}`}>
       <div className="mx-auto w-full max-w-[1560px]">
         <section className="mt-20 px-1 md:mt-24 md:px-0">
           {usesEditorialHero ? (
@@ -633,7 +633,7 @@ export default function WaterfallSectionPage({ showcase, sectionId }: WaterfallS
                 ))}
               </div>
             ) : (
-              <div className="flex min-h-[320px] items-center justify-center rounded-[24px] border border-slate-200 bg-slate-50 px-6 text-center text-sm leading-relaxed text-slate-500">
+              <div className="flex min-h-[320px] items-center justify-center rounded-[24px] border border-slate-200 bg-[#F1F1F1] px-6 text-center text-sm leading-relaxed text-slate-500">
                 当前分组还没有内容。
               </div>
             )}
