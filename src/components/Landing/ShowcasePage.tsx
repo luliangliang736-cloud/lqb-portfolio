@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import { ArrowLeft, ChevronRight, X } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ArrowLeft, ChevronRight } from 'lucide-react';
+import { motion, useTransform } from 'framer-motion';
 import { accentMap, isVideoSrc, recentShowcaseMedia, showcaseMediaBySlug, showcases, type ShowcaseItem, type ShowcaseMediaItem } from '../../content/showcases';
 import { toAssetPath } from '../../utils/assetPath';
+import ImagePreviewOverlay from '../common/ImagePreviewOverlay';
+import { useMagneticMotion } from '../../hooks/useMagneticMotion';
 
 const sectionLabels = [
   '封面精选',
@@ -154,6 +156,120 @@ function renderHeadingWithAccent(heading: string, accentChar: string | undefined
   });
 }
 
+function WaterfallEntryCard({
+  section,
+  previewItem,
+  href,
+  index,
+  isActive,
+  isDimmed,
+  onHoverStart,
+  onHoverEnd,
+}: {
+  section: WaterfallSection;
+  previewItem: { src: string; title: string } | undefined;
+  href: string;
+  index: number;
+  isActive: boolean;
+  isDimmed: boolean;
+  onHoverStart: (id: WaterfallSectionId) => void;
+  onHoverEnd: () => void;
+}) {
+  const cardScale = isActive ? 1.1 : isDimmed ? 0.93 : 1;
+  const { x, y, handleMouseMove, handleMouseLeave } = useMagneticMotion({
+    strength: isActive ? 14 : 10,
+    stiffness: 170,
+    damping: 20,
+  });
+  const rotateY = useTransform(x, [-14, 14], [-3.2, 3.2]);
+  const rotateX = useTransform(y, [-14, 14], [3.2, -3.2]);
+
+  return (
+    <motion.a
+      href={href}
+      style={{
+        x,
+        y,
+        rotateX,
+        rotateY,
+        transformPerspective: 1400,
+        transformStyle: 'preserve-3d',
+      }}
+      initial={{ opacity: 0, y: 18, scale: 1, filter: 'saturate(1) brightness(1)' }}
+      animate={{
+        opacity: 1,
+        y: 0,
+        scale: cardScale,
+        filter: isDimmed ? 'saturate(0.88) brightness(0.9)' : 'saturate(1) brightness(1)',
+      }}
+      transition={{
+        opacity: { duration: 0.35, delay: index * 0.06 },
+        y: { duration: 0.35, delay: index * 0.06 },
+        scale: { type: 'spring', stiffness: 150, damping: 22, mass: 0.95 },
+        filter: { duration: 0.28 },
+      }}
+      className={`g2-card-xl group relative flex aspect-square w-full overflow-hidden border border-white/6 bg-[#0B0B0D] p-6 text-left shadow-xl transition-[box-shadow,background-color] duration-500 transform-gpu will-change-transform ${
+        isActive ? 'z-10 bg-[#0E0E11] shadow-2xl shadow-black/35' : 'z-0 shadow-xl shadow-black/12'
+      }`}
+      onMouseEnter={() => onHoverStart(section.id)}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => {
+        handleMouseLeave();
+        onHoverEnd();
+      }}
+    >
+      <div className="relative flex h-full w-full flex-col [transform:translateZ(0)]">
+        <div>
+          <div className="flex items-start justify-between gap-4">
+            <h2 className="text-[22px] font-medium tracking-tight text-surface-50 md:text-[30px]">
+              {section.title}
+            </h2>
+            <span className="inline-flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-black/40 text-white/55 transition-colors group-hover:text-white/75">
+              <ChevronRight size={12} />
+            </span>
+          </div>
+          <p className="mt-2.5 max-w-sm text-[11px] leading-relaxed text-surface-400 md:text-[13px]">
+            {section.description}
+          </p>
+        </div>
+        <div className="mt-5 flex min-h-0 flex-1 flex-col overflow-hidden rounded-[24px]">
+          {previewItem ? (
+            <div className="relative h-full min-h-[220px] overflow-hidden rounded-[24px]">
+              {isVideoSrc(previewItem.src) ? (
+                <video
+                  src={previewItem.src}
+                  className="block h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025]"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                />
+              ) : (
+                <img
+                  src={previewItem.src}
+                  alt={section.coverSrc ? '' : previewItem.title}
+                  className="block h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025]"
+                />
+              )}
+              {section.coverSrc ? null : (
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-4">
+                  <p className="text-sm font-medium text-surface-50">
+                    {previewItem.title}
+                  </p>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="flex h-full min-h-[220px] items-center justify-center rounded-[18px] border border-white/6 bg-black/20 px-6 text-center text-[12px] leading-relaxed text-surface-500 md:text-[13px]">
+              近期作品内容后续会按你指定的文件夹填入
+            </div>
+          )}
+        </div>
+      </div>
+    </motion.a>
+  );
+}
+
 export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
   const accentSurface = accentSurfaceMap[showcase.accent];
   const mediaItems = showcaseMediaBySlug[showcase.slug] ?? [];
@@ -198,10 +314,9 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
     : [];
   const [activeImage, setActiveImage] = useState<ActiveImageState>(null);
   const [previewScale, setPreviewScale] = useState(1);
-  const [openedWaterfallSection, setOpenedWaterfallSection] = useState<WaterfallSectionId | null>(null);
+  const [hoveredWaterfallSection, setHoveredWaterfallSection] = useState<WaterfallSectionId | null>(null);
   const canZoomIn = previewScale < MAX_PREVIEW_SCALE;
   const canZoomOut = previewScale > 0.26;
-  const currentWaterfallSection = waterfallSections.find((section) => section.id === openedWaterfallSection) ?? null;
 
   useEffect(() => {
     if (!activeImage) {
@@ -280,72 +395,26 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
               mediaItems.length ? (
                 <div className="space-y-8">
                   {showcase.slug === 'waterfall-collection' ? (
-                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
                       {waterfallSections.map((section, index) => {
                         const previewItem = section.coverSrc
                           ? { src: section.coverSrc, title: section.coverTitle ?? section.title }
                           : section.items[0];
+                        const isActive = hoveredWaterfallSection === section.id;
+                        const isDimmed = Boolean(hoveredWaterfallSection) && !isActive;
 
                         return (
-                        <motion.button
-                          key={section.title}
-                          type="button"
-                          onClick={() => setOpenedWaterfallSection(section.id)}
-                          className="g2-card-xl relative flex aspect-square w-full overflow-hidden border border-white/6 bg-[#0B0B0D] p-6 text-left shadow-xl shadow-black/15 transition-all duration-300 hover:border-white/12 hover:bg-[#0E0E11]"
-                          initial={{ opacity: 0, y: 18 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.35, delay: index * 0.06 }}
-                        >
-                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(110,255,156,0.1),transparent_42%)]" />
-                          <div className="relative flex h-full w-full flex-col">
-                            <div>
-                              <div className="flex items-start justify-between gap-4">
-                                <h2 className="text-[22px] font-medium tracking-tight text-surface-50 md:text-[30px]">
-                                  {section.title}
-                                </h2>
-                                <span className="inline-flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-black/40 text-white/55 transition-colors group-hover:text-white/75">
-                                  <ChevronRight size={12} />
-                                </span>
-                              </div>
-                              <p className="mt-2.5 max-w-sm text-[11px] leading-relaxed text-surface-400 md:text-[13px]">
-                                {section.description}
-                              </p>
-                            </div>
-                            <div className="mt-5 flex min-h-0 flex-1 flex-col overflow-hidden rounded-[24px]">
-                              {previewItem ? (
-                                <div className="relative h-full min-h-[220px] overflow-hidden rounded-[24px]">
-                                  {isVideoSrc(previewItem.src) ? (
-                                    <video
-                                      src={previewItem.src}
-                                      className="block h-full w-full object-cover"
-                                      autoPlay
-                                      muted
-                                      loop
-                                      playsInline
-                                    />
-                                  ) : (
-                                    <img
-                                      src={previewItem.src}
-                                      alt={section.coverSrc ? '' : previewItem.title}
-                                      className="block h-full w-full object-cover"
-                                    />
-                                  )}
-                                  {section.coverSrc ? null : (
-                                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-4">
-                                      <p className="text-sm font-medium text-surface-50">
-                                        {previewItem.title}
-                                      </p>
-                                    </div>
-                                  )}
-                                </div>
-                              ) : (
-                                <div className="flex h-full min-h-[220px] items-center justify-center rounded-[18px] border border-white/6 bg-black/20 px-6 text-center text-[12px] leading-relaxed text-surface-500 md:text-[13px]">
-                                  近期作品内容后续会按你指定的文件夹填入
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </motion.button>
+                          <WaterfallEntryCard
+                            key={section.title}
+                            section={section}
+                            previewItem={previewItem}
+                            href={`#showcase/${showcase.slug}/section/${section.id}`}
+                            index={index}
+                            isActive={isActive}
+                            isDimmed={isDimmed}
+                            onHoverStart={setHoveredWaterfallSection}
+                            onHoverEnd={() => setHoveredWaterfallSection(null)}
+                          />
                       )})}
                     </div>
                   ) : null}
@@ -506,13 +575,21 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
           </div>
 
         <section className="mt-[12.5rem] px-1 md:px-0">
-          <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+          <motion.div
+            className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between"
+            initial="rest"
+            whileHover="hover"
+          >
             <div>
-              <h2 className="text-[1.95rem] font-medium leading-[0.9] tracking-[-0.08em] text-[#F2F0E8] sm:text-[2.5rem] lg:text-[4.6rem] xl:text-[5.8rem]">
+              <motion.h2
+                className="text-[1.95rem] font-medium leading-[0.9] tracking-[-0.08em] text-[#F2F0E8] sm:text-[2.5rem] lg:text-[4.6rem] xl:text-[5.8rem]"
+                variants={headingLineVariants}
+                transition={{ type: 'spring', stiffness: 220, damping: 18, mass: 0.9 }}
+              >
                 {renderHeadingWithAccent(continueBrowsingHeading, continueBrowsingAccentChar, 'text-[#FFB8DF]', 'continue-browsing')}
-              </h2>
+              </motion.h2>
             </div>
-          </div>
+          </motion.div>
 
           <div className="mt-[7.5rem] grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6 lg:gap-3.5 xl:gap-4">
             {showcases.map((item) => {
@@ -570,153 +647,15 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
         </section>
       </div>
 
-      {currentWaterfallSection ? (
-        <div
-          className="fixed inset-0 z-[75] flex items-center justify-center bg-black/88 px-4 py-8 backdrop-blur-sm"
-          onClick={() => setOpenedWaterfallSection(null)}
-        >
-          <div
-            className="relative max-h-[calc(100vh-4rem)] w-full max-w-7xl overflow-auto rounded-[var(--radius-g2-xl)] bg-[#0A0A0C] p-6 shadow-2xl shadow-black/40 md:p-8"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <button
-              type="button"
-              onClick={() => setOpenedWaterfallSection(null)}
-              className="absolute top-5 right-5 inline-flex h-11 w-11 items-center justify-center text-surface-100 transition-colors hover:text-white/75"
-              aria-label="关闭作品分组预览"
-            >
-              <X size={18} />
-            </button>
-
-            <div className="pr-14">
-              <div className="mt-3 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-                <div>
-                  <h2 className="text-3xl font-semibold tracking-tight text-surface-50 md:text-5xl">
-                    {currentWaterfallSection.title}
-                  </h2>
-                  <p className="mt-3 max-w-2xl text-sm leading-relaxed text-surface-400 md:text-[15px]">
-                    {currentWaterfallSection.description}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {currentWaterfallSection.items.length ? (
-              <div className="mt-8 columns-2 [column-gap:1rem] md:columns-5">
-                {currentWaterfallSection.items.map((item, index) => {
-                  const Wrapper = item.id ? motion.a : motion.article;
-                  const wrapperProps = item.id
-                    ? { href: `#showcase/${showcase.slug}/project/${item.id}` }
-                    : {};
-
-                  return (
-                    <Wrapper
-                      key={`${showcase.slug}-${currentWaterfallSection.id}-${item.title}-${index}`}
-                      {...wrapperProps}
-                      className="g2-card-md mb-4 inline-block w-full break-inside-avoid bg-black/25 align-top shadow-xl shadow-black/10 transition-colors"
-                      initial={{ opacity: 0, y: 18 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.35, delay: index * 0.04 }}
-                    >
-                      {isVideoSrc(item.src) ? (
-                        <video
-                          src={item.src}
-                          className="block h-auto w-full bg-surface-950/60 object-cover"
-                          autoPlay
-                          muted
-                          loop
-                          playsInline
-                        />
-                      ) : (
-                        <button
-                          type="button"
-                          onClick={() => openImagePreview(item.src, item.title)}
-                          className="block w-full cursor-zoom-in overflow-hidden"
-                          aria-label={`全屏查看 ${item.title}`}
-                        >
-                          <img
-                            src={item.src}
-                            alt={item.title}
-                            className="block h-auto w-full bg-surface-950/60 object-cover"
-                          />
-                        </button>
-                      )}
-                    </Wrapper>
-                  );
-                })}
-              </div>
-            ) : (
-              <div className="mt-8 flex min-h-[320px] items-center justify-center rounded-[24px] border border-white/6 bg-black/18 px-6 text-center text-sm leading-relaxed text-surface-500">
-                近期作品内容暂未填充，等你给我文件夹后我会补进去。
-              </div>
-            )}
-          </div>
-        </div>
-      ) : null}
-
-      {activeImage ? (
-        <div
-          className="fixed inset-0 z-[80] flex items-center justify-center bg-black/90 px-4 py-8 backdrop-blur-sm"
-          onClick={() => setActiveImage(null)}
-        >
-          <button
-            type="button"
-            onClick={() => setActiveImage(null)}
-            className="absolute top-5 right-5 inline-flex h-11 w-11 items-center justify-center text-surface-100 transition-colors hover:text-white/75"
-            aria-label="关闭全屏预览"
-          >
-            <X size={18} />
-          </button>
-          <div
-            className="max-h-[calc(100vh-9rem)] max-w-full overflow-auto rounded-[var(--radius-g2-lg)]"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <img
-              src={activeImage.src}
-              alt={`${activeImage.title} 全屏预览`}
-              className="g2-card-lg object-contain shadow-2xl shadow-black/40"
-              style={{
-                width: `${Math.max(activeImage.width * previewScale, 1)}px`,
-                height: `${Math.max(activeImage.height * previewScale, 1)}px`,
-                maxWidth: 'none',
-                maxHeight: 'none',
-              }}
-            />
-          </div>
-          <div
-            className="absolute bottom-5 left-1/2 inline-flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/10 bg-black/55 p-1.5 text-sm text-surface-100 shadow-lg shadow-black/30"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <button
-              type="button"
-              onClick={() => setPreviewScale((value) => Math.max(0.25, Number((value - 0.25).toFixed(2))))}
-              disabled={!canZoomOut}
-              className={`rounded-full px-3 py-2 transition-colors ${
-                canZoomOut ? 'hover:bg-white/10' : 'cursor-not-allowed text-surface-500'
-              }`}
-            >
-              缩小
-            </button>
-            <button
-              type="button"
-              onClick={() => setPreviewScale(1)}
-              className="rounded-full px-3 py-2 transition-colors hover:bg-white/10"
-            >
-              1:1
-            </button>
-            <button
-              type="button"
-              onClick={() => setPreviewScale((value) => Math.min(MAX_PREVIEW_SCALE, Number((value + 0.25).toFixed(2))))}
-              disabled={!canZoomIn}
-              className={`rounded-full px-3 py-2 transition-colors ${
-                canZoomIn ? 'hover:bg-white/10' : 'cursor-not-allowed text-surface-500'
-              }`}
-            >
-              放大
-            </button>
-          </div>
-        </div>
-      ) : null}
+      <ImagePreviewOverlay
+        image={activeImage}
+        scale={previewScale}
+        maxScale={MAX_PREVIEW_SCALE}
+        canZoomIn={canZoomIn}
+        canZoomOut={canZoomOut}
+        onScaleChange={setPreviewScale}
+        onClose={() => setActiveImage(null)}
+      />
     </main>
   );
 }

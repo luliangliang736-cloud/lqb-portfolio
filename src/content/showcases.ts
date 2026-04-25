@@ -1,4 +1,4 @@
-﻿import type { LucideIcon } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { Clapperboard, ImageIcon, LayoutTemplate, PenTool, Rows3, Sparkles } from 'lucide-react';
 
 export type ShowcaseAccent = 'primary' | 'violet' | 'emerald' | 'amber' | 'rose' | 'sky';
@@ -101,7 +101,7 @@ const rawShowcases: ShowcaseItem[] = [
     slug: 'waterfall-collection',
     icon: Rows3,
     tag: 'Waterfall Collection',
-    title: '作品合集',
+    title: '工作项目',
     description: '2019-2026设计工作轨迹，走过一些弯路依旧保持passion',
     cta: '查看作品',
     accent: 'sky',

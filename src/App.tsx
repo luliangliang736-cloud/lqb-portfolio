@@ -9,6 +9,7 @@ import DesktopCompanion from './components/Desktop/DesktopCompanion';
 import ShowcasePage from './components/Landing/ShowcasePage';
 import ProjectDetailPage from './components/Landing/ProjectDetailPage';
 import MoreGalleryPage from './components/Landing/MoreGalleryPage';
+import WaterfallSectionPage, { isWaterfallSectionId } from './components/Landing/WaterfallSectionPage';
 import { showcaseMediaBySlug, showcases } from './content/showcases';
 
 const clickEmojis = ['✨', '💫', '🌟', '🎨', '🫧', '💥', '🌈', '🍀', '💖', '🎵'];
@@ -51,6 +52,7 @@ function getRouteState() {
       page: null,
       showcaseSlug: null,
       projectId: null,
+      sectionId: null,
     };
   }
 
@@ -59,6 +61,18 @@ function getRouteState() {
       page: 'more-gallery',
       showcaseSlug: null,
       projectId: null,
+      sectionId: null,
+    };
+  }
+
+  const sectionMatch = window.location.hash.match(/^#showcase\/([^/]+)\/section\/([^/]+)$/);
+
+  if (sectionMatch) {
+    return {
+      page: null,
+      showcaseSlug: sectionMatch[1] ?? null,
+      projectId: null,
+      sectionId: sectionMatch[2] ?? null,
     };
   }
 
@@ -69,6 +83,7 @@ function getRouteState() {
       page: null,
       showcaseSlug: projectMatch[1] ?? null,
       projectId: projectMatch[2] ?? null,
+      sectionId: null,
     };
   }
 
@@ -78,6 +93,7 @@ function getRouteState() {
     page: null,
     showcaseSlug: showcaseMatch?.[1] ?? null,
     projectId: null,
+    sectionId: null,
   };
 }
 
@@ -121,7 +137,7 @@ function App() {
     window.requestAnimationFrame(() => {
       window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     });
-  }, [desktopMode, routeState.page, routeState.projectId, routeState.showcaseSlug]);
+  }, [desktopMode, routeState.page, routeState.projectId, routeState.sectionId, routeState.showcaseSlug]);
 
   useEffect(() => {
     if (desktopMode || !emojiBursts.length) {
@@ -167,6 +183,9 @@ function App() {
   const activeShowcase = showcases.find((item) => item.slug === routeState.showcaseSlug) ?? null;
   const activeProject = activeShowcase && routeState.projectId
     ? (showcaseMediaBySlug[activeShowcase.slug] ?? []).find((item) => item.id === routeState.projectId) ?? null
+    : null;
+  const activeWaterfallSection = activeShowcase && isWaterfallSectionId(routeState.sectionId)
+    ? routeState.sectionId
     : null;
   const activeStandalonePage = routeState.page;
 
@@ -225,6 +244,8 @@ function App() {
       <Navbar />
       {activeStandalonePage === 'more-gallery' ? (
         <MoreGalleryPage />
+      ) : activeShowcase && activeWaterfallSection ? (
+        <WaterfallSectionPage showcase={activeShowcase} sectionId={activeWaterfallSection} />
       ) : activeShowcase && activeProject ? (
         <ProjectDetailPage showcase={activeShowcase} project={activeProject} />
       ) : activeShowcase ? (

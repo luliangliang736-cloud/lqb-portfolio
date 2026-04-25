@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ArrowLeft, X } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { isVideoSrc, type ShowcaseItem, type ShowcaseMediaItem } from '../../content/showcases';
+import ImagePreviewOverlay from '../common/ImagePreviewOverlay';
 
 type ProjectDetailPageProps = {
   showcase: ShowcaseItem;
@@ -265,69 +266,15 @@ export default function ProjectDetailPage({ showcase, project }: ProjectDetailPa
         </section>
       </div>
 
-      {activeImage ? (
-        <div
-          className="fixed inset-0 z-[80] flex items-center justify-center bg-black/90 px-4 py-8 backdrop-blur-sm"
-          onClick={() => setActiveImage(null)}
-        >
-          <button
-            type="button"
-            onClick={() => setActiveImage(null)}
-            className="absolute top-5 right-5 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-black/45 text-surface-100 transition-colors hover:border-white/20 hover:bg-black/65"
-            aria-label="关闭全屏预览"
-          >
-            <X size={18} />
-          </button>
-          <div
-            className="max-h-[calc(100vh-9rem)] max-w-full overflow-auto rounded-[var(--radius-g2-lg)]"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <img
-              src={activeImage.src}
-              alt={`${project.title} 全屏预览`}
-              className="g2-card-lg object-contain shadow-2xl shadow-black/40"
-              style={{
-                width: `${Math.max(activeImage.width * previewScale, 1)}px`,
-                height: `${Math.max(activeImage.height * previewScale, 1)}px`,
-                maxWidth: 'none',
-                maxHeight: 'none',
-              }}
-            />
-          </div>
-          <div
-            className="absolute bottom-5 left-1/2 inline-flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/10 bg-black/55 p-1.5 text-sm text-surface-100 shadow-lg shadow-black/30"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <button
-              type="button"
-              onClick={() => setPreviewScale((value) => Math.max(0.25, Number((value - 0.25).toFixed(2))))}
-              disabled={!canZoomOut}
-              className={`rounded-full px-3 py-2 transition-colors ${
-                canZoomOut ? 'hover:bg-white/10' : 'cursor-not-allowed text-surface-500'
-              }`}
-            >
-              缩小
-            </button>
-            <button
-              type="button"
-              onClick={() => setPreviewScale(1)}
-              className="rounded-full px-3 py-2 transition-colors hover:bg-white/10"
-            >
-              1:1
-            </button>
-            <button
-              type="button"
-              onClick={() => setPreviewScale((value) => Math.min(MAX_PREVIEW_SCALE, Number((value + 0.25).toFixed(2))))}
-              disabled={!canZoomIn}
-              className={`rounded-full px-3 py-2 transition-colors ${
-                canZoomIn ? 'hover:bg-white/10' : 'cursor-not-allowed text-surface-500'
-              }`}
-            >
-              放大
-            </button>
-          </div>
-        </div>
-      ) : null}
+      <ImagePreviewOverlay
+        image={activeImage ? { ...activeImage, title: project.title } : null}
+        scale={previewScale}
+        maxScale={MAX_PREVIEW_SCALE}
+        canZoomIn={canZoomIn}
+        canZoomOut={canZoomOut}
+        onScaleChange={setPreviewScale}
+        onClose={() => setActiveImage(null)}
+      />
     </main>
   );
 }

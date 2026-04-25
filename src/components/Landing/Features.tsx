@@ -711,7 +711,7 @@ function FeatureCard({
     >
       <div className="flex h-full flex-col p-6 sm:p-8 xl:p-10 [transform:translateZ(0)]">
         <div>
-          <span className={`mb-6 inline-flex self-start items-center gap-1.5 rounded-full border px-3 py-1 text-xs ${colors.tag}`}>
+          <span className={`mb-6 inline-flex self-start items-center gap-1.5 text-sm font-medium ${colors.ctaBg}`}>
             <feature.icon size={12} />
             {feature.tag}
           </span>
