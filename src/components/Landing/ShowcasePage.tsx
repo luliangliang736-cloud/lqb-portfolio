@@ -273,7 +273,7 @@ function WaterfallEntryCard({
 export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
   const accentSurface = accentSurfaceMap[showcase.accent];
   const mediaItems = showcaseMediaBySlug[showcase.slug] ?? [];
-  const waterfallHeroBanner = toAssetPath('/assets/work-collection-banner.png?v=20260425-1927');
+  const waterfallHeroBanner = toAssetPath('/assets/work-collection-banner.png?v=20260425-2004');
   const usesWaterfallLayout = showcase.slug === 'waterfall-collection' || showcase.slug === 'beyond-design';
   const waterfallHeroRef = useRef<HTMLDivElement | null>(null);
   const showcaseHeading = showcaseHeadingMap[showcase.slug] ?? showcase.title;
