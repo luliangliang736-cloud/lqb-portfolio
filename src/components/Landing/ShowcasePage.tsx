@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ChevronRight } from 'lucide-react';
-import { motion, useTransform } from 'framer-motion';
+import { motion, useInView, useMotionTemplate, useScroll, useTransform } from 'framer-motion';
 import { accentMap, isVideoSrc, recentShowcaseMedia, showcaseMediaBySlug, showcases, type ShowcaseItem, type ShowcaseMediaItem } from '../../content/showcases';
 import { toAssetPath } from '../../utils/assetPath';
 import ImagePreviewOverlay from '../common/ImagePreviewOverlay';
@@ -273,7 +273,9 @@ function WaterfallEntryCard({
 export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
   const accentSurface = accentSurfaceMap[showcase.accent];
   const mediaItems = showcaseMediaBySlug[showcase.slug] ?? [];
+  const waterfallHeroBanner = toAssetPath('/assets/work-collection-banner.png?v=20260425-1927');
   const usesWaterfallLayout = showcase.slug === 'waterfall-collection' || showcase.slug === 'beyond-design';
+  const waterfallHeroRef = useRef<HTMLDivElement | null>(null);
   const showcaseHeading = showcaseHeadingMap[showcase.slug] ?? showcase.title;
   const showcaseGridItems = mediaItems.length
     ? [
@@ -317,6 +319,14 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
   const [hoveredWaterfallSection, setHoveredWaterfallSection] = useState<WaterfallSectionId | null>(null);
   const canZoomIn = previewScale < MAX_PREVIEW_SCALE;
   const canZoomOut = previewScale > 0.26;
+  const waterfallHeroInView = useInView(waterfallHeroRef, { once: true, margin: '-80px' });
+  const { scrollYProgress: waterfallHeroProgress } = useScroll({
+    target: waterfallHeroRef,
+    offset: ['start 88%', 'end 12%'],
+  });
+  const waterfallHeroScale = useTransform(waterfallHeroProgress, [0, 0.5, 1], [1.52, 1.18, 1.52]);
+  const waterfallHeroObjectY = useTransform(waterfallHeroProgress, [0, 1], ['73%', '-11%']);
+  const waterfallHeroObjectPosition = useMotionTemplate`50% ${waterfallHeroObjectY}`;
 
   useEffect(() => {
     if (!activeImage) {
@@ -395,27 +405,38 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
               mediaItems.length ? (
                 <div className="space-y-8">
                   {showcase.slug === 'waterfall-collection' ? (
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
-                      {waterfallSections.map((section, index) => {
-                        const previewItem = section.coverSrc
-                          ? { src: section.coverSrc, title: section.coverTitle ?? section.title }
-                          : section.items[0];
-                        const isActive = hoveredWaterfallSection === section.id;
-                        const isDimmed = Boolean(hoveredWaterfallSection) && !isActive;
+                    <div>
+                      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+                        {waterfallSections.map((section, index) => {
+                          const previewItem = section.coverSrc
+                            ? { src: section.coverSrc, title: section.coverTitle ?? section.title }
+                            : section.items[0];
+                          const isActive = hoveredWaterfallSection === section.id;
+                          const isDimmed = Boolean(hoveredWaterfallSection) && !isActive;
 
-                        return (
-                          <WaterfallEntryCard
-                            key={section.title}
-                            section={section}
-                            previewItem={previewItem}
-                            href={`#showcase/${showcase.slug}/section/${section.id}`}
-                            index={index}
-                            isActive={isActive}
-                            isDimmed={isDimmed}
-                            onHoverStart={setHoveredWaterfallSection}
-                            onHoverEnd={() => setHoveredWaterfallSection(null)}
-                          />
-                      )})}
+                          return (
+                            <WaterfallEntryCard
+                              key={section.title}
+                              section={section}
+                              previewItem={previewItem}
+                              href={`#showcase/${showcase.slug}/section/${section.id}`}
+                              index={index}
+                              isActive={isActive}
+                              isDimmed={isDimmed}
+                              onHoverStart={setHoveredWaterfallSection}
+                              onHoverEnd={() => setHoveredWaterfallSection(null)}
+                            />
+                        )})}
+                      </div>
+                      <div className="mt-12 flex justify-end md:mt-16">
+                        <a
+                          href="#features"
+                          className="inline-flex items-center gap-2 text-sm text-surface-300 transition-colors hover:text-surface-100"
+                        >
+                          <ArrowLeft size={16} />
+                          返回作品区
+                        </a>
+                      </div>
                     </div>
                   ) : null}
                   {showcase.slug === 'waterfall-collection' ? null : (
@@ -562,17 +583,41 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                 ))}
               </div>
             )}
+
+            {showcase.slug === 'waterfall-collection' ? (
+              <div className="relative mt-72 pb-24 md:mt-96 md:pb-32">
+                <motion.div
+                  ref={waterfallHeroRef}
+                  className="relative left-1/2 h-[390px] w-screen -translate-x-1/2 overflow-hidden bg-[#080809] md:h-[540px]"
+                  initial={{ opacity: 0, y: 28, filter: 'blur(8px)' }}
+                  animate={waterfallHeroInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <motion.img
+                    src={waterfallHeroBanner}
+                    alt="Work collection banner"
+                    className="absolute inset-0 h-full w-full object-cover will-change-transform"
+                    style={{
+                      scale: waterfallHeroScale,
+                      objectPosition: waterfallHeroObjectPosition,
+                    }}
+                  />
+                </motion.div>
+              </div>
+            ) : null}
           </div>
 
-          <div className="mt-10 flex justify-end">
-            <a
-              href="#features"
-              className="inline-flex items-center gap-2 text-sm text-surface-300 transition-colors hover:text-surface-100"
-            >
-              <ArrowLeft size={16} />
-              返回作品区
-            </a>
-          </div>
+          {showcase.slug === 'waterfall-collection' ? null : (
+            <div className="mt-10 flex justify-end">
+              <a
+                href="#features"
+                className="inline-flex items-center gap-2 text-sm text-surface-300 transition-colors hover:text-surface-100"
+              >
+                <ArrowLeft size={16} />
+                返回作品区
+              </a>
+            </div>
+          )}
 
         <section className="mt-[12.5rem] px-1 md:px-0">
           <motion.div
