@@ -156,6 +156,44 @@ function renderHeadingWithAccent(heading: string, accentChar: string | undefined
   });
 }
 
+function renderHeadingWithAccentIndexes(
+  heading: string,
+  accentIndexes: number[],
+  accentColorClass = 'text-[#9CFF3F]',
+  keyPrefix = heading,
+) {
+  const accentIndexSet = new Set(accentIndexes);
+  let wordIndex = 0;
+  let charIndexAcrossWords = 0;
+
+  return heading.split(' ').map((word, index, words) => {
+    const currentWordIndex = wordIndex;
+    wordIndex += 1;
+
+    return (
+      <motion.span
+        key={`${keyPrefix}-${word}-${index}`}
+        className="inline-block"
+        variants={headingWordVariants}
+        custom={currentWordIndex}
+        transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8, delay: currentWordIndex * 0.02 }}
+      >
+        {word.split('').map((char, charIndex) => {
+          const shouldAccent = accentIndexSet.has(charIndexAcrossWords);
+          charIndexAcrossWords += 1;
+
+          return (
+            <span key={`${keyPrefix}-${word}-${char}-${charIndex}`} className={shouldAccent ? accentColorClass : undefined}>
+              {char}
+            </span>
+          );
+        })}
+        {index < words.length - 1 ? <span className="inline-block w-[0.22em]" aria-hidden="true" /> : null}
+      </motion.span>
+    );
+  });
+}
+
 function WaterfallEntryCard({
   section,
   previewItem,
@@ -273,7 +311,13 @@ function WaterfallEntryCard({
 export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
   const accentSurface = accentSurfaceMap[showcase.accent];
   const mediaItems = showcaseMediaBySlug[showcase.slug] ?? [];
-  const waterfallHeroBanner = toAssetPath('/assets/work-collection-banner.png?v=20260425-2004');
+  const waterfallHeroBanner = toAssetPath(
+    showcase.slug === 'creative-visuals'
+      ? '/assets/showcases/creative-visuals/retro-banner.jpg?v=20260426c'
+      : showcase.slug === 'form-design'
+        ? '/assets/showcases/form-design/computer-banner.jpg?v=20260426g'
+      : '/assets/work-collection-banner.jpg?v=20260426a',
+  );
   const usesWaterfallLayout = showcase.slug === 'waterfall-collection' || showcase.slug === 'beyond-design';
   const waterfallHeroRef = useRef<HTMLDivElement | null>(null);
   const showcaseHeading = showcaseHeadingMap[showcase.slug] ?? showcase.title;
@@ -428,15 +472,6 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                             />
                         )})}
                       </div>
-                      <div className="mt-12 flex justify-end md:mt-16">
-                        <a
-                          href="#features"
-                          className="inline-flex items-center gap-2 text-sm text-surface-300 transition-colors hover:text-surface-100"
-                        >
-                          <ArrowLeft size={16} />
-                          返回作品区
-                        </a>
-                      </div>
                     </div>
                   ) : null}
                   {showcase.slug === 'waterfall-collection' ? null : (
@@ -484,140 +519,175 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                       })}
                     </div>
                   )}
+                  <div className="mt-12 flex justify-end md:mt-16">
+                    <a
+                      href="#features"
+                      className="inline-flex items-center gap-2 text-sm text-surface-300 transition-colors hover:text-surface-100"
+                    >
+                      <ArrowLeft size={16} />
+                      返回作品区
+                    </a>
+                  </div>
                 </div>
               ) : (
                 <div className="min-h-[260px]" />
               )
             ) : (
-              <div className="grid grid-cols-2 items-start gap-4 md:grid-cols-4 lg:gap-5">
-                {showcaseGridItems.map((item, index) => (
-                  item.id ? (
-                    <motion.a
-                      key={`${showcase.slug}-${item.title}-${index}`}
-                      href={`#showcase/${showcase.slug}/project/${item.id}`}
-                      className="group g2-card-lg self-start bg-[#1E1E1E] p-4 transition-colors hover:bg-[#1E1E1E]"
-                      initial={{ opacity: 0, y: 18 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      whileHover={{
-                        y: -10,
-                        scale: 1.03,
-                        rotateX: 3.6,
-                        rotateY: index % 2 === 0 ? -3 : 3,
-                        boxShadow: '0 26px 54px rgba(0,0,0,0.3)',
-                      }}
-                      transition={{ type: 'spring', stiffness: 170, damping: 18, mass: 1, delay: index * 0.06 }}
-                      style={{ transformPerspective: 1400, transformStyle: 'preserve-3d' }}
-                    >
-                      <div className="flex items-center justify-between gap-3">
-                        <span className="text-sm font-medium leading-5 text-surface-200 transition-colors duration-300 group-hover:text-surface-50">{item.title}</span>
-                        <span className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-black/40 text-white/55 transition-colors duration-300 group-hover:bg-black/55 group-hover:text-white/75">
-                          <ChevronRight size={10} />
-                        </span>
-                      </div>
-                      {item.src ? (
-                        isVideoSrc(item.src) ? (
-                          <video
-                            src={item.src}
-                            className={`g2-card-md mt-4 block aspect-[3/4] w-full object-cover shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
-                            autoPlay
-                            muted
-                            loop
-                            playsInline
-                          />
-                        ) : (
-                          <img
-                            src={item.src}
-                            alt={item.title}
-                            className={`g2-card-md mt-4 block aspect-[3/4] w-full object-cover shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
-                          />
-                        )
-                      ) : (
-                        <div className={`g2-card-md mt-4 flex aspect-[3/4] items-center justify-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}>
-                          <showcase.icon size={28} className="text-surface-600 transition-colors duration-300 group-hover:text-surface-400" />
+              <div>
+                <div className="grid grid-cols-2 items-start gap-4 md:grid-cols-4 lg:gap-5">
+                  {showcaseGridItems.map((item, index) => (
+                    item.id ? (
+                      <motion.a
+                        key={`${showcase.slug}-${item.title}-${index}`}
+                        href={`#showcase/${showcase.slug}/project/${item.id}`}
+                        className="group g2-card-lg self-start bg-[#1E1E1E] p-4 transition-colors hover:bg-[#1E1E1E]"
+                        initial={{ opacity: 0, y: 18 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        whileHover={{
+                          y: -10,
+                          scale: 1.03,
+                          rotateX: 3.6,
+                          rotateY: index % 2 === 0 ? -3 : 3,
+                          boxShadow: '0 26px 54px rgba(0,0,0,0.3)',
+                        }}
+                        transition={{ type: 'spring', stiffness: 170, damping: 18, mass: 1, delay: index * 0.06 }}
+                        style={{ transformPerspective: 1400, transformStyle: 'preserve-3d' }}
+                      >
+                        <div className="flex items-center justify-between gap-3">
+                          <span className="text-sm font-medium leading-5 text-surface-200 transition-colors duration-300 group-hover:text-surface-50">{item.title}</span>
+                          <span className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-black/40 text-white/55 transition-colors duration-300 group-hover:bg-black/55 group-hover:text-white/75">
+                            <ChevronRight size={10} />
+                          </span>
                         </div>
-                      )}
-                    </motion.a>
-                  ) : (
-                    <motion.article
-                      key={`${showcase.slug}-${item.title}-${index}`}
-                      className="group g2-card-lg self-start bg-[#1E1E1E] p-4"
-                      initial={{ opacity: 0, y: 18 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      whileHover={{
-                        y: -8,
-                        scale: 1.022,
-                        rotateX: 3,
-                        rotateY: index % 2 === 0 ? -2.4 : 2.4,
-                        boxShadow: '0 22px 44px rgba(0,0,0,0.24)',
-                      }}
-                      transition={{ type: 'spring', stiffness: 170, damping: 18, mass: 1, delay: index * 0.06 }}
-                      style={{ transformPerspective: 1400, transformStyle: 'preserve-3d' }}
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium text-surface-200 transition-colors duration-300 group-hover:text-surface-50">{item.title}</span>
-                      </div>
-                      {item.src ? (
-                        isVideoSrc(item.src) ? (
-                          <video
-                            src={item.src}
-                            className={`g2-card-md mt-4 block aspect-[3/4] w-full object-cover shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
-                            autoPlay
-                            muted
-                            loop
-                            playsInline
-                          />
+                        {item.src ? (
+                          isVideoSrc(item.src) ? (
+                            <video
+                              src={item.src}
+                              className={`g2-card-md mt-4 block aspect-[3/4] w-full object-cover shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
+                              autoPlay
+                              muted
+                              loop
+                              playsInline
+                            />
+                          ) : (
+                            <img
+                              src={item.src}
+                              alt={item.title}
+                              className={`g2-card-md mt-4 block aspect-[3/4] w-full object-cover shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
+                            />
+                          )
                         ) : (
-                          <img
-                            src={item.src}
-                            alt={item.title}
-                            className={`g2-card-md mt-4 block aspect-[3/4] w-full object-cover shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
-                          />
-                        )
-                      ) : (
-                        <div className={`g2-card-md mt-4 flex aspect-[3/4] items-center justify-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}>
-                          <showcase.icon size={28} className="text-surface-600 transition-colors duration-300 group-hover:text-surface-400" />
+                          <div className={`g2-card-md mt-4 flex aspect-[3/4] items-center justify-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}>
+                            <showcase.icon size={28} className="text-surface-600 transition-colors duration-300 group-hover:text-surface-400" />
+                          </div>
+                        )}
+                      </motion.a>
+                    ) : (
+                      <motion.article
+                        key={`${showcase.slug}-${item.title}-${index}`}
+                        className="group g2-card-lg self-start bg-[#1E1E1E] p-4"
+                        initial={{ opacity: 0, y: 18 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        whileHover={{
+                          y: -8,
+                          scale: 1.022,
+                          rotateX: 3,
+                          rotateY: index % 2 === 0 ? -2.4 : 2.4,
+                          boxShadow: '0 22px 44px rgba(0,0,0,0.24)',
+                        }}
+                        transition={{ type: 'spring', stiffness: 170, damping: 18, mass: 1, delay: index * 0.06 }}
+                        style={{ transformPerspective: 1400, transformStyle: 'preserve-3d' }}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-medium text-surface-200 transition-colors duration-300 group-hover:text-surface-50">{item.title}</span>
                         </div>
-                      )}
-                    </motion.article>
-                  )
-                ))}
+                        {item.src ? (
+                          isVideoSrc(item.src) ? (
+                            <video
+                              src={item.src}
+                              className={`g2-card-md mt-4 block aspect-[3/4] w-full object-cover shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
+                              autoPlay
+                              muted
+                              loop
+                              playsInline
+                            />
+                          ) : (
+                            <img
+                              src={item.src}
+                              alt={item.title}
+                              className={`g2-card-md mt-4 block aspect-[3/4] w-full object-cover shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
+                            />
+                          )
+                        ) : (
+                          <div className={`g2-card-md mt-4 flex aspect-[3/4] items-center justify-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}>
+                            <showcase.icon size={28} className="text-surface-600 transition-colors duration-300 group-hover:text-surface-400" />
+                          </div>
+                        )}
+                      </motion.article>
+                    )
+                  ))}
+                </div>
+                <div className="mt-12 flex justify-end md:mt-16">
+                  <a
+                    href="#features"
+                    className="inline-flex items-center gap-2 text-sm text-surface-300 transition-colors hover:text-surface-100"
+                  >
+                    <ArrowLeft size={16} />
+                    返回作品区
+                  </a>
+                </div>
               </div>
             )}
 
-            {showcase.slug === 'waterfall-collection' ? (
-              <div className="relative mt-72 pb-24 md:mt-96 md:pb-32">
-                <motion.div
-                  ref={waterfallHeroRef}
-                  className="relative left-1/2 h-[390px] w-screen -translate-x-1/2 overflow-hidden bg-[#080809] md:h-[540px]"
-                  initial={{ opacity: 0, y: 28, filter: 'blur(8px)' }}
-                  animate={waterfallHeroInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
-                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <motion.img
-                    src={waterfallHeroBanner}
-                    alt="Work collection banner"
-                    className="absolute inset-0 h-full w-full object-cover will-change-transform"
-                    style={{
-                      scale: waterfallHeroScale,
-                      objectPosition: waterfallHeroObjectPosition,
-                    }}
-                  />
-                </motion.div>
-              </div>
-            ) : null}
-          </div>
-
-          {showcase.slug === 'waterfall-collection' ? null : (
-            <div className="mt-10 flex justify-end">
-              <a
-                href="#features"
-                className="inline-flex items-center gap-2 text-sm text-surface-300 transition-colors hover:text-surface-100"
+            <div className="relative mt-48 pb-24 md:mt-64 md:pb-32">
+              <motion.div
+                className="mx-auto mb-40 flex w-full max-w-[1560px] justify-center px-1 text-center md:mb-52 md:px-0"
+                initial="rest"
+                whileHover="hover"
               >
-                <ArrowLeft size={16} />
-                返回作品区
-              </a>
+                <div className="max-w-[980px]">
+                  <motion.p
+                    className="whitespace-nowrap text-[1.95rem] font-medium uppercase leading-[0.9] tracking-[-0.08em] text-[#F2F0E8] sm:text-[2.5rem] lg:text-[4.6rem] xl:text-[5.8rem]"
+                    variants={headingLineVariants}
+                    transition={{ type: 'spring', stiffness: 220, damping: 18, mass: 0.9 }}
+                  >
+                    {renderHeadingWithAccentIndexes('STOP OVERTHINKING', [2], 'text-[#FFB8DF]', `${showcase.slug}-quote-line-1`)}
+                  </motion.p>
+                  <motion.p
+                    className="mt-2 text-[1.95rem] font-medium uppercase leading-[0.9] tracking-[-0.08em] text-[#F2F0E8] sm:text-[2.5rem] lg:text-[4.6rem] xl:text-[5.8rem]"
+                    variants={headingLineVariants}
+                    transition={{ type: 'spring', stiffness: 220, damping: 18, mass: 0.9 }}
+                  >
+                    {renderHeadingWithAccentIndexes('JUST DO IT', [6], 'text-[#9CFF3F]', `${showcase.slug}-quote-line-2`)}
+                  </motion.p>
+                  <motion.p
+                    className="mt-2 text-[1.95rem] font-medium uppercase leading-[0.9] tracking-[-0.08em] text-white/72 sm:text-[2.5rem] lg:text-[4.6rem] xl:text-[5.8rem]"
+                    variants={headingLineVariants}
+                    transition={{ type: 'spring', stiffness: 220, damping: 18, mass: 0.9 }}
+                  >
+                    {renderHeadingWithAccentIndexes('FOR FUTURE', [], 'text-[#9CFF3F]', `${showcase.slug}-quote-line-3`)}
+                  </motion.p>
+                </div>
+              </motion.div>
+              <motion.div
+                ref={waterfallHeroRef}
+                className="relative left-1/2 h-[390px] w-screen -translate-x-1/2 overflow-hidden bg-[#080809] md:h-[540px]"
+                initial={{ opacity: 0, y: 28, filter: 'blur(8px)' }}
+                animate={waterfallHeroInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <motion.img
+                  src={waterfallHeroBanner}
+                  alt={`${showcase.title} banner`}
+                  className="absolute inset-0 h-full w-full object-cover will-change-transform"
+                  style={{
+                    scale: waterfallHeroScale,
+                    objectPosition: waterfallHeroObjectPosition,
+                  }}
+                />
+              </motion.div>
             </div>
-          )}
+          </div>
 
         <section className="mt-[12.5rem] px-1 md:px-0">
           <motion.div

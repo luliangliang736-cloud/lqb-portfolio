@@ -116,7 +116,7 @@ const collageSpiralOrderIndex = Object.fromEntries(
   collageSpiralOrder.map((cardIndex, orderIndex) => [cardIndex, orderIndex]),
 );
 
-const parallaxPanelImage = toAssetPath('/assets/parallax-theater.webp');
+const parallaxPanelImage = toAssetPath('/assets/parallax-rainy-computer.jpg');
 const homeInfiniteScrollAssetVersion = '20260423-2';
 const recentWorksItems = Array.from({ length: 13 }, (_, index) => ({
   title: `首页无限滚动 ${index + 1}`,

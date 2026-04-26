@@ -90,7 +90,7 @@ export default function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium tracking-[0.01em] text-surface-400 hover:text-surface-50 transition-colors"
+                className="text-sm font-medium tracking-[0.01em] text-surface-400 transition-colors hover:text-[#9CFF3F]"
               >
                 {link.label}
               </a>
@@ -131,7 +131,7 @@ export default function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="block text-sm font-medium tracking-[0.01em] text-surface-400 hover:text-surface-50 py-2"
+                className="block py-2 text-sm font-medium tracking-[0.01em] text-surface-400 transition-colors hover:text-[#9CFF3F]"
                 onClick={() => setMobileOpen(false)}
               >
                 {link.label}
