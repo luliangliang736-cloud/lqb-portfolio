@@ -3,6 +3,7 @@ import { ArrowLeft, ChevronRight } from 'lucide-react';
 import { motion, useInView, useMotionTemplate, useScroll, useTransform } from 'framer-motion';
 import { accentMap, isVideoSrc, recentShowcaseMedia, showcaseMediaBySlug, showcases, type ShowcaseItem, type ShowcaseMediaItem } from '../../content/showcases';
 import { toAssetPath } from '../../utils/assetPath';
+import { getOptimizedImageSrc } from '../../utils/optimizedMedia';
 import ImagePreviewOverlay from '../common/ImagePreviewOverlay';
 import { useMagneticMotion } from '../../hooks/useMagneticMotion';
 
@@ -280,13 +281,16 @@ function WaterfallEntryCard({
                   autoPlay
                   muted
                   loop
+                  preload="metadata"
                   playsInline
                 />
               ) : (
                 <img
-                  src={previewItem.src}
+                  src={getOptimizedImageSrc(previewItem.src)}
                   alt={section.coverSrc ? '' : previewItem.title}
                   className="block h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025]"
+                  loading="lazy"
+                  decoding="async"
                 />
               )}
               {section.coverSrc ? null : (
@@ -498,6 +502,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                                 autoPlay
                                 muted
                                 loop
+                                preload="metadata"
                                 playsInline
                               />
                             ) : (
@@ -508,9 +513,12 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                                 aria-label={`全屏查看 ${item.title}`}
                               >
                                 <img
-                                  src={item.src}
+                                  src={getOptimizedImageSrc(item.src)}
                                   alt={item.title}
                                   className="block h-auto w-full bg-surface-950/60 object-cover"
+                                  loading={index < 4 ? 'eager' : 'lazy'}
+                                  decoding="async"
+                                  fetchPriority={index < 2 ? 'high' : 'low'}
                                 />
                               </button>
                             )}
@@ -567,13 +575,17 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                               autoPlay
                               muted
                               loop
+                              preload="metadata"
                               playsInline
                             />
                           ) : (
                             <img
-                              src={item.src}
+                              src={getOptimizedImageSrc(item.src)}
                               alt={item.title}
                               className={`g2-card-md mt-4 block aspect-[3/4] w-full object-cover shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
+                              loading={index < 4 ? 'eager' : 'lazy'}
+                              decoding="async"
+                              fetchPriority={index < 2 ? 'high' : 'low'}
                             />
                           )
                         ) : (
@@ -609,13 +621,17 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                               autoPlay
                               muted
                               loop
+                              preload="metadata"
                               playsInline
                             />
                           ) : (
                             <img
-                              src={item.src}
+                              src={getOptimizedImageSrc(item.src)}
                               alt={item.title}
                               className={`g2-card-md mt-4 block aspect-[3/4] w-full object-cover shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
+                              loading={index < 4 ? 'eager' : 'lazy'}
+                              decoding="async"
+                              fetchPriority={index < 2 ? 'high' : 'low'}
                             />
                           )
                         ) : (
@@ -728,9 +744,11 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                   {item.coverSrc ? (
                     <>
                       <img
-                        src={item.coverSrc}
+                        src={getOptimizedImageSrc(item.coverSrc)}
                         alt={`${item.title} 封面`}
                         className="absolute inset-0 h-full w-full scale-[1.05] object-cover opacity-0 transition-all duration-500 ease-out group-hover:scale-100 group-hover:opacity-100"
+                        loading="lazy"
+                        decoding="async"
                       />
                       <div className="absolute inset-0 bg-gradient-to-r from-black via-black/72 to-black/28 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                     </>

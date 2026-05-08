@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { isVideoSrc, type ShowcaseItem, type ShowcaseMediaItem } from '../../content/showcases';
+import { getOptimizedImageSrc } from '../../utils/optimizedMedia';
 import ImagePreviewOverlay from '../common/ImagePreviewOverlay';
 
 type ProjectDetailPageProps = {
@@ -118,7 +119,7 @@ export default function ProjectDetailPage({ showcase, project }: ProjectDetailPa
             resolve([src, ratio]);
           };
           image.onerror = () => resolve([src, 1.25]);
-          image.src = src;
+          image.src = getOptimizedImageSrc(src);
         })),
       );
 
@@ -231,6 +232,7 @@ export default function ProjectDetailPage({ showcase, project }: ProjectDetailPa
                           src={src}
                           className={`block h-auto w-full object-contain shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
                           controls
+                          preload="metadata"
                           playsInline
                         />
                       ) : (
@@ -241,9 +243,12 @@ export default function ProjectDetailPage({ showcase, project }: ProjectDetailPa
                           aria-label={`全屏查看 ${project.title} ${index + 1}`}
                         >
                           <img
-                            src={src}
+                            src={getOptimizedImageSrc(src)}
                             alt={`${project.title} ${index + 1}`}
                             className={`block h-auto w-full object-contain shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}
+                            loading={index < 4 ? 'eager' : 'lazy'}
+                            decoding="async"
+                            fetchPriority={index < 2 ? 'high' : 'low'}
                           />
                         </button>
                       )}

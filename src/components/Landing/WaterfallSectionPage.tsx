@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { isVideoSrc, recentShowcaseMedia, showcaseMediaBySlug, type ShowcaseItem, type ShowcaseMediaItem } from '../../content/showcases';
 import ImagePreviewOverlay from '../common/ImagePreviewOverlay';
 import { toAssetPath } from '../../utils/assetPath';
+import { getOptimizedImageSrc } from '../../utils/optimizedMedia';
 
 export type WaterfallSectionId = 'recent' | 'archive';
 
@@ -324,7 +325,7 @@ export default function WaterfallSectionPage({ showcase, sectionId, caseId = nul
             resolve([item.src, ratio]);
           };
           image.onerror = () => resolve([item.src, 1.25]);
-          image.src = item.src;
+          image.src = getOptimizedImageSrc(item.src);
         })),
       );
 
@@ -639,9 +640,12 @@ export default function WaterfallSectionPage({ showcase, sectionId, caseId = nul
                 <>
                   <div className="mt-40 overflow-hidden rounded-[32px] border border-white/8 bg-black/30 shadow-2xl shadow-black/25 md:mt-56 lg:mt-64">
                     <img
-                      src={wuyouNightKvImage}
+                      src={getOptimizedImageSrc(wuyouNightKvImage)}
                       alt="无忧之夜 2024 主视觉 KV"
                       className="block w-full object-cover"
+                      loading="eager"
+                      decoding="async"
+                      fetchPriority="high"
                     />
                   </div>
                   <div className="mt-12 max-w-5xl md:mt-16">
@@ -899,9 +903,12 @@ export default function WaterfallSectionPage({ showcase, sectionId, caseId = nul
                           <div className={`lg:col-span-7 ${isReversed ? 'lg:order-1' : ''}`}>
                             <div className={`relative block w-full overflow-hidden rounded-[24px] ${accentSurface.card}`}>
                               <img
-                                src={caseStudy.coverSrc}
+                                src={getOptimizedImageSrc(caseStudy.coverSrc)}
                                 alt={caseStudy.title}
                                 className={`block w-full rounded-[24px] object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025] aspect-[12/5] ${accentSurface.media}`}
+                                loading={index < 2 ? 'eager' : 'lazy'}
+                                decoding="async"
+                                fetchPriority={index === 0 ? 'high' : 'low'}
                               />
                             </div>
                           </div>
@@ -942,6 +949,7 @@ export default function WaterfallSectionPage({ showcase, sectionId, caseId = nul
                               autoPlay
                               muted
                               loop
+                              preload="metadata"
                               playsInline
                             />
                           ) : (
@@ -952,9 +960,12 @@ export default function WaterfallSectionPage({ showcase, sectionId, caseId = nul
                               aria-label={`全屏查看 ${item.title}`}
                             >
                               <img
-                                src={item.src}
+                                src={getOptimizedImageSrc(item.src)}
                                 alt={item.title}
                                 className={`block h-auto w-full object-contain ${isArchivePage ? 'rounded-[24px] shadow-none bg-transparent' : `shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}`}
+                                loading={index < 6 ? 'eager' : 'lazy'}
+                                decoding="async"
+                                fetchPriority={index < 2 ? 'high' : 'low'}
                               />
                             </button>
                           )}
