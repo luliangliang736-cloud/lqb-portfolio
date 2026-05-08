@@ -37,6 +37,7 @@ type RecentCaseStudy = {
 type WaterfallSectionPageProps = {
   showcase: ShowcaseItem;
   sectionId: WaterfallSectionId;
+  caseId?: string | null;
 };
 
 const MAX_PREVIEW_SCALE = 3;
@@ -142,17 +143,17 @@ function getRecentCaseStudies(): RecentCaseStudy[] {
   return [
     {
       id: 'case-01',
-      title: 'Easycash Visual Renewal',
-      kicker: 'Eashcash 海外官网视觉焕新',
-      summary: '围绕Eashcash 八周年节点需求，对海外官网建立统一的视觉语调，并扩展到社媒，物料落地和触达，传达更加向新的金融活力',
-      tags: ['Campaign', 'KV', 'Social'],
-      role: 'Visual Direction / Key Visual',
-      deliverables: 'KV、活动页主图、社媒图组',
-      meta: '2025 / Commercial / Indonesia',
+      title: '无忧之夜 2024',
+      kicker: '视觉主 KV 项目复盘',
+      summary: 'MCN 领域的年度红人标杆盛典',
+      tags: ['Brand Event', 'Main KV', 'Visual System'],
+      role: 'Creative Direction / Key Visual / Type Design',
+      deliverables: '主视觉 KV、活动邀请函、日程页、直播宣发物料、奖项视觉模板',
+      meta: '2024 / Brand Event / Wuyou Media',
       coverSrc: defaultRecentCaseCover,
       highlights: [
-        '强化促销传播识别度与统一视觉秩序',
-        '兼顾品牌调性与投放转化需求',
+        '延续无忧之夜视觉资产并升级未来科技感',
+        '形成可复用的视觉规范，支撑多场景物料延展',
       ],
     },
     {
@@ -233,7 +234,7 @@ function getRecentCaseStudies(): RecentCaseStudy[] {
   ];
 }
 
-export default function WaterfallSectionPage({ showcase, sectionId }: WaterfallSectionPageProps) {
+export default function WaterfallSectionPage({ showcase, sectionId, caseId = null }: WaterfallSectionPageProps) {
   const accentSurface = accentSurfaceMap[showcase.accent];
   const [activeImage, setActiveImage] = useState<ActiveImageState>(null);
   const [previewScale, setPreviewScale] = useState(1);
@@ -374,6 +375,335 @@ export default function WaterfallSectionPage({ showcase, sectionId }: WaterfallS
               返回{showcase.title}
             </a>
           </div>
+        </div>
+      </main>
+    );
+  }
+
+  const activeCaseStudy = caseId
+    ? recentCaseStudies.find((caseStudy) => caseStudy.id === caseId) ?? null
+    : null;
+  const wuyouCaseSections = [
+    {
+      index: '01',
+      title: '项目背景与业务目标',
+      groups: [
+        {
+          title: '业务背景',
+          items: [
+            '无忧之夜是无忧传媒的核心品牌资产，已成为 MCN 领域的年度标杆盛典。',
+            '2024 年曝光量超 10 亿级，是集团级重点项目，兼具品牌声量与商业化价值。',
+          ],
+        },
+        {
+          title: '核心目标',
+          items: [
+            '品牌资产延续：延续过往活动的视觉记忆点，强化品牌识别。',
+            '用户审美契合：以蓝紫为主色调，匹配年轻受众审美，传递潮流感。',
+            '集团调性表达：展现无忧传媒的头部集团形象，传递专业、活力的品牌气质。',
+            '效率与协作：通过标准化的视觉语言，提升团队提效与跨部门协作效率。',
+          ],
+        },
+      ],
+    },
+    {
+      index: '02',
+      title: '我的角色与职责',
+      groups: [
+        {
+          title: '项目职责',
+          items: [
+            '独立负责主视觉 KV 的创意方向、视觉设计、字体设计与延展规范。',
+            '为活动物料，包括海报、邀请函、日程页等提供统一的视觉规范支持。',
+            '全流程参与前期创意方向输出、中期视觉定稿对接与后期资源沉淀复用。',
+          ],
+        },
+      ],
+    },
+    {
+      index: '03',
+      title: '设计策略拆解',
+      groups: [
+        {
+          title: '创意策略：「向上而生，向新而行」',
+          items: [
+            '以数字「8」为核心视觉符号，呼应无忧传媒 8 周年，打造贯穿性主视觉。',
+            '将杭州奥体中心等地标建筑与未来感城市元素结合，强化地域与活动属性。',
+            '延续无忧之夜的未来科技风，用霓虹光效、城市赛博场景匹配年轻受众审美。',
+          ],
+        },
+        {
+          title: '色彩策略：品牌色 + 潮流渐变',
+          items: [
+            '主色使用品牌蓝 + 紫渐变，延续无忧之夜的经典视觉记忆。',
+            '辅助色以霓虹粉、青绿色点缀，强化未来感与活力感。',
+            '主 KV 统一品牌色，延展物料根据场景调整，保持识别性同时兼顾适配性。',
+          ],
+        },
+        {
+          title: '字体与图形策略',
+          items: [
+            '延续无忧之夜专属字体风格，对数字与线条进行动态化调整，增强张力与活力。',
+            '以环形光效、流动线条强化「向上而生」主题，构建沉浸式未来感场景。',
+          ],
+        },
+      ],
+    },
+    {
+      index: '04',
+      title: '核心产出物',
+      groups: [
+        {
+          title: '主视觉 KV',
+          items: [
+            '包含活动主题、slogan、时间地点、平台合作方等关键信息。',
+            '支持主会场大屏、线上宣发、物料延展等多场景复用。',
+          ],
+        },
+        {
+          title: '延展物料设计',
+          items: [
+            '活动邀请函、日程页统一视觉语言，承载会议时间、地点、流程等信息。',
+            '直播与宣发物料适配不同尺寸的线上宣发海报、活动预告物料。',
+            '奖项物料适配「无忧 8 周年特别奖」等活动场景的视觉模板。',
+          ],
+        },
+      ],
+    },
+    {
+      index: '05',
+      title: '项目成果与价值',
+      groups: [
+        {
+          title: '业务价值',
+          items: [
+            '主 KV 支撑了超 10 亿级曝光的年度盛典，强化无忧之夜的行业标杆地位。',
+            '形成可复用的视觉规范，为后续活动提供高效延展模板，降低重复设计成本。',
+          ],
+        },
+        {
+          title: '设计价值',
+          items: [
+            '通过延续品牌记忆点并升级未来科技风，提升活动视觉辨识度与用户感知。',
+            '标准化设计规范让跨物料视觉统一度更高，缩短后续延展物料制作周期。',
+          ],
+        },
+      ],
+    },
+  ];
+
+  if (caseId) {
+    const isWuyouCase = activeCaseStudy?.id === 'case-01';
+    const wuyouNightKvImage = toAssetPath('/assets/showcases/recent-works/wuyou-night-kv.jpg');
+
+    return (
+      <main className="min-h-screen bg-surface-950 px-4 pt-28 pb-16 sm:px-5 lg:px-6 xl:px-8">
+        <div className="mx-auto w-full max-w-[1560px]">
+          <section className="mt-20 px-1 md:mt-24 md:px-0">
+            <div>
+              {isWuyouCase ? (
+                <div className="mb-16 flex items-start justify-between gap-4 md:mb-20">
+                  <motion.div
+                    className="relative"
+                    initial="rest"
+                    whileHover="hover"
+                  >
+                    <h1 className="text-[1.95rem] font-medium uppercase leading-[0.9] tracking-[-0.08em] text-[#F2F0E8] sm:text-[2.5rem] lg:text-[4.6rem] xl:text-[5.8rem]">
+                      <span className="block">
+                        <motion.span
+                          className="inline-block origin-left"
+                          variants={headingLineVariants}
+                          custom={0}
+                          transition={{ type: 'spring', stiffness: 220, damping: 18, mass: 0.9 }}
+                        >
+                          <motion.span
+                            className="inline-block"
+                            variants={headingWordVariants}
+                            custom={0}
+                            transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8 }}
+                          >
+                            Recent
+                          </motion.span>
+                          <span className="inline-block w-[0.18em] lg:w-[0.22em]" aria-hidden="true" />
+                          <motion.span
+                            className="inline-block"
+                            variants={headingWordVariants}
+                            custom={1}
+                            transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8, delay: 0.02 }}
+                          >
+                            W<span className="text-[#9CFF3F]">O</span>r<span className="text-[#9CFF3F]">K</span>s
+                          </motion.span>
+                        </motion.span>
+                      </span>
+                      <span className="mt-3 block lg:mt-4">
+                        <motion.span
+                          className="inline-flex origin-left items-baseline gap-[0.22em] lg:gap-[0.28em]"
+                          variants={headingLineVariants}
+                          custom={1}
+                          transition={{ type: 'spring', stiffness: 220, damping: 18, mass: 0.9, delay: 0.02 }}
+                        >
+                          <motion.span
+                            className="inline-block"
+                            variants={headingWordVariants}
+                            custom={2}
+                            transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8 }}
+                          >
+                            Hey
+                          </motion.span>
+                          <motion.span
+                            className="inline-block"
+                            variants={headingWordVariants}
+                            custom={3}
+                            transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8, delay: 0.02 }}
+                          >
+                            Creative
+                          </motion.span>
+                          <motion.span
+                            className="inline-block"
+                            variants={headingWordVariants}
+                            custom={4}
+                            transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8, delay: 0.04 }}
+                          >
+                            Design
+                          </motion.span>
+                        </motion.span>
+                      </span>
+                      <span className="mt-3 block lg:mt-4">
+                        <motion.span
+                          className="inline-flex origin-left items-baseline gap-[0.2em] lg:gap-[0.26em]"
+                          variants={headingLineVariants}
+                          custom={2}
+                          transition={{ type: 'spring', stiffness: 220, damping: 18, mass: 0.9, delay: 0.04 }}
+                        >
+                          <motion.span
+                            className="inline-block"
+                            variants={headingWordVariants}
+                            custom={5}
+                            transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8 }}
+                          >
+                            Just
+                          </motion.span>
+                          <motion.span
+                            className="inline-block"
+                            variants={headingWordVariants}
+                            custom={6}
+                            transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8, delay: 0.02 }}
+                          >
+                            For
+                          </motion.span>
+                          <motion.span
+                            className="inline-block"
+                            variants={headingWordVariants}
+                            custom={7}
+                            transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8, delay: 0.04 }}
+                          >
+                            <span className="text-[#FFB8DF]">@</span>Future
+                          </motion.span>
+                        </motion.span>
+                      </span>
+                    </h1>
+                  </motion.div>
+                  <motion.svg
+                    width="116"
+                    height="116"
+                    viewBox="0 0 116 116"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="mt-1 h-9 w-9 shrink-0 text-[#D9D9D9] sm:h-10 sm:w-10 lg:h-12 lg:w-12 xl:h-14 xl:w-14"
+                    aria-hidden="true"
+                    whileHover={{ scaleX: -1 }}
+                    transition={{ duration: 0.28, ease: 'easeInOut' }}
+                  >
+                    <rect x="15.6719" y="84.0684" width="22.1632" height="22.1632" rx="4" transform="rotate(45 15.6719 84.0684)" fill="currentColor" />
+                    <rect x="71.7207" y="84.0684" width="22.1632" height="22.1632" rx="4" transform="rotate(45 71.7207 84.0684)" fill="currentColor" />
+                    <rect x="43.6914" y="84.0684" width="22.1632" height="22.1632" rx="4" transform="rotate(45 43.6914 84.0684)" fill="currentColor" />
+                    <rect x="99.7402" y="84.0684" width="22.1632" height="22.1632" rx="4" transform="rotate(45 99.7402 84.0684)" fill="currentColor" />
+                    <rect x="115.412" y="15.6719" width="22.1632" height="22.1632" rx="4" transform="rotate(135 115.412 15.6719)" fill="currentColor" />
+                    <rect x="115.412" y="71.7207" width="22.1632" height="22.1632" rx="4" transform="rotate(135 115.412 71.7207)" fill="currentColor" />
+                    <rect x="115.412" y="43.6914" width="22.1632" height="22.1632" rx="4" transform="rotate(135 115.412 43.6914)" fill="currentColor" />
+                    <path d="M6.09675 15.7026L13.928 7.77433C15.4648 6.21843 17.9663 6.18522 19.5439 7.69977L84.3828 69.947C86.0246 71.5232 86.0222 74.1498 84.3775 75.723L75.0053 84.6877C73.434 86.1907 70.95 86.1632 69.4123 84.6259L6.11443 21.3423C4.55883 19.7871 4.55093 17.2676 6.09675 15.7026Z" fill="currentColor" />
+                  </motion.svg>
+                </div>
+              ) : null}
+              {isWuyouCase ? null : (
+                <div className="max-w-5xl">
+                  <h1 className="text-[2.25rem] font-medium leading-[0.92] tracking-[-0.08em] text-[#F2F0E8] sm:text-[3rem] lg:text-[5rem] xl:text-[6.2rem]">
+                    {activeCaseStudy?.title ?? '项目详情'}
+                  </h1>
+                  <p className="mt-7 max-w-3xl text-sm leading-[1.9] text-surface-400 md:text-base">
+                    {activeCaseStudy?.summary ?? '这里先作为项目详情的占位页，后续可继续补充内容和布局。'}
+                  </p>
+                </div>
+              )}
+              {isWuyouCase ? (
+                <>
+                  <div className="mt-40 overflow-hidden rounded-[32px] border border-white/8 bg-black/30 shadow-2xl shadow-black/25 md:mt-56 lg:mt-64">
+                    <img
+                      src={wuyouNightKvImage}
+                      alt="无忧之夜 2024 主视觉 KV"
+                      className="block w-full object-cover"
+                    />
+                  </div>
+                  <div className="mt-12 max-w-5xl md:mt-16">
+                    <h1 className="text-[2.25rem] font-medium leading-[0.92] tracking-[-0.08em] text-[#F2F0E8] sm:text-[3rem] lg:text-[5rem] xl:text-[6.2rem]">
+                      无忧之夜 2024
+                    </h1>
+                    <p className="mt-7 max-w-3xl text-sm leading-[1.9] text-surface-400 md:text-base">
+                      {activeCaseStudy?.summary ?? '这里先作为项目详情的占位页，后续可继续补充内容和布局。'}
+                    </p>
+                  </div>
+                </>
+              ) : null}
+            </div>
+
+            {isWuyouCase ? (
+              <>
+                <div className="mt-20 space-y-30 md:mt-28 md:space-y-36">
+                  {wuyouCaseSections.map((section) => (
+                    <motion.article
+                      key={section.title}
+                      initial={{ opacity: 0, y: 22 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.42 }}
+                    >
+                      <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                        <h2 className="text-[1.75rem] font-medium leading-tight tracking-[-0.05em] text-surface-50 md:text-[2.35rem]">
+                          {section.title}
+                        </h2>
+                        <p className="text-[1.75rem] font-medium leading-tight tracking-[-0.05em] text-surface-50 md:text-[2.35rem]">
+                          #{section.index}
+                        </p>
+                      </div>
+                      <div className="mt-10 max-w-5xl space-y-12">
+                        {section.groups.map((group) => (
+                          <div key={group.title} className="max-w-4xl">
+                            <h3 className="text-lg font-medium tracking-[-0.03em] text-surface-100 md:text-xl">{group.title}</h3>
+                            <div className="mt-4 space-y-3 text-sm leading-[1.95] text-surface-400 md:text-[15px]">
+                              {group.items.map((item) => (
+                                <p key={item}>{item}</p>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </motion.article>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className="mt-24 min-h-[52vh] rounded-[28px] border border-white/8 bg-black/18 md:mt-32" />
+            )}
+
+            <div className="mt-10 flex justify-end">
+              <a
+                href={`#showcase/${showcase.slug}/section/${sectionId}`}
+                className="inline-flex items-center gap-2 text-sm text-surface-300 transition-colors hover:text-surface-100"
+              >
+                <ArrowLeft size={16} />
+                返回{currentSection.title}
+              </a>
+            </div>
+          </section>
         </div>
       </main>
     );
@@ -525,17 +855,19 @@ export default function WaterfallSectionPage({ showcase, sectionId }: WaterfallS
                     const isReversed = index % 2 === 1;
 
                     return (
-                      <motion.article
+                      <motion.a
+                        href={`#showcase/${showcase.slug}/section/${currentSection.id}/case/${caseStudy.id}`}
                         key={caseStudy.id}
-                        className="pt-8 md:pt-10"
+                        className="group block pt-8 md:pt-10"
                         initial={{ opacity: 0, y: 24 }}
                         animate={{ opacity: 1, y: 0 }}
+                        whileHover={{ y: -8 }}
                         transition={{ duration: 0.45, delay: index * 0.06 }}
                       >
                         <div className="grid gap-8 lg:grid-cols-12 lg:gap-10 xl:gap-14">
                           <div className={`lg:col-span-5 ${isReversed ? 'lg:order-2' : ''}`}>
                             <div className="flex h-full flex-col">
-                            <h2 className={`text-[1.7rem] font-medium leading-[0.95] tracking-[-0.06em] sm:text-[2rem] lg:text-[2.7rem] ${usesDarkTheme ? 'text-surface-50' : 'text-slate-950'}`}>
+                            <h2 className={`text-[1.7rem] font-medium leading-[0.95] tracking-[-0.06em] transition-colors sm:text-[2rem] lg:text-[2.7rem] ${usesDarkTheme ? 'text-surface-50 group-hover:text-white' : 'text-slate-950 group-hover:text-slate-700'}`}>
                               {index === 0 ? (
                                 <>
                                   Ea<span className="text-[#9CFF3F]">s</span>ycash Visual
@@ -565,7 +897,7 @@ export default function WaterfallSectionPage({ showcase, sectionId }: WaterfallS
                           </div>
 
                           <div className={`lg:col-span-7 ${isReversed ? 'lg:order-1' : ''}`}>
-                            <div className={`group relative block w-full overflow-hidden rounded-[24px] ${accentSurface.card}`}>
+                            <div className={`relative block w-full overflow-hidden rounded-[24px] ${accentSurface.card}`}>
                               <img
                                 src={caseStudy.coverSrc}
                                 alt={caseStudy.title}
@@ -574,7 +906,7 @@ export default function WaterfallSectionPage({ showcase, sectionId }: WaterfallS
                             </div>
                           </div>
                         </div>
-                      </motion.article>
+                      </motion.a>
                     );
                   })}
                 </div>

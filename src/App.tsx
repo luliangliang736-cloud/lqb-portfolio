@@ -2,7 +2,6 @@ import { useEffect, useState, type CSSProperties, type MouseEvent } from 'react'
 import Navbar from './components/Landing/Navbar';
 import Hero from './components/Landing/Hero';
 import Features from './components/Landing/Features';
-import DemoSection from './components/Landing/DemoSection';
 import CTASection from './components/Landing/CTASection';
 import Footer from './components/Landing/Footer';
 import DesktopCompanion from './components/Desktop/DesktopCompanion';
@@ -53,6 +52,7 @@ function getRouteState() {
       showcaseSlug: null,
       projectId: null,
       sectionId: null,
+      caseId: null,
     };
   }
 
@@ -62,6 +62,19 @@ function getRouteState() {
       showcaseSlug: null,
       projectId: null,
       sectionId: null,
+      caseId: null,
+    };
+  }
+
+  const sectionCaseMatch = window.location.hash.match(/^#showcase\/([^/]+)\/section\/([^/]+)\/case\/([^/]+)$/);
+
+  if (sectionCaseMatch) {
+    return {
+      page: null,
+      showcaseSlug: sectionCaseMatch[1] ?? null,
+      projectId: null,
+      sectionId: sectionCaseMatch[2] ?? null,
+      caseId: sectionCaseMatch[3] ?? null,
     };
   }
 
@@ -73,6 +86,7 @@ function getRouteState() {
       showcaseSlug: sectionMatch[1] ?? null,
       projectId: null,
       sectionId: sectionMatch[2] ?? null,
+      caseId: null,
     };
   }
 
@@ -84,6 +98,7 @@ function getRouteState() {
       showcaseSlug: projectMatch[1] ?? null,
       projectId: projectMatch[2] ?? null,
       sectionId: null,
+      caseId: null,
     };
   }
 
@@ -94,6 +109,7 @@ function getRouteState() {
     showcaseSlug: showcaseMatch?.[1] ?? null,
     projectId: null,
     sectionId: null,
+    caseId: null,
   };
 }
 
@@ -137,7 +153,7 @@ function App() {
     window.requestAnimationFrame(() => {
       window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     });
-  }, [desktopMode, routeState.page, routeState.projectId, routeState.sectionId, routeState.showcaseSlug]);
+  }, [desktopMode, routeState.caseId, routeState.page, routeState.projectId, routeState.sectionId, routeState.showcaseSlug]);
 
   useEffect(() => {
     if (desktopMode || !emojiBursts.length) {
@@ -245,7 +261,7 @@ function App() {
       {activeStandalonePage === 'more-gallery' ? (
         <MoreGalleryPage />
       ) : activeShowcase && activeWaterfallSection ? (
-        <WaterfallSectionPage showcase={activeShowcase} sectionId={activeWaterfallSection} />
+        <WaterfallSectionPage showcase={activeShowcase} sectionId={activeWaterfallSection} caseId={routeState.caseId} />
       ) : activeShowcase && activeProject ? (
         <ProjectDetailPage showcase={activeShowcase} project={activeProject} />
       ) : activeShowcase ? (
@@ -255,7 +271,6 @@ function App() {
           <Hero />
           <div className="min-h-screen bg-surface-950">
             <Features />
-            <DemoSection />
             <CTASection />
             <Footer />
           </div>
