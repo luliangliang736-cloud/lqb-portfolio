@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ChevronRight, X } from 'lucide-react';
 import { motion, useInView, useMotionTemplate, useScroll, useTransform } from 'framer-motion';
 import { accentMap, isVideoSrc, recentShowcaseMedia, showcaseMediaBySlug, showcases, type ShowcaseItem, type ShowcaseMediaItem } from '../../content/showcases';
 import { toAssetPath } from '../../utils/assetPath';
@@ -20,6 +20,11 @@ type ActiveImageState = {
   src: string;
   width: number;
   height: number;
+  title: string;
+} | null;
+
+type ActiveVideoState = {
+  src: string;
   title: string;
 } | null;
 
@@ -84,6 +89,20 @@ const showcaseHeadingAccentCharMap: Record<string, string> = {
 
 const continueBrowsingHeading = 'Continue browsing';
 const continueBrowsingAccentChar = 'o';
+
+function flattenShowcaseMediaForWaterfall(items: ShowcaseMediaItem[]) {
+  return items.flatMap((item) => {
+    const detailMedia = item.detailMedia?.length ? item.detailMedia : [item.src];
+
+    return detailMedia.map((src, index) => ({
+      ...item,
+      id: undefined,
+      title: detailMedia.length > 1 ? `${item.title} ${index + 1}` : item.title,
+      src,
+      detailMedia: undefined,
+    }));
+  });
+}
 
 const headingLineVariants = {
   rest: {
@@ -247,8 +266,8 @@ function WaterfallEntryCard({
         scale: { type: 'spring', stiffness: 150, damping: 22, mass: 0.95 },
         filter: { duration: 0.28 },
       }}
-      className={`g2-card-xl group relative flex aspect-square w-full overflow-hidden border border-white/6 bg-[#0B0B0D] p-6 text-left shadow-xl transition-[box-shadow,background-color] duration-500 transform-gpu will-change-transform ${
-        isActive ? 'z-10 bg-[#0E0E11] shadow-2xl shadow-black/35' : 'z-0 shadow-xl shadow-black/12'
+      className={`g2-card-xl group relative flex aspect-square w-full overflow-hidden bg-surface-900/72 p-6 text-left shadow-xl transition-[box-shadow,background-color] duration-500 transform-gpu will-change-transform ${
+        isActive ? 'z-10 bg-surface-900/82 shadow-2xl shadow-black/35' : 'z-0 shadow-xl shadow-black/12'
       }`}
       onMouseEnter={() => onHoverStart(section.id)}
       onMouseMove={handleMouseMove}
@@ -315,14 +334,9 @@ function WaterfallEntryCard({
 export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
   const accentSurface = accentSurfaceMap[showcase.accent];
   const mediaItems = showcaseMediaBySlug[showcase.slug] ?? [];
-  const waterfallHeroBanner = toAssetPath(
-    showcase.slug === 'creative-visuals'
-      ? '/assets/showcases/creative-visuals/retro-banner.jpg?v=20260426c'
-      : showcase.slug === 'form-design'
-        ? '/assets/showcases/form-design/computer-banner.jpg?v=20260426g'
-      : '/assets/work-collection-banner.jpg?v=20260426a',
-  );
-  const usesWaterfallLayout = showcase.slug === 'waterfall-collection' || showcase.slug === 'beyond-design';
+  const directWaterfallItems = flattenShowcaseMediaForWaterfall(mediaItems);
+  const waterfallHeroBanner = toAssetPath('/assets/section-parallax-rainy-computer.jpg');
+  const usesWaterfallLayout = true;
   const waterfallHeroRef = useRef<HTMLDivElement | null>(null);
   const showcaseHeading = showcaseHeadingMap[showcase.slug] ?? showcase.title;
   const showcaseGridItems = mediaItems.length
@@ -363,6 +377,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
       ]
     : [];
   const [activeImage, setActiveImage] = useState<ActiveImageState>(null);
+  const [activeVideo, setActiveVideo] = useState<ActiveVideoState>(null);
   const [previewScale, setPreviewScale] = useState(1);
   const [hoveredWaterfallSection, setHoveredWaterfallSection] = useState<WaterfallSectionId | null>(null);
   const canZoomIn = previewScale < MAX_PREVIEW_SCALE;
@@ -377,19 +392,20 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
   const waterfallHeroObjectPosition = useMotionTemplate`50% ${waterfallHeroObjectY}`;
 
   useEffect(() => {
-    if (!activeImage) {
+    if (!activeImage && !activeVideo) {
       return undefined;
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setActiveImage(null);
+        setActiveVideo(null);
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [activeImage]);
+  }, [activeImage, activeVideo]);
 
   const openImagePreview = (src: string, title: string) => {
     const image = new Image();
@@ -450,7 +466,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
 
         <div className="mt-48 px-1 md:mt-56 md:px-0">
             {usesWaterfallLayout ? (
-              mediaItems.length ? (
+              (showcase.slug === 'waterfall-collection' ? mediaItems : directWaterfallItems).length ? (
                 <div className="space-y-8">
                   {showcase.slug === 'waterfall-collection' ? (
                     <div>
@@ -479,50 +495,56 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                     </div>
                   ) : null}
                   {showcase.slug === 'waterfall-collection' ? null : (
-                    <div className="columns-2 [column-gap:1rem] md:columns-5">
-                      {mediaItems.map((item, index) => {
-                        const Wrapper = item.id ? motion.a : motion.article;
-                        const wrapperProps = item.id
-                          ? { href: `#showcase/${showcase.slug}/project/${item.id}` }
-                          : {};
-
+                    <div className={showcase.slug === 'creative-visuals'
+                      ? 'columns-2 [column-gap:1rem] md:columns-5'
+                      : 'grid grid-cols-2 items-start gap-4 md:grid-cols-5'}
+                    >
+                      {directWaterfallItems.map((item, index) => {
                         return (
-                          <Wrapper
+                          <motion.article
                             key={`${showcase.slug}-${item.title}-${index}`}
-                            {...wrapperProps}
-                            className="g2-card-md mb-4 inline-block w-full break-inside-avoid bg-black/25 align-top shadow-xl shadow-black/10 transition-colors"
+                            className={showcase.slug === 'creative-visuals'
+                              ? 'mb-4 inline-block w-full break-inside-avoid rounded-[24px] bg-black/25 shadow-xl shadow-black/10 transition-colors'
+                              : 'w-full rounded-[24px] bg-black/25 shadow-xl shadow-black/10 transition-colors'}
                             initial={{ opacity: 0, y: 18 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.35, delay: index * 0.04 }}
                           >
                             {isVideoSrc(item.src) ? (
-                              <video
-                                src={item.src}
-                                className="block h-auto w-full bg-surface-950/60 object-cover"
-                                autoPlay
-                                muted
-                                loop
-                                preload="metadata"
-                                playsInline
-                              />
+                              <button
+                                type="button"
+                                onClick={() => setActiveVideo({ src: item.src, title: item.title })}
+                                className="block w-full cursor-zoom-in overflow-hidden"
+                                aria-label={`全屏播放 ${item.title}`}
+                              >
+                                <video
+                                  src={item.src}
+                                  className="block h-auto w-full bg-surface-950/60 object-contain"
+                                  autoPlay
+                                  muted
+                                  loop
+                                  preload="metadata"
+                                  playsInline
+                                />
+                              </button>
                             ) : (
                               <button
                                 type="button"
                                 onClick={() => openImagePreview(item.src, item.title)}
-                                className="block w-full cursor-zoom-in overflow-hidden"
+                                className="block w-full cursor-zoom-in"
                                 aria-label={`全屏查看 ${item.title}`}
                               >
                                 <img
                                   src={getOptimizedImageSrc(item.src)}
                                   alt={item.title}
-                                  className="block h-auto w-full bg-surface-950/60 object-cover"
+                                  className="block h-auto w-full bg-surface-950/60 object-contain"
                                   loading={index < 4 ? 'eager' : 'lazy'}
                                   decoding="async"
                                   fetchPriority={index < 2 ? 'high' : 'low'}
                                 />
                               </button>
                             )}
-                          </Wrapper>
+                          </motion.article>
                         );
                       })}
                     </div>
@@ -677,7 +699,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
                     {renderHeadingWithAccentIndexes('JUST DO IT', [6], 'text-[#9CFF3F]', `${showcase.slug}-quote-line-2`)}
                   </motion.p>
                   <motion.p
-                    className="mt-2 text-[1.95rem] font-medium uppercase leading-[0.9] tracking-[-0.08em] text-white/72 sm:text-[2.5rem] lg:text-[4.6rem] xl:text-[5.8rem]"
+                    className="mt-2 text-[1.95rem] font-medium uppercase leading-[0.9] tracking-[-0.08em] text-[#F2F0E8] sm:text-[2.5rem] lg:text-[4.6rem] xl:text-[5.8rem]"
                     variants={headingLineVariants}
                     transition={{ type: 'spring', stiffness: 220, damping: 18, mass: 0.9 }}
                   >
@@ -789,6 +811,35 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
         onScaleChange={setPreviewScale}
         onClose={() => setActiveImage(null)}
       />
+      {activeVideo ? (
+        <div
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-black/92 p-4 backdrop-blur-sm"
+          onClick={() => setActiveVideo(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${activeVideo.title} 全屏播放`}
+        >
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              setActiveVideo(null);
+            }}
+            className="absolute top-5 right-5 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-black/45 text-surface-100 transition-colors hover:border-white/20 hover:bg-black/65"
+            aria-label="关闭视频预览"
+          >
+            <X size={18} />
+          </button>
+          <video
+            src={activeVideo.src}
+            className="max-h-[86vh] max-w-[94vw] rounded-[24px] bg-black object-contain shadow-2xl shadow-black/50"
+            controls
+            autoPlay
+            playsInline
+            onClick={(event) => event.stopPropagation()}
+          />
+        </div>
+      ) : null}
     </main>
   );
 }

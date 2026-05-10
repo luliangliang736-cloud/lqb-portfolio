@@ -13,8 +13,6 @@ export const heroVideosDesktop = [
   '/assets/hero-banner.mp4',
   '/assets/4月12日(1)-1.mp4',
   '/assets/4月12日(1)-4.mp4',
-  '/assets/4月12日(1)-5.mp4',
-  '/assets/4月12日(1)-10.mp4',
 ].map(toAssetPath);
 
 // 移动端只加载精简视频，减少首屏等待。

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent, type WheelEvent as ReactWheelEvent } from 'react';
 import { motion, useInView, useMotionTemplate, useScroll, useTransform } from 'framer-motion';
-import { ChevronDown, ChevronRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { accentMap, showcases } from '../../content/showcases';
 import { useMagneticMotion } from '../../hooks/useMagneticMotion';
 import { toAssetPath } from '../../utils/assetPath';
@@ -116,7 +116,7 @@ const collageSpiralOrderIndex = Object.fromEntries(
   collageSpiralOrder.map((cardIndex, orderIndex) => [cardIndex, orderIndex]),
 );
 
-const parallaxPanelImage = toAssetPath('/assets/parallax-rainy-computer.jpg');
+const parallaxPanelImage = toAssetPath('/assets/parallax-new.jpg');
 const homeInfiniteScrollAssetVersion = '20260423-2';
 const recentWorksItems = Array.from({ length: 13 }, (_, index) => ({
   title: `首页无限滚动 ${index + 1}`,
@@ -699,7 +699,7 @@ function FeatureCard({
         filter: isDimmed ? 'saturate(0.88) brightness(0.9)' : 'saturate(1) brightness(1)',
       }}
       transition={{ type: 'spring', stiffness: 150, damping: 22, mass: 0.95 }}
-      className={`feature-panel-shell group relative flex h-full bg-surface-900/40 backdrop-blur-sm transition-[box-shadow,background-color] duration-500 transform-gpu will-change-transform ${
+      className={`feature-panel-shell group relative flex h-full bg-surface-900/72 backdrop-blur-sm transition-[box-shadow,background-color] duration-500 transform-gpu will-change-transform ${
         isActive ? 'z-10 shadow-2xl shadow-black/35' : 'z-0 shadow-xl shadow-black/12'
       }`}
       onMouseEnter={() => onHoverStart(feature.slug)}
@@ -760,7 +760,7 @@ export default function Features() {
     target: parallaxRef,
     offset: ['start 88%', 'end 12%'],
   });
-  const parallaxImageScale = useTransform(parallaxProgress, [0, 0.5, 1], [1.52, 1.18, 1.52]);
+  const parallaxImageScale = useTransform(parallaxProgress, [0, 0.5, 1], [1.12, 1.03, 1.12]);
   const parallaxObjectY = useTransform(parallaxProgress, [0, 1], ['73%', '-11%']);
   const parallaxObjectPosition = useMotionTemplate`50% ${parallaxObjectY}`;
 
@@ -929,7 +929,7 @@ export default function Features() {
         </div>
 
         <div ref={parallaxRef} className="relative mt-[32rem] mb-48 w-full md:mt-[44rem] md:mb-52">
-          <div className="absolute top-[-10rem] left-1/2 w-screen -translate-x-1/2 md:top-[-12rem]">
+          <div className="absolute top-[-14rem] left-1/2 w-screen -translate-x-1/2 md:top-[-16rem]">
             <div className="flex justify-end px-6 md:px-10">
               <motion.div
                 className="text-right text-[2rem] font-medium uppercase leading-[0.88] tracking-[-0.06em] text-[#F2F0E8] md:text-[5.2rem]"
@@ -955,9 +955,6 @@ export default function Features() {
               </motion.div>
             </div>
           </div>
-          <div className="mt-28 mb-6 flex justify-center text-white/72 md:mt-32 md:mb-8" aria-hidden="true">
-            <ChevronDown size={28} strokeWidth={1.9} />
-          </div>
           <motion.div
             className="mx-auto mb-8 flex max-w-5xl flex-col items-center gap-3 text-center text-[11px] leading-[1.9] text-surface-500 transition-[transform,color] duration-300 ease-out hover:text-surface-300 md:mb-10 md:text-[15px]"
             onHoverStart={() => setCollageCopyHovered(true)}
@@ -973,7 +970,7 @@ export default function Features() {
             </p>
           </motion.div>
           <motion.div
-            className="relative left-1/2 h-[390px] w-screen -translate-x-1/2 overflow-hidden bg-[#080809] md:h-[540px]"
+            className="relative left-1/2 h-[300px] w-screen -translate-x-1/2 overflow-hidden bg-[#080809] md:h-[420px]"
           >
             <motion.img
               src={parallaxPanelImage}

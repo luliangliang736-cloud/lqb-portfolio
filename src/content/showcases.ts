@@ -243,12 +243,6 @@ const formDesignMedia: ShowcaseMediaItem[] = [
       '/assets/showcases/form-design/box-heart/1 (1).png',
       '/assets/showcases/form-design/box-heart/1 (2).png',
       '/assets/showcases/form-design/box-heart/1 (3).png',
-      '/assets/showcases/form-design/box-heart/1 (4).png',
-      '/assets/showcases/form-design/box-heart/1 (5).png',
-      '/assets/showcases/form-design/box-heart/1 (6).png',
-      '/assets/showcases/form-design/box-heart/1 (7).png',
-      '/assets/showcases/form-design/box-heart/1 (8).png',
-      '/assets/showcases/form-design/box-heart/1 (9).png',
 
     ],
   },

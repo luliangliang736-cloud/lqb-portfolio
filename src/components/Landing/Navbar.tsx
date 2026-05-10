@@ -69,7 +69,7 @@ export default function Navbar() {
         animate={{ opacity: navVisible ? 1 : 0, y: navVisible ? 0 : -72 }}
         transition={{ duration: 0.22, ease: 'easeOut' }}
       >
-        <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-6">
+        <div className="relative flex h-16 w-full items-center justify-between px-5 sm:px-8 lg:px-10">
           {/* Logo */}
           <a href="#hero" className="flex items-center gap-2.5 group">
             <img
