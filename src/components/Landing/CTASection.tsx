@@ -111,7 +111,7 @@ export default function CTASection() {
               {renderHeadingWithAccentIndexes('JUST DO IT', [6], 'text-[#9CFF3F]', 'cta-quote-line-2')}
             </motion.p>
             <motion.p
-              className="mt-2 text-[1.95rem] font-medium uppercase leading-[0.9] tracking-[-0.08em] text-white/72 sm:text-[2.5rem] lg:text-[4.6rem] xl:text-[5.8rem]"
+              className="mt-2 text-[1.95rem] font-medium uppercase leading-[0.9] tracking-[-0.08em] text-[#F2F0E8] sm:text-[2.5rem] lg:text-[4.6rem] xl:text-[5.8rem]"
               variants={headingLineVariants}
               transition={{ type: 'spring', stiffness: 220, damping: 18, mass: 0.9 }}
             >

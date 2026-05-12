@@ -742,13 +742,7 @@ const waterfallCollectionMedia: ShowcaseMediaItem[] = [
   },
 ];
 
-const beyondDesignMedia: ShowcaseMediaItem[] = [
-  {
-    title: 'Clipboard - 2026-04-12 11.46.32',
-    description: '',
-    src: '/assets/showcases/Beyond Design/Beyond Design/Clipboard - 2026-04-12 11.46.32.png',
-  },
-];
+const beyondDesignMedia: ShowcaseMediaItem[] = [];
 
 const rawShowcaseMediaBySlug: Record<string, ShowcaseMediaItem[]> = {
   'creative-visuals': creativeVisualsMedia,

@@ -945,7 +945,7 @@ export default function WaterfallSectionPage({ showcase, sectionId, caseId = nul
                           {isVideoSrc(item.src) ? (
                             <video
                               src={item.src}
-                              className={`block h-auto w-full object-contain ${isArchivePage ? 'rounded-[24px] shadow-none bg-transparent' : `shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}`}
+                              className={`block h-auto w-full object-contain ${isArchivePage ? 'shadow-none bg-transparent' : `shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}`}
                               autoPlay
                               muted
                               loop
@@ -962,7 +962,7 @@ export default function WaterfallSectionPage({ showcase, sectionId, caseId = nul
                               <img
                                 src={getOptimizedImageSrc(item.src)}
                                 alt={item.title}
-                                className={`block h-auto w-full object-contain ${isArchivePage ? 'rounded-[24px] shadow-none bg-transparent' : `shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}`}
+                                className={`block h-auto w-full object-contain ${isArchivePage ? 'shadow-none bg-transparent' : `shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${accentSurface.media}`}`}
                                 loading={index < 6 ? 'eager' : 'lazy'}
                                 decoding="async"
                                 fetchPriority={index < 2 ? 'high' : 'low'}
