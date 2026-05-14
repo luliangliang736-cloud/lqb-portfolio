@@ -77,11 +77,6 @@ export default function Navbar() {
               alt="LQB icon"
               className="w-8 h-8 rounded-lg object-cover shadow-lg shadow-black/20"
             />
-            <img
-              src={toAssetPath('/assets/site-wordmark.svg')}
-              alt="LQB"
-              className="block h-6 w-auto shrink-0 object-contain object-left"
-            />
           </a>
 
           {/* Desktop links */}
@@ -101,7 +96,7 @@ export default function Navbar() {
           <div className="hidden items-center gap-3 lg:flex">
             <motion.a
               href="#more-gallery"
-              className="text-sm font-medium tracking-[0.01em] px-5 py-2 rounded-full bg-[#FFB8DF] text-surface-950 hover:bg-[#FFCBE8] transition-colors"
+              className="inline-flex h-8 items-center rounded-full bg-white px-5 text-sm font-medium tracking-[0.01em] text-surface-950 transition-colors hover:bg-white/90"
               style={{ x, y }}
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}

@@ -94,7 +94,7 @@ const rawShowcases: ShowcaseItem[] = [
     description: '2019-2026设计工作轨迹，走过一些弯路依旧保持passion',
     cta: '查看作品',
     accent: 'sky',
-    coverSrc: '/assets/showcases/waterfallCollectionMedia/Cover.png',
+    coverSrc: '/assets/home-work-track.jpg',
   },
   {
     id: 'dynamic-vision',
@@ -116,7 +116,7 @@ const rawShowcases: ShowcaseItem[] = [
     description: '记录设计之外的观察、新时代AI技术探索。',
     cta: '查看作品',
     accent: 'rose',
-    coverSrc: '/assets/showcases/Beyond Design/Cover.png',
+    coverSrc: '/assets/home-beyond-design.jpg',
   },
 ];
 
