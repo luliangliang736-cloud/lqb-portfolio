@@ -335,7 +335,7 @@ export default function ShowcasePage({ showcase }: { showcase: ShowcaseItem }) {
   const accentSurface = accentSurfaceMap[showcase.accent];
   const mediaItems = showcaseMediaBySlug[showcase.slug] ?? [];
   const directWaterfallItems = flattenShowcaseMediaForWaterfall(mediaItems);
-  const waterfallHeroBanner = toAssetPath('/assets/section-parallax-rainy-computer.jpg');
+  const waterfallHeroBanner = toAssetPath('/assets/section-parallax-rainy-computer.webp');
   const usesWaterfallLayout = true;
   const waterfallHeroRef = useRef<HTMLDivElement | null>(null);
   const showcaseHeading = showcaseHeadingMap[showcase.slug] ?? showcase.title;

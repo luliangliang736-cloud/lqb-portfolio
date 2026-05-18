@@ -46,7 +46,7 @@ const socialLinks = [
   { label: 'GitHub', href: '#' },
 ];
 
-const footerParallaxImage = toAssetPath('/assets/footer-parallax-4.png');
+const footerParallaxImage = toAssetPath('/assets/footer-parallax-4.webp');
 
 export default function Footer() {
   const parallaxRef = useRef<HTMLDivElement | null>(null);
@@ -80,7 +80,7 @@ export default function Footer() {
             <div className="max-w-[220px]">
               <div className="mb-4 flex min-h-8 items-center gap-2.5">
                 <img
-                  src={toAssetPath('/assets/site-icon.png')}
+                  src={toAssetPath('/assets/site-icon.webp')}
                   alt="LQB icon"
                   className="h-8 w-8 rounded-lg object-cover"
                 />

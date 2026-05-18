@@ -44,7 +44,7 @@ export default function CharacterAvatar({
           transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
         >
           <img
-            src={toAssetPath('/assets/chat-avatar.png')}
+            src={toAssetPath('/assets/chat-avatar.webp')}
             alt="LQB avatar"
             className="h-full w-full object-cover"
           />
@@ -52,7 +52,7 @@ export default function CharacterAvatar({
       ) : (
         <div className={avatarClassName}>
           <img
-            src={toAssetPath('/assets/chat-avatar.png')}
+            src={toAssetPath('/assets/chat-avatar.webp')}
             alt="LQB avatar"
             className="h-full w-full object-cover"
           />

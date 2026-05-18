@@ -2,13 +2,13 @@ import { useRef, useState, useEffect, useCallback } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { toAssetPath } from '../../utils/assetPath';
 
-const bannerSrc = toAssetPath('/assets/bwe-moddy-banner.jpg');
+const bannerSrc = toAssetPath('/assets/bwe-moddy-banner.webp');
 
 const cards = [
-  toAssetPath('/assets/bwe-moddy-cards/1.jpg'),
-  toAssetPath('/assets/bwe-moddy-cards/2.jpg'),
-  toAssetPath('/assets/bwe-moddy-cards/3.jpg'),
-  toAssetPath('/assets/bwe-moddy-cards/4.jpg'),
+  toAssetPath('/assets/bwe-moddy-cards/1.webp'),
+  toAssetPath('/assets/bwe-moddy-cards/2.webp'),
+  toAssetPath('/assets/bwe-moddy-cards/3.webp'),
+  toAssetPath('/assets/bwe-moddy-cards/4.webp'),
 ];
 
 // 单张卡片：暗/亮由 lit 控制，hover 时也会亮

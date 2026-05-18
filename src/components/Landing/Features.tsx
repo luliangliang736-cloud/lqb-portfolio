@@ -24,7 +24,7 @@ const collageOuterRight = spreadFromCenter(79.25);
 const collageCards = [
   {
     alt: '占位卡片 1',
-    imageSrc: toAssetPath('/assets/collage-cards/card-04.png'),
+    imageSrc: toAssetPath('/assets/collage-cards/card-04.webp'),
     left: collageOuterLeft,
     top: spreadFromCenter(11.5),
     size: collageCardSize,
@@ -33,7 +33,7 @@ const collageCards = [
   },
   {
     alt: '占位卡片 2',
-    imageSrc: toAssetPath('/assets/collage-cards/card-01.png'),
+    imageSrc: toAssetPath('/assets/collage-cards/card-01.webp'),
     left: collageInnerLeft,
     top: spreadFromCenter(2),
     size: collageCardSize,
@@ -42,7 +42,7 @@ const collageCards = [
   },
   {
     alt: '占位卡片 3',
-    imageSrc: toAssetPath('/assets/collage-cards/card-08.png'),
+    imageSrc: toAssetPath('/assets/collage-cards/card-08.webp'),
     left: collageCenterLeft,
     top: spreadFromCenter(-3.5),
     size: collageCardSize,
@@ -51,7 +51,7 @@ const collageCards = [
   },
   {
     alt: '占位卡片 4',
-    imageSrc: toAssetPath('/assets/collage-cards/card-03.png'),
+    imageSrc: toAssetPath('/assets/collage-cards/card-03.webp'),
     left: collageInnerRight,
     top: spreadFromCenter(2),
     size: collageCardSize,
@@ -60,7 +60,7 @@ const collageCards = [
   },
   {
     alt: '占位卡片 5',
-    imageSrc: toAssetPath('/assets/collage-cards/card-05.png'),
+    imageSrc: toAssetPath('/assets/collage-cards/card-05.webp'),
     left: collageOuterRight,
     top: spreadFromCenter(11.5),
     size: collageCardSize,
@@ -69,7 +69,7 @@ const collageCards = [
   },
   {
     alt: '占位卡片 6',
-    imageSrc: toAssetPath('/assets/collage-cards/card-07.png'),
+    imageSrc: toAssetPath('/assets/collage-cards/card-07.webp'),
     left: collageOuterLeft,
     top: spreadFromCenter(67),
     size: collageCardSize,
@@ -78,7 +78,7 @@ const collageCards = [
   },
   {
     alt: '占位卡片 7',
-    imageSrc: toAssetPath('/assets/collage-cards/card-10.png'),
+    imageSrc: toAssetPath('/assets/collage-cards/card-10.webp'),
     left: collageInnerLeft,
     top: spreadFromCenter(77),
     size: collageCardSize,
@@ -87,7 +87,7 @@ const collageCards = [
   },
   {
     alt: '占位卡片 8',
-    imageSrc: toAssetPath('/assets/collage-cards/card-02.png'),
+    imageSrc: toAssetPath('/assets/collage-cards/card-02.webp'),
     left: collageCenterLeft,
     top: spreadFromCenter(82.5),
     size: collageCardSize,
@@ -96,7 +96,7 @@ const collageCards = [
   },
   {
     alt: '占位卡片 9',
-    imageSrc: toAssetPath('/assets/collage-cards/card-06.png'),
+    imageSrc: toAssetPath('/assets/collage-cards/card-06.webp'),
     left: collageInnerRight,
     top: spreadFromCenter(77),
     size: collageCardSize,
@@ -105,7 +105,7 @@ const collageCards = [
   },
   {
     alt: '占位卡片 10',
-    imageSrc: toAssetPath('/assets/collage-cards/card-09.png'),
+    imageSrc: toAssetPath('/assets/collage-cards/card-09.webp'),
     left: collageOuterRight,
     top: spreadFromCenter(67),
     size: collageCardSize,
@@ -118,7 +118,7 @@ const collageSpiralOrderIndex = Object.fromEntries(
   collageSpiralOrder.map((cardIndex, orderIndex) => [cardIndex, orderIndex]),
 );
 
-const parallaxPanelImage = toAssetPath('/assets/parallax-new.jpg');
+const parallaxPanelImage = toAssetPath('/assets/parallax-new.webp');
 const homeInfiniteScrollAssetVersion = '20260423-2';
 const recentWorksItems = Array.from({ length: 13 }, (_, index) => ({
   title: `首页无限滚动 ${index + 1}`,

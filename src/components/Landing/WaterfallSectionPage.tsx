@@ -139,7 +139,7 @@ function getWaterfallSections(showcase: ShowcaseItem): WaterfallSection[] {
 }
 
 function getRecentCaseStudies(): RecentCaseStudy[] {
-  const defaultRecentCaseCover = toAssetPath('/assets/showcases/recent-works/easycash-visual-renewal-cover.png');
+  const defaultRecentCaseCover = toAssetPath('/assets/showcases/recent-works/easycash-visual-renewal-cover.webp');
 
   return [
     {
@@ -495,7 +495,7 @@ export default function WaterfallSectionPage({ showcase, sectionId, caseId = nul
 
   if (caseId) {
     const isWuyouCase = activeCaseStudy?.id === 'case-01';
-    const wuyouNightKvImage = toAssetPath('/assets/showcases/recent-works/wuyou-night-kv.jpg');
+    const wuyouNightKvImage = toAssetPath('/assets/showcases/recent-works/wuyou-night-kv.webp');
 
     return (
       <main className="min-h-screen bg-surface-950 px-4 pt-28 pb-16 sm:px-5 lg:px-6 xl:px-8">

@@ -73,7 +73,7 @@ export default function Navbar() {
           {/* Logo */}
           <a href="#hero" className="flex items-center gap-2.5 group">
             <img
-              src={toAssetPath('/assets/site-icon.png')}
+              src={toAssetPath('/assets/site-icon.webp')}
               alt="LQB icon"
               className="w-8 h-8 rounded-lg object-cover shadow-lg shadow-black/20"
             />
