@@ -5,6 +5,8 @@ import { accentMap, showcases } from '../../content/showcases';
 import { useMagneticMotion } from '../../hooks/useMagneticMotion';
 import { toAssetPath } from '../../utils/assetPath';
 import InteractiveTitle from '../common/InteractiveTitle';
+import WorkForFuture from './WorkForFuture';
+import BweModdySection from './BweModdySection';
 
 const collageCardSize = 23.5;
 const collageSpread = 1.12;
@@ -985,7 +987,13 @@ export default function Features() {
         </div>
 
         <RecentWorksLoop />
+      </div>
 
+      {/* WORK A FUTURE + BWE MODDY — full-width sections outside max-w container */}
+      <WorkForFuture />
+      <BweModdySection />
+
+      <div className="mx-auto max-w-7xl px-6 pt-72 pb-32 md:pt-96">
         <div ref={headerRef} className="mx-auto mb-16 max-w-5xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 42, filter: 'blur(10px)' }}
