@@ -98,7 +98,7 @@ export default function BweModdySection() {
       {/* 4 cards */}
       <div
         className="absolute inset-x-0 flex items-end gap-2 pl-4 md:gap-3 md:pl-6 lg:gap-4 lg:pl-8"
-        style={{ bottom: '360px', zIndex: 10 }}
+        style={{ bottom: '14.06vw', zIndex: 10 }}
       >
         {/* Card 1 */}
         <BrightCard
@@ -107,7 +107,7 @@ export default function BweModdySection() {
           lit={isLit(0)}
           index={0}
           onHoverChange={handleHoverChange}
-          style={{ height: '400px' }}
+          style={{ height: '15.625vw' }}
           motionProps={{
             initial: { opacity: 0, y: 18 },
             animate: isInView ? { opacity: 1, y: 0 } : {},
@@ -125,7 +125,7 @@ export default function BweModdySection() {
               lit={isLit(i)}
               index={i}
               onHoverChange={handleHoverChange}
-              style={{ height: '400px', marginRight: i === 1 ? '-1px' : undefined }}
+              style={{ height: '15.625vw', marginRight: i === 1 ? '-1px' : undefined }}
               motionProps={{
                 initial: { opacity: 0, y: 18 },
                 animate: isInView ? { opacity: 1, y: 0 } : {},
@@ -142,7 +142,7 @@ export default function BweModdySection() {
           lit={isLit(3)}
           index={3}
           onHoverChange={handleHoverChange}
-          style={{ height: '400px' }}
+          style={{ height: '15.625vw' }}
           motionProps={{
             initial: { opacity: 0, y: 18 },
             animate: isInView ? { opacity: 1, y: 0 } : {},
