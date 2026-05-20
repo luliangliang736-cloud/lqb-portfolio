@@ -6,28 +6,25 @@ const toAsset = (p: string) => `${BASE.replace(/\/$/, '')}${p}`;
 
 const CARD_IMAGES: string[][] = [
   [
-    toAsset('/assets/scroll-cards/Mask group.jpg'),
-    toAsset('/assets/scroll-cards/Mask group-1.jpg'),
-    toAsset('/assets/scroll-cards/Mask group-2.jpg'),
-    toAsset('/assets/scroll-cards/Mask group-3.jpg'),
+    toAsset('/assets/scroll-cards/Mask group.webp'),
+    toAsset('/assets/scroll-cards/Mask group-1.webp'),
+    toAsset('/assets/scroll-cards/Mask group-2.webp'),
+    toAsset('/assets/scroll-cards/Mask group-3.webp'),
+    toAsset('/assets/scroll-cards/Mask group-4.webp'),
   ],
   [
-    toAsset('/assets/scroll-cards/Mask group-4.jpg'),
-    toAsset('/assets/scroll-cards/Mask group-5.jpg'),
-    toAsset('/assets/scroll-cards/Mask group-6.jpg'),
-    toAsset('/assets/scroll-cards/Mask group-7.jpg'),
+    toAsset('/assets/scroll-cards/Mask group-5.webp'),
+    toAsset('/assets/scroll-cards/Mask group-6.webp'),
+    toAsset('/assets/scroll-cards/Mask group-7.webp'),
+    toAsset('/assets/scroll-cards/Mask group-8.webp'),
+    toAsset('/assets/scroll-cards/Mask group-9.webp'),
   ],
   [
-    toAsset('/assets/scroll-cards/Mask group-8.jpg'),
-    toAsset('/assets/scroll-cards/Mask group-9.jpg'),
-    toAsset('/assets/scroll-cards/Mask group-10.jpg'),
-    toAsset('/assets/scroll-cards/Mask group-11.jpg'),
-  ],
-  [
-    toAsset('/assets/scroll-cards/Mask group-12.jpg'),
-    toAsset('/assets/scroll-cards/Mask group-13.jpg'),
-    toAsset('/assets/scroll-cards/Mask group-14.jpg'),
-    toAsset('/assets/scroll-cards/Mask group-15.jpg'),
+    toAsset('/assets/scroll-cards/Mask group-10.webp'),
+    toAsset('/assets/scroll-cards/Mask group-11.webp'),
+    toAsset('/assets/scroll-cards/Mask group-12.webp'),
+    toAsset('/assets/scroll-cards/Mask group-13.webp'),
+    toAsset('/assets/scroll-cards/Mask group-14.webp'),
   ],
 ];
 
@@ -164,7 +161,7 @@ export default function WorkForFuture() {
           </motion.div>
         </div>
 
-        {/* Right — 4 cards */}
+        {/* Right — 3 cards */}
         <div className="flex w-[42%] max-w-[420px] shrink-0 flex-col justify-center gap-4 py-12 pr-8 md:pr-12 lg:pr-16">
           {CARD_IMAGES.map((imgs, i) => (
             <motion.div
