@@ -81,14 +81,9 @@ export default function CTASection() {
 
   return (
     <section className="relative px-5 pt-20 pb-16 sm:px-6 sm:pt-24 sm:pb-20 lg:pt-28 lg:pb-22 xl:pt-32 xl:pb-24" ref={ref}>
-      {/* Background glow */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute bottom-0 left-1/2 h-[280px] w-[420px] -translate-x-1/2 rounded-full bg-primary-600/8 blur-[90px] sm:h-[340px] sm:w-[520px] lg:h-[380px] lg:w-[560px] xl:h-[400px] xl:w-[600px] xl:blur-[120px]" />
-      </div>
-
       <div className="relative mx-auto max-w-6xl text-center">
         <motion.div
-          className="mx-auto -translate-y-6 flex w-full justify-center px-1 text-center sm:-translate-y-8 lg:-translate-y-10"
+          className="mx-auto -translate-y-[74px] flex w-full justify-center px-1 text-center sm:-translate-y-[82px] lg:-translate-y-[90px]"
           initial={{ opacity: 0, y: 40, filter: 'blur(10px)' }}
           animate={isInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
           transition={{ duration: 0.65 }}

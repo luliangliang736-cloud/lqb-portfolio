@@ -993,7 +993,7 @@ export default function Features() {
       <WorkForFuture />
       <BweModdySection />
 
-      <div className="mx-auto max-w-7xl px-6 pt-72 pb-32 md:pt-96">
+      <div className="mx-auto w-full max-w-[1920px] px-6 pt-72 pb-32 md:px-[2vw] md:pt-96">
         <div ref={headerRef} className="mx-auto mb-16 max-w-5xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 42, filter: 'blur(10px)' }}
@@ -1018,7 +1018,7 @@ export default function Features() {
           </motion.p>
         </div>
 
-        <div id="features-grid" className="grid grid-cols-1 gap-5 md:grid-cols-2">
+        <div id="features-grid" className="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-[1vw]">
           {showcases.map((feature) => (
             <FeatureCard
               key={feature.tag}

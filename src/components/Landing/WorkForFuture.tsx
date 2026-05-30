@@ -106,6 +106,42 @@ function SlidingCard({ images, delay = 0 }: { images: string[]; delay?: number }
   );
 }
 
+const showcaseWordOffsets = {
+  EVERYTHING: 0,
+  TO: 10,
+  CREATE: 12,
+  ANYTHING: 18,
+};
+
+const showcaseAccentMap = new Map<number, string>([
+  [showcaseWordOffsets.EVERYTHING + 5, '#9CFF3F'], // H in EVERYTHING
+  [showcaseWordOffsets.CREATE + 4, '#FFB8DF'], // T in CREATE
+  [showcaseWordOffsets.ANYTHING + 6, '#9CFF3F'], // second N in ANYTHING
+]);
+
+function AccentLetters({
+  word,
+  offset,
+  accents,
+}: {
+  word: string;
+  offset: number;
+  accents: Map<number, string>;
+}) {
+  return (
+    <>
+      {word.split('').map((letter, index) => {
+        const color = accents.get(offset + index);
+        return (
+          <span key={`${word}-${index}`} style={color ? { color } : undefined}>
+            {letter}
+          </span>
+        );
+      })}
+    </>
+  );
+}
+
 function WorkFutureShowcase({ isInView }: { isInView: boolean }) {
   return (
     <motion.div
@@ -172,7 +208,11 @@ function WorkFutureShowcase({ isInView }: { isInView: boolean }) {
                   custom={0}
                   transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8 }}
                 >
-                  EVERYTHING
+                  <AccentLetters
+                    word="EVERYTHING"
+                    offset={showcaseWordOffsets.EVERYTHING}
+                    accents={showcaseAccentMap}
+                  />
                 </motion.span>
               </motion.span>
             </span>
@@ -190,7 +230,7 @@ function WorkFutureShowcase({ isInView }: { isInView: boolean }) {
                   custom={1}
                   transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8 }}
                 >
-                  TO
+                  <AccentLetters word="TO" offset={showcaseWordOffsets.TO} accents={showcaseAccentMap} />
                 </motion.span>
                 <motion.span
                   className="inline-flex items-center rounded-full bg-[#9CFF3F] px-[0.42em] py-[0.12em] align-middle text-[0.46em] leading-none tracking-[-0.04em] text-black"
@@ -206,7 +246,11 @@ function WorkFutureShowcase({ isInView }: { isInView: boolean }) {
                   custom={3}
                   transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8, delay: 0.03 }}
                 >
-                  CREATE
+                  <AccentLetters
+                    word="CREATE"
+                    offset={showcaseWordOffsets.CREATE}
+                    accents={showcaseAccentMap}
+                  />
                 </motion.span>
               </motion.span>
             </span>
@@ -224,7 +268,11 @@ function WorkFutureShowcase({ isInView }: { isInView: boolean }) {
                   custom={4}
                   transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8, delay: 0.04 }}
                 >
-                  ANYTHING
+                  <AccentLetters
+                    word="ANYTHING"
+                    offset={showcaseWordOffsets.ANYTHING}
+                    accents={showcaseAccentMap}
+                  />
                 </motion.span>
               </motion.span>
             </span>
