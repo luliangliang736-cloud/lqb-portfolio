@@ -1,8 +1,12 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { AnimatePresence, motion, useInView } from 'framer-motion';
 import { toAssetPath } from '../../utils/assetPath';
 
-const bannerSrc = toAssetPath('/assets/bwe-moddy-banner.webp');
+const bannerImages = [
+  toAssetPath('/assets/bwe-moddy-banner/1.webp'),
+  toAssetPath('/assets/bwe-moddy-banner/2.webp'),
+  toAssetPath('/assets/bwe-moddy-banner/3.webp'),
+];
 
 const cards = [
   toAssetPath('/assets/bwe-moddy-cards/1.webp'),
@@ -59,6 +63,7 @@ export default function BweModdySection() {
 
   // activeIndex: 自动轮播当前亮起的卡片 (-1 = 无)
   const [activeIndex, setActiveIndex] = useState<number>(-1);
+  const [bannerIndex, setBannerIndex] = useState(0);
   // hoveredIndex: 鼠标悬停的卡片
   const [, setHoveredIndex] = useState<number>(-1);
 
@@ -81,19 +86,46 @@ export default function BweModdySection() {
     return () => clearInterval(interval);
   }, [isInView]);
 
+  useEffect(() => {
+    if (!isInView || bannerImages.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setBannerIndex((current) => (current + 1) % bannerImages.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [isInView]);
+
   const isLit = (i: number) => activeIndex === i;
 
   return (
     <section ref={ref} className="relative w-full overflow-hidden">
 
-      {/* Bottom large image */}
-      <img
-        src={bannerSrc}
-        alt="BWE MODDY"
-        className="block w-full object-cover"
-        draggable={false}
-        loading="lazy"
-      />
+      {/* Bottom large image carousel */}
+      <div className="relative w-full overflow-hidden">
+        <img
+          src={bannerImages[0]}
+          alt=""
+          className="block w-full object-cover opacity-0"
+          draggable={false}
+          loading="lazy"
+          aria-hidden="true"
+        />
+        <AnimatePresence initial={false}>
+          <motion.img
+            key={bannerImages[bannerIndex]}
+            src={bannerImages[bannerIndex]}
+            alt="BWE MODDY"
+            className="absolute inset-0 h-full w-full object-cover"
+            draggable={false}
+            loading="lazy"
+            initial={{ y: '100%' }}
+            animate={{ y: '0%' }}
+            exit={{ y: '-100%' }}
+            transition={{ duration: 1.45, ease: [0.16, 1, 0.3, 1] }}
+          />
+        </AnimatePresence>
+      </div>
 
       {/* 4 cards */}
       <div
