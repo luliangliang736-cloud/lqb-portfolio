@@ -31,19 +31,19 @@ const CARD_IMAGES: string[][] = [
 const SHOWCASE_FLOATS = [
   {
     src: toAsset('/assets/work-future-showcase/1.webp'),
-    className: 'left-[3vw] top-[9.5vw] aspect-[3/4] w-[9.5vw]',
+    className: 'left-[3vw] top-[9.5vw] aspect-[3/4] w-[10.925vw]',
   },
   {
     src: toAsset('/assets/work-future-showcase/2.webp'),
-    className: 'bottom-[6.2vw] left-[16vw] aspect-[16/9] w-[22vw]',
+    className: 'bottom-[6.2vw] left-[16vw] aspect-[16/9] w-[25.3vw]',
   },
   {
     src: toAsset('/assets/work-future-showcase/3.webp'),
-    className: 'right-[21vw] top-[4.5vw] aspect-[3/4] w-[15vw]',
+    className: 'right-[21vw] top-[4.5vw] aspect-[3/4] w-[17.25vw]',
   },
   {
     src: toAsset('/assets/work-future-showcase/4.webp'),
-    className: 'bottom-[9vw] right-[4vw] aspect-[3/4] w-[12vw]',
+    className: 'bottom-[9vw] right-[4vw] aspect-[3/4] w-[13.8vw]',
   },
 ];
 
@@ -233,12 +233,12 @@ function WorkFutureShowcase({ isInView }: { isInView: boolean }) {
                   <AccentLetters word="TO" offset={showcaseWordOffsets.TO} accents={showcaseAccentMap} />
                 </motion.span>
                 <motion.span
-                  className="inline-flex items-center rounded-full bg-[#9CFF3F] px-[0.42em] py-[0.12em] align-middle text-[0.46em] leading-none tracking-[-0.04em] text-black"
+                  className="inline-flex min-w-[3.25em] items-center justify-center rounded-full bg-[#9CFF3F] px-[0.42em] py-[0.12em] align-middle text-[0.46em] leading-none tracking-[-0.04em] text-black"
                   variants={headingWordVariants}
                   custom={2}
                   transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8, delay: 0.02 }}
                 >
-                  Enert
+                  →
                 </motion.span>
                 <motion.span
                   className="inline-block"
@@ -309,6 +309,33 @@ export default function WorkForFuture() {
               whileHover="hover"
             >
               <h2 className="text-[1.95rem] font-medium uppercase leading-[0.9] tracking-[-0.08em] text-[#F2F0E8] sm:text-[2.5rem] lg:text-[4.6rem] xl:text-[5.8rem]">
+                <span className="mb-4 block leading-[0.9] lg:mb-6">
+                  <motion.span
+                    className="inline-block origin-left"
+                    variants={headingLineVariants}
+                    custom={0}
+                    transition={{ type: 'spring', stiffness: 220, damping: 18, mass: 0.9 }}
+                  >
+                    <motion.span
+                      className="inline-block"
+                      variants={headingWordVariants}
+                      custom={0}
+                      transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8 }}
+                    >
+                      CREATE
+                    </motion.span>
+                    <span className="inline-block w-[0.18em] lg:w-[0.22em]" aria-hidden="true" />
+                    <motion.span
+                      className="inline-block"
+                      variants={headingWordVariants}
+                      custom={1}
+                      transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8, delay: 0.02 }}
+                    >
+                      DE<span className="text-[#FFB8DF]">S</span>IGN
+                    </motion.span>
+                  </motion.span>
+                </span>
+
                 {/* Line 1: WORK */}
                 <span className="block">
                   <motion.span
