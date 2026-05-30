@@ -28,6 +28,25 @@ const CARD_IMAGES: string[][] = [
   ],
 ];
 
+const SHOWCASE_FLOATS = [
+  {
+    src: toAsset('/assets/work-future-showcase/1.webp'),
+    className: 'left-[3vw] top-[9.5vw] aspect-[3/4] w-[9.5vw]',
+  },
+  {
+    src: toAsset('/assets/work-future-showcase/2.webp'),
+    className: 'bottom-[6.2vw] left-[16vw] aspect-[16/9] w-[22vw]',
+  },
+  {
+    src: toAsset('/assets/work-future-showcase/3.webp'),
+    className: 'right-[21vw] top-[4.5vw] aspect-[3/4] w-[15vw]',
+  },
+  {
+    src: toAsset('/assets/work-future-showcase/4.webp'),
+    className: 'bottom-[9vw] right-[4vw] aspect-[3/4] w-[12vw]',
+  },
+];
+
 const headingLineVariants = {
   rest: { x: 0, y: 0, rotate: 0, scale: 1 },
   hover: (index: number) => {
@@ -87,6 +106,135 @@ function SlidingCard({ images, delay = 0 }: { images: string[]; delay?: number }
   );
 }
 
+function WorkFutureShowcase({ isInView }: { isInView: boolean }) {
+  return (
+    <motion.div
+      className="relative left-1/2 mb-52 hidden h-[56.25vw] w-screen -translate-x-1/2 -translate-y-[244px] overflow-hidden md:block"
+      initial={{ opacity: 0, y: 36 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {SHOWCASE_FLOATS.map((item, index) => (
+        <motion.div
+          key={index}
+          className={`absolute z-10 overflow-hidden shadow-[0_24px_70px_rgba(0,0,0,0.35)] ${item.className}`}
+          initial={{ opacity: 0, y: 26, scale: 0.94 }}
+          animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+          whileHover={{
+            y: -12,
+            scale: 1.08,
+            rotateX: item.className.includes('top') ? 8 : -8,
+            rotateY: item.className.includes('left') ? -10 : 10,
+            filter: 'brightness(1.1)',
+          }}
+          transition={{
+            opacity: { duration: 0.72, delay: 0.12 + index * 0.08, ease: [0.22, 1, 0.36, 1] },
+            y: { type: 'spring', stiffness: 420, damping: 24, mass: 0.65 },
+            scale: { type: 'spring', stiffness: 420, damping: 24, mass: 0.65 },
+            rotateX: { type: 'spring', stiffness: 420, damping: 24, mass: 0.65 },
+            rotateY: { type: 'spring', stiffness: 420, damping: 24, mass: 0.65 },
+            filter: { duration: 0.16, ease: 'easeOut' },
+          }}
+          style={{ transformPerspective: 900, transformStyle: 'preserve-3d' }}
+        >
+          <img
+            src={item.src}
+            alt=""
+            className="h-full w-full object-contain"
+            draggable={false}
+            loading="lazy"
+          />
+        </motion.div>
+      ))}
+
+      <div className="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center text-center">
+        <motion.div
+          className="pointer-events-auto relative cursor-default"
+          initial="rest"
+          whileHover="hover"
+        >
+          <motion.h3
+            className="text-[1.95rem] font-medium uppercase leading-[0.9] tracking-[-0.08em] text-[#F2F0E8] sm:text-[2.5rem] lg:text-[4.6rem] xl:text-[5.8rem]"
+          initial={{ opacity: 0, y: 20, scale: 0.98 }}
+          animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+          transition={{ duration: 0.85, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
+        >
+            <span className="block">
+              <motion.span
+                className="inline-block origin-left"
+                variants={headingLineVariants}
+                custom={0}
+                transition={{ type: 'spring', stiffness: 220, damping: 18, mass: 0.9 }}
+              >
+                <motion.span
+                  className="inline-block"
+                  variants={headingWordVariants}
+                  custom={0}
+                  transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8 }}
+                >
+                  EVERYTHING
+                </motion.span>
+              </motion.span>
+            </span>
+
+            <span className="mt-2 block">
+              <motion.span
+                className="inline-flex origin-center items-center justify-center gap-[0.18em] lg:gap-[0.22em]"
+                variants={headingLineVariants}
+                custom={1}
+                transition={{ type: 'spring', stiffness: 220, damping: 18, mass: 0.9, delay: 0.02 }}
+              >
+                <motion.span
+                  className="inline-block"
+                  variants={headingWordVariants}
+                  custom={1}
+                  transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8 }}
+                >
+                  TO
+                </motion.span>
+                <motion.span
+                  className="inline-flex items-center rounded-full bg-[#9CFF3F] px-[0.42em] py-[0.12em] align-middle text-[0.46em] leading-none tracking-[-0.04em] text-black"
+                  variants={headingWordVariants}
+                  custom={2}
+                  transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8, delay: 0.02 }}
+                >
+                  Enert
+                </motion.span>
+                <motion.span
+                  className="inline-block"
+                  variants={headingWordVariants}
+                  custom={3}
+                  transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8, delay: 0.03 }}
+                >
+                  CREATE
+                </motion.span>
+              </motion.span>
+            </span>
+
+            <span className="mt-2 block">
+              <motion.span
+                className="inline-block origin-left"
+                variants={headingLineVariants}
+                custom={2}
+                transition={{ type: 'spring', stiffness: 220, damping: 18, mass: 0.9, delay: 0.04 }}
+              >
+                <motion.span
+                  className="inline-block"
+                  variants={headingWordVariants}
+                  custom={4}
+                  transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8, delay: 0.04 }}
+                >
+                  ANYTHING
+                </motion.span>
+              </motion.span>
+            </span>
+          </motion.h3>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function WorkForFuture() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-60px' });
@@ -96,6 +244,8 @@ export default function WorkForFuture() {
       ref={ref}
       className="relative w-full bg-black py-[250px]"
     >
+      <WorkFutureShowcase isInView={isInView} />
+
       <div className="flex pb-16 lg:pb-24" style={{ transform: 'translateY(-200px)', marginBottom: '-200px' }}>
 
         {/* Left — text block with hover effect */}
