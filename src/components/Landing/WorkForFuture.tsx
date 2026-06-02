@@ -145,7 +145,7 @@ function AccentLetters({
 function WorkFutureShowcase({ isInView }: { isInView: boolean }) {
   return (
     <motion.div
-      className="relative left-1/2 mb-52 hidden h-[56.25vw] max-h-[calc(100vh-160px)] w-screen -translate-x-1/2 -translate-y-[244px] overflow-hidden md:block"
+      className="relative left-1/2 mb-52 hidden h-[56.25vw] w-screen -translate-x-1/2 -translate-y-[244px] overflow-hidden md:block"
       initial={{ opacity: 0, y: 36 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
@@ -290,7 +290,7 @@ export default function WorkForFuture() {
   return (
     <section
       ref={ref}
-      className="relative w-full bg-black py-32 lg:py-[250px]"
+      className="relative w-full bg-black py-[250px]"
     >
       <WorkFutureShowcase isInView={isInView} />
 
