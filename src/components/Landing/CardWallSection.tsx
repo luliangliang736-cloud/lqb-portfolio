@@ -162,7 +162,7 @@ export default function CardWallSection() {
   };
 
   return (
-    // Outer section: perspective only, NO overflow-hidden (Safari clips 3D when combined)
+    // clip-path instead of overflow-hidden — Safari incorrectly clips 3D transforms with overflow:hidden
     <section
       className={`relative flex items-center justify-center bg-black touch-none select-none ${
         isDragging ? 'cursor-grabbing' : 'cursor-grab'
@@ -170,6 +170,7 @@ export default function CardWallSection() {
       style={{
         height: '90vh',
         minHeight: 620,
+        clipPath: 'inset(0)',
         perspective: '900px',
         perspectiveOrigin: '50% 50%',
       }}
@@ -178,8 +179,7 @@ export default function CardWallSection() {
       onPointerUp={finishDrag}
       onPointerCancel={finishDrag}
     >
-      {/* Inner clip layer: overflow-hidden separated from perspective to avoid Safari clipping bug */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0">
         <div
           className="absolute inset-0 flex items-center justify-center"
           style={{ perspective: '900px', perspectiveOrigin: '50% 50%' }}
