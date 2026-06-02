@@ -169,9 +169,6 @@ export default function CardWallSection() {
       style={{
         height: '90vh',
         minHeight: 620,
-        // No overflow/clip-path here — both break 3D transforms on Mac browsers.
-        // Perspective lives only on the inner container that hosts the 3D scene.
-        isolation: 'isolate',
       }}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
@@ -239,8 +236,6 @@ export default function CardWallSection() {
         </div>
         <div className="pointer-events-none absolute inset-y-0 left-0 w-[18vw] bg-gradient-to-r from-black via-black/70 to-transparent" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-[18vw] bg-gradient-to-l from-black via-black/70 to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-black to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black to-transparent" />
       </div>
       <img
         src={OPERATOR_IMAGE}
