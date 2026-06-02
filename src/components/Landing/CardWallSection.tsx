@@ -162,8 +162,9 @@ export default function CardWallSection() {
   };
 
   return (
+    // Outer section: perspective only, NO overflow-hidden (Safari clips 3D when combined)
     <section
-      className={`relative flex items-center justify-center overflow-hidden bg-black touch-none select-none ${
+      className={`relative flex items-center justify-center bg-black touch-none select-none ${
         isDragging ? 'cursor-grabbing' : 'cursor-grab'
       }`}
       style={{
@@ -177,61 +178,69 @@ export default function CardWallSection() {
       onPointerUp={finishDrag}
       onPointerCancel={finishDrag}
     >
-      <div
-        className="relative"
-        style={{
-          width: 5 * cardW + 4 * gapX,
-          height: totalH,
-          transformStyle: 'preserve-3d',
-        }}
-      >
+      {/* Inner clip layer: overflow-hidden separated from perspective to avoid Safari clipping bug */}
+      <div className="absolute inset-0 overflow-hidden">
         <div
-          className="absolute left-1/2 top-1/2"
-          style={{ width: 0, height: 0, transformStyle: 'preserve-3d' }}
+          className="absolute inset-0 flex items-center justify-center"
+          style={{ perspective: '900px', perspectiveOrigin: '50% 50%' }}
         >
-          {Array.from({ length: TOTAL_COLS }, (_, colIndex) => (
+          <div
+            className="relative"
+            style={{
+              width: 5 * cardW + 4 * gapX,
+              height: totalH,
+              transformStyle: 'preserve-3d',
+            }}
+          >
             <div
-              key={colIndex}
-              ref={(element) => {
-                columnRefs.current[colIndex] = element;
-              }}
-              className="absolute will-change-transform"
-              style={{
-                left: -cardW / 2,
-                top: -totalH / 2,
-                width: cardW,
-                height: totalH,
-                transformStyle: 'preserve-3d',
-              }}
+              className="absolute left-1/2 top-1/2"
+              style={{ width: 0, height: 0, transformStyle: 'preserve-3d' }}
             >
-              {ROWS.map((row) => (
+              {Array.from({ length: TOTAL_COLS }, (_, colIndex) => (
                 <div
-                  key={row}
-                  className="absolute left-0 overflow-hidden bg-white"
+                  key={colIndex}
+                  ref={(element) => {
+                    columnRefs.current[colIndex] = element;
+                  }}
+                  className="absolute will-change-transform"
                   style={{
-                    top: row * rowStep,
+                    left: -cardW / 2,
+                    top: -totalH / 2,
                     width: cardW,
-                    height: cardH,
-                    borderRadius: 'clamp(12px, 1.5vw, 19px)',
-                    boxShadow: '0 0 0 1px rgba(255,255,255,0.05)',
-                    backfaceVisibility: 'hidden',
+                    height: totalH,
+                    transformStyle: 'preserve-3d',
                   }}
                 >
-                  <img
-                    src={toCardAsset(colIndex, row)}
-                    alt=""
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                    draggable={false}
-                  />
+                  {ROWS.map((row) => (
+                    <div
+                      key={row}
+                      className="absolute left-0 overflow-hidden bg-white"
+                      style={{
+                        top: row * rowStep,
+                        width: cardW,
+                        height: cardH,
+                        borderRadius: 'clamp(12px, 1.5vw, 19px)',
+                        boxShadow: '0 0 0 1px rgba(255,255,255,0.05)',
+                        backfaceVisibility: 'hidden',
+                      }}
+                    >
+                      <img
+                        src={toCardAsset(colIndex, row)}
+                        alt=""
+                        className="h-full w-full object-cover"
+                        loading="lazy"
+                        draggable={false}
+                      />
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>
-          ))}
+          </div>
         </div>
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-[18vw] bg-gradient-to-r from-black via-black/70 to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-[18vw] bg-gradient-to-l from-black via-black/70 to-transparent" />
       </div>
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-[18vw] bg-gradient-to-r from-black via-black/70 to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-[18vw] bg-gradient-to-l from-black via-black/70 to-transparent" />
       <img
         src={OPERATOR_IMAGE}
         alt=""
