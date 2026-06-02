@@ -70,6 +70,7 @@ export default function CardWallSection() {
   const colStep = cardW + gapX;
   const rowStep = cardH + gapY;
   const totalH = cardH * ROWS.length + gapY * (ROWS.length - 1);
+  const maskedSceneH = Math.max(totalH + 320, 980);
   // Matches the approved static shape: outer visible columns sit at ±1.88 column steps.
   const radius = (1.88 * colStep) / Math.sin(ANGLE_STEP * 2);
 
@@ -177,8 +178,9 @@ export default function CardWallSection() {
     >
       <div className="absolute inset-0">
         <div
-          className="absolute inset-0 flex items-center justify-center"
+          className="absolute left-0 right-0 top-1/2 flex -translate-y-1/2 items-center justify-center"
           style={{
+            height: maskedSceneH,
             perspective: '900px',
             perspectiveOrigin: '50% 50%',
             WebkitMaskImage: 'linear-gradient(to right, transparent 0%, #000 18%, #000 82%, transparent 100%)',
