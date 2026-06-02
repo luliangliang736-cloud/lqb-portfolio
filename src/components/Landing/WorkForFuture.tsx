@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
+import CardWallSection from './CardWallSection';
 
 const BASE = import.meta.env.BASE_URL ?? '/';
 const toAsset = (p: string) => `${BASE.replace(/\/$/, '')}${p}`;
@@ -293,6 +294,9 @@ export default function WorkForFuture() {
       className="relative w-full bg-black py-[250px]"
     >
       <WorkFutureShowcase isInView={isInView} />
+      <div className="-mt-[280px] mb-[520px]">
+        <CardWallSection />
+      </div>
 
       <div className="flex pb-16 lg:pb-24" style={{ transform: 'translateY(-200px)', marginBottom: '-200px' }}>
 
