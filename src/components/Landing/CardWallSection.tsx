@@ -178,7 +178,12 @@ export default function CardWallSection() {
       <div className="absolute inset-0">
         <div
           className="absolute inset-0 flex items-center justify-center"
-          style={{ perspective: '900px', perspectiveOrigin: '50% 50%' }}
+          style={{
+            perspective: '900px',
+            perspectiveOrigin: '50% 50%',
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, #000 18%, #000 82%, transparent 100%)',
+            maskImage: 'linear-gradient(to right, transparent 0%, #000 18%, #000 82%, transparent 100%)',
+          }}
         >
           <div
             className="relative"
@@ -234,8 +239,6 @@ export default function CardWallSection() {
             </div>
           </div>
         </div>
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-[18vw] bg-gradient-to-r from-black via-black/70 to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-[18vw] bg-gradient-to-l from-black via-black/70 to-transparent" />
       </div>
       <img
         src={OPERATOR_IMAGE}
