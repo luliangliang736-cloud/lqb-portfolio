@@ -70,7 +70,7 @@ export default function CardWallSection() {
   const colStep = cardW + gapX;
   const rowStep = cardH + gapY;
   const totalH = cardH * ROWS.length + gapY * (ROWS.length - 1);
-  const maskedSceneH = Math.max(totalH + 320, 980);
+  const maskedSceneH = Math.max(totalH + 520, 1180);
   // Matches the approved static shape: outer visible columns sit at ±1.88 column steps.
   const radius = (1.88 * colStep) / Math.sin(ANGLE_STEP * 2);
 
