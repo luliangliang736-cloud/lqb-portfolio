@@ -6,6 +6,7 @@ import { useMagneticMotion } from '../../hooks/useMagneticMotion';
 import { toAssetPath } from '../../utils/assetPath';
 import InteractiveTitle from '../common/InteractiveTitle';
 import WorkForFuture from './WorkForFuture';
+import CardWallSection from './CardWallSection';
 import BweModdySection from './BweModdySection';
 
 const collageCardSize = 23.5;
@@ -990,6 +991,7 @@ export default function Features() {
       </div>
 
       {/* WORK A FUTURE + BWE MODDY — full-width sections outside max-w container */}
+      <CardWallSection />
       <WorkForFuture />
       <BweModdySection />
 
