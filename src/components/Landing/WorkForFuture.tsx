@@ -23,8 +23,8 @@ const CARD_IMAGES: string[][] = [
     toAsset('/assets/scroll-cards/Mask group-10.webp'),
     toAsset('/assets/scroll-cards/Mask group-11.webp'),
     toAsset('/assets/scroll-cards/Mask group-12.webp'),
-    toAsset('/assets/scroll-cards/Mask group-13.webp'),
-    toAsset('/assets/scroll-cards/Mask group-14.webp'),
+    toAsset('/assets/scroll-cards/Group 1912056496.webp'),
+    toAsset('/assets/scroll-cards/Mask grou6p.webp'),
   ],
 ];
 
@@ -145,7 +145,7 @@ function AccentLetters({
 function WorkFutureShowcase({ isInView }: { isInView: boolean }) {
   return (
     <motion.div
-      className="relative left-1/2 mb-52 hidden h-[56.25vw] w-screen -translate-x-1/2 -translate-y-[244px] overflow-hidden md:block"
+      className="relative left-1/2 mb-52 hidden h-[56.25vw] max-h-[calc(100vh-160px)] w-screen -translate-x-1/2 -translate-y-[244px] overflow-hidden md:block"
       initial={{ opacity: 0, y: 36 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
@@ -290,7 +290,7 @@ export default function WorkForFuture() {
   return (
     <section
       ref={ref}
-      className="relative w-full bg-black py-[250px]"
+      className="relative w-full bg-black py-32 lg:py-[250px]"
     >
       <WorkFutureShowcase isInView={isInView} />
 
@@ -387,7 +387,7 @@ export default function WorkForFuture() {
         </div>
 
         {/* Right — 3 cards */}
-        <div className="flex w-[42%] max-w-[420px] shrink-0 flex-col justify-center gap-4 py-12 pr-8 md:pr-12 lg:pr-16">
+        <div className="flex w-[clamp(200px,30vw,480px)] shrink-0 flex-col justify-center gap-4 py-12 pr-8 md:pr-12 lg:pr-16">
           {CARD_IMAGES.map((imgs, i) => (
             <motion.div
               key={i}
