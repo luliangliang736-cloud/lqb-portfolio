@@ -7,9 +7,8 @@ import {
 
 const ROWS = [0, 1, 2] as const;
 const TOTAL_COLS = 20;
-const CARD_IMAGE_COUNT = 15;
-const CARD_IMAGE_COLS = CARD_IMAGE_COUNT / ROWS.length;
-const CARD_ASSET_VERSION = '20260602-1541';
+const CARD_IMAGE_COUNT = 21;
+const CARD_ASSET_VERSION = '20260603-1513';
 const ANGLE_STEP_DEG = 18;
 const ANGLE_STEP = ANGLE_STEP_DEG * Math.PI / 180;
 const AUTO_SCROLL_SPEED = 0.0012;
@@ -19,9 +18,10 @@ const FADE_OUT_ANGLE = ANGLE_STEP * 2.82;
 const BASE = import.meta.env.BASE_URL ?? '/';
 const OPERATOR_IMAGE = `${BASE.replace(/\/$/, '')}/assets/操作人物.png?v=20260602-1610`;
 const toCardAsset = (colIndex: number, row: number) => {
-  const imageIndex = (colIndex % CARD_IMAGE_COLS) * ROWS.length + row + 1;
+  const imageIndex = (colIndex * ROWS.length + row) % CARD_IMAGE_COUNT + 1;
+  const fileName = `card-${String(imageIndex).padStart(2, '0')}.webp`;
 
-  return `${BASE.replace(/\/$/, '')}/assets/card-wall/card-${String(imageIndex).padStart(2, '0')}.webp?v=${CARD_ASSET_VERSION}`;
+  return `${BASE.replace(/\/$/, '')}/assets/card-wall/${fileName}?v=${CARD_ASSET_VERSION}`;
 };
 
 function clamp(value: number, min: number, max: number) {
