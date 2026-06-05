@@ -119,9 +119,10 @@ export default function EverythingCreatePage() {
       const cardSize = Math.min(Math.max(324, 0.67 * vmin), 756);
       const backScale = Math.pow(1 - SCALE_STEP, STACK_SIZE - 1);
       const backCardHalf = (cardSize * backScale) / 2;
-      const backCardY = getTranslateY(STACK_SIZE - 1); // negative value
-      // Min offset = distance needed to keep back card >= 20px from viewport top
-      const minOffset = 20 - backCardY - backCardHalf - window.innerHeight / 2;
+      const backCardY = getTranslateY(STACK_SIZE - 1); // negative value (~-450px)
+      // Condition: screen_center + offset + backCardY - backCardHalf >= topMargin
+      // → offset >= topMargin - screen_center - backCardY + backCardHalf
+      const minOffset = 20 - window.innerHeight / 2 - backCardY + backCardHalf;
       setStackOffset(Math.max(50, Math.ceil(minOffset)));
     };
     compute();
