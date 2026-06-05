@@ -294,7 +294,7 @@ export default function WorkForFuture() {
       className="relative w-full bg-black py-[250px]"
     >
       <WorkFutureShowcase isInView={isInView} />
-      <div className="-mt-[280px] mb-[520px] relative z-[1]">
+      <div className="mb-[520px] relative z-[1]" style={{ marginTop: 'clamp(-300px, calc(218px - 45vh), -160px)' }}>
         <CardWallSection />
       </div>
 
