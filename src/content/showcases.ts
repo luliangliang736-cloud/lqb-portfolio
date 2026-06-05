@@ -285,6 +285,96 @@ const ipScenarioMedia: ShowcaseMediaItem[] = [
     description: 'A complete scene poster built from holiday motifs, characters, and graphic modules.',
     src: '/assets/showcases/ip-scenario/06.webp',
   },
+  {
+    id: 'ip-scene-07',
+    title: 'IP Scene 07',
+    description: '',
+    src: '/assets/showcases/ip-scenario/07.webp',
+  },
+  {
+    id: 'ip-scene-08',
+    title: 'IP Scene 08',
+    description: '',
+    src: '/assets/showcases/ip-scenario/08.webp',
+  },
+  {
+    id: 'ip-scene-09',
+    title: 'IP Scene 09',
+    description: '',
+    src: '/assets/showcases/ip-scenario/09.webp',
+  },
+  {
+    id: 'ip-scene-10',
+    title: 'IP Scene 10',
+    description: '',
+    src: '/assets/showcases/ip-scenario/10.webp',
+  },
+  {
+    id: 'ip-scene-11',
+    title: 'IP Scene 11',
+    description: '',
+    src: '/assets/showcases/ip-scenario/11.webp',
+  },
+  {
+    id: 'ip-scene-12',
+    title: 'IP Scene 12',
+    description: '',
+    src: '/assets/showcases/ip-scenario/12.webp',
+  },
+  {
+    id: 'ip-scene-13',
+    title: 'IP Scene 13',
+    description: '',
+    src: '/assets/showcases/ip-scenario/13.webp',
+  },
+  {
+    id: 'ip-scene-14',
+    title: 'IP Scene 14',
+    description: '',
+    src: '/assets/showcases/ip-scenario/14.webp',
+  },
+  {
+    id: 'ip-scene-15',
+    title: 'IP Scene 15',
+    description: '',
+    src: '/assets/showcases/ip-scenario/15.webp',
+  },
+  {
+    id: 'ip-scene-16',
+    title: 'IP Scene 16',
+    description: '',
+    src: '/assets/showcases/ip-scenario/16.webp',
+  },
+  {
+    id: 'ip-scene-17',
+    title: 'IP Scene 17',
+    description: '',
+    src: '/assets/showcases/ip-scenario/17.webp',
+  },
+  {
+    id: 'ip-scene-18',
+    title: 'IP Scene 18',
+    description: '',
+    src: '/assets/showcases/ip-scenario/18.webp',
+  },
+  {
+    id: 'ip-scene-19',
+    title: 'IP Scene 19',
+    description: '',
+    src: '/assets/showcases/ip-scenario/19.webp',
+  },
+  {
+    id: 'ip-scene-20',
+    title: 'IP Scene 20',
+    description: '',
+    src: '/assets/showcases/ip-scenario/20.webp',
+  },
+  {
+    id: 'ip-scene-21',
+    title: 'IP Scene 21',
+    description: '',
+    src: '/assets/showcases/ip-scenario/21.webp',
+  },
 ];
 
 const dynamicVisionMedia: ShowcaseMediaItem[] = [
