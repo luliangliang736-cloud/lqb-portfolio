@@ -5,27 +5,28 @@ import CardWallSection from './CardWallSection';
 const BASE = import.meta.env.BASE_URL ?? '/';
 const toAsset = (p: string) => `${BASE.replace(/\/$/, '')}${p}`;
 
+const SCROLL_CARD_VERSION = '20260605-1304';
 const CARD_IMAGES: string[][] = [
   [
-    toAsset('/assets/scroll-cards/Mask group.webp'),
-    toAsset('/assets/scroll-cards/Mask group-1.webp'),
-    toAsset('/assets/scroll-cards/Mask group-2.webp'),
-    toAsset('/assets/scroll-cards/Mask group-3.webp'),
-    toAsset('/assets/scroll-cards/Mask group-4.webp'),
+    toAsset(`/assets/scroll-cards/scroll-01.webp?v=${SCROLL_CARD_VERSION}`),
+    toAsset(`/assets/scroll-cards/scroll-02.webp?v=${SCROLL_CARD_VERSION}`),
+    toAsset(`/assets/scroll-cards/scroll-03.webp?v=${SCROLL_CARD_VERSION}`),
+    toAsset(`/assets/scroll-cards/scroll-04.webp?v=${SCROLL_CARD_VERSION}`),
+    toAsset(`/assets/scroll-cards/scroll-05.webp?v=${SCROLL_CARD_VERSION}`),
   ],
   [
-    toAsset('/assets/scroll-cards/Mask group-5.webp'),
-    toAsset('/assets/scroll-cards/Mask group-6.webp'),
-    toAsset('/assets/scroll-cards/Mask group-7.webp'),
-    toAsset('/assets/scroll-cards/Mask group-8.webp'),
-    toAsset('/assets/scroll-cards/Mask group-9.webp'),
+    toAsset(`/assets/scroll-cards/scroll-06.webp?v=${SCROLL_CARD_VERSION}`),
+    toAsset(`/assets/scroll-cards/scroll-07.webp?v=${SCROLL_CARD_VERSION}`),
+    toAsset(`/assets/scroll-cards/scroll-08.webp?v=${SCROLL_CARD_VERSION}`),
+    toAsset(`/assets/scroll-cards/scroll-09.webp?v=${SCROLL_CARD_VERSION}`),
+    toAsset(`/assets/scroll-cards/scroll-10.webp?v=${SCROLL_CARD_VERSION}`),
   ],
   [
-    toAsset('/assets/scroll-cards/Mask group-10.webp'),
-    toAsset('/assets/scroll-cards/Mask group-11.webp'),
-    toAsset('/assets/scroll-cards/Mask group-12.webp'),
-    toAsset('/assets/scroll-cards/Group 1912056496.webp'),
-    toAsset('/assets/scroll-cards/Mask grou6p.webp'),
+    toAsset(`/assets/scroll-cards/scroll-11.webp?v=${SCROLL_CARD_VERSION}`),
+    toAsset(`/assets/scroll-cards/scroll-12.webp?v=${SCROLL_CARD_VERSION}`),
+    toAsset(`/assets/scroll-cards/scroll-13.webp?v=${SCROLL_CARD_VERSION}`),
+    toAsset(`/assets/scroll-cards/scroll-14.webp?v=${SCROLL_CARD_VERSION}`),
+    toAsset(`/assets/scroll-cards/scroll-15.webp?v=${SCROLL_CARD_VERSION}`),
   ],
 ];
 
