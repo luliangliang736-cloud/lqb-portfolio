@@ -242,16 +242,6 @@ export default function CardWallSection() {
           </div>
         </div>
       </div>
-      <img
-        src={OPERATOR_IMAGE}
-        alt=""
-        className="pointer-events-none absolute left-1/2 bottom-[-4vh] z-20 w-[clamp(300px,36vw,600px)] -translate-x-1/2 select-none object-contain"
-        style={{
-          WebkitMaskImage: 'linear-gradient(to bottom, #000 0%, #000 68%, transparent 100%)',
-          maskImage: 'linear-gradient(to bottom, #000 0%, #000 68%, transparent 100%)',
-        }}
-        draggable={false}
-      />
     </section>
   );
 }
