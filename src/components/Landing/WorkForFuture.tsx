@@ -186,8 +186,9 @@ function WorkFutureShowcase({ isInView }: { isInView: boolean }) {
       ))}
 
       <div className="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center text-center">
-        <motion.div
-          className="pointer-events-auto relative cursor-default"
+        <motion.a
+          href="#showcase/waterfall-collection"
+          className="pointer-events-auto relative cursor-pointer group"
           initial="rest"
           whileHover="hover"
         >
@@ -279,7 +280,14 @@ function WorkFutureShowcase({ isInView }: { isInView: boolean }) {
               </motion.span>
             </span>
           </motion.h3>
-        </motion.div>
+          <motion.span
+            className="mt-4 block text-center text-[0.7rem] uppercase tracking-[0.22em] text-white/0 transition-colors duration-300 group-hover:text-white/45 lg:text-[0.75rem]"
+            variants={{ rest: { y: 4, opacity: 0 }, hover: { y: 0, opacity: 1 } }}
+            transition={{ duration: 0.22, ease: 'easeOut' }}
+          >
+            View All Work →
+          </motion.span>
+        </motion.a>
       </div>
     </motion.div>
   );
