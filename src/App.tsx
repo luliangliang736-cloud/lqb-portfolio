@@ -8,6 +8,7 @@ import DesktopCompanion from './components/Desktop/DesktopCompanion';
 import ShowcasePage from './components/Landing/ShowcasePage';
 import ProjectDetailPage from './components/Landing/ProjectDetailPage';
 import MoreGalleryPage from './components/Landing/MoreGalleryPage';
+import EverythingCreatePage from './components/Landing/EverythingCreatePage';
 import WaterfallSectionPage, { isWaterfallSectionId } from './components/Landing/WaterfallSectionPage';
 import { showcaseMediaBySlug, showcases } from './content/showcases';
 
@@ -59,6 +60,16 @@ function getRouteState() {
   if (window.location.hash === '#more-gallery') {
     return {
       page: 'more-gallery',
+      showcaseSlug: null,
+      projectId: null,
+      sectionId: null,
+      caseId: null,
+    };
+  }
+
+  if (window.location.hash === '#everything-create') {
+    return {
+      page: 'everything-create',
       showcaseSlug: null,
       projectId: null,
       sectionId: null,
@@ -258,7 +269,9 @@ function App() {
   return (
     <div onClick={handleBackgroundClick}>
       <Navbar />
-      {activeStandalonePage === 'more-gallery' ? (
+      {activeStandalonePage === 'everything-create' ? (
+        <EverythingCreatePage />
+      ) : activeStandalonePage === 'more-gallery' ? (
         <MoreGalleryPage />
       ) : activeShowcase && activeWaterfallSection ? (
         <WaterfallSectionPage showcase={activeShowcase} sectionId={activeWaterfallSection} caseId={routeState.caseId} />

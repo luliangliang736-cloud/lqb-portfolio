@@ -186,9 +186,8 @@ function WorkFutureShowcase({ isInView }: { isInView: boolean }) {
       ))}
 
       <div className="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center text-center">
-        <motion.a
-          href="#showcase/waterfall-collection"
-          className="pointer-events-auto relative cursor-pointer group"
+        <motion.div
+          className="pointer-events-auto relative cursor-default"
           initial="rest"
           whileHover="hover"
         >
@@ -235,14 +234,16 @@ function WorkFutureShowcase({ isInView }: { isInView: boolean }) {
                 >
                   <AccentLetters word="TO" offset={showcaseWordOffsets.TO} accents={showcaseAccentMap} />
                 </motion.span>
-                <motion.span
-                  className="inline-flex min-w-[3.25em] items-center justify-center rounded-full bg-[#9CFF3F] px-[0.42em] py-[0.12em] align-middle text-[0.46em] leading-none tracking-[-0.04em] text-black"
+                <motion.a
+                  href="#everything-create"
+                  className="inline-flex min-w-[3.25em] items-center justify-center rounded-full bg-[#9CFF3F] px-[0.42em] py-[0.12em] align-middle text-[0.46em] leading-none tracking-[-0.04em] text-black cursor-pointer hover:bg-[#b8ff6a] transition-colors duration-200"
                   variants={headingWordVariants}
                   custom={2}
                   transition={{ type: 'spring', stiffness: 260, damping: 18, mass: 0.8, delay: 0.02 }}
+                  onClick={(e) => e.stopPropagation()}
                 >
                   →
-                </motion.span>
+                </motion.a>
                 <motion.span
                   className="inline-block"
                   variants={headingWordVariants}
@@ -280,14 +281,7 @@ function WorkFutureShowcase({ isInView }: { isInView: boolean }) {
               </motion.span>
             </span>
           </motion.h3>
-          <motion.span
-            className="mt-4 block text-center text-[0.7rem] uppercase tracking-[0.22em] text-white/0 transition-colors duration-300 group-hover:text-white/45 lg:text-[0.75rem]"
-            variants={{ rest: { y: 4, opacity: 0 }, hover: { y: 0, opacity: 1 } }}
-            transition={{ duration: 0.22, ease: 'easeOut' }}
-          >
-            View All Work →
-          </motion.span>
-        </motion.a>
+        </motion.div>
       </div>
     </motion.div>
   );
