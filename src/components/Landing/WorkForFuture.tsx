@@ -5,7 +5,7 @@ import CardWallSection from './CardWallSection';
 const BASE = import.meta.env.BASE_URL ?? '/';
 const toAsset = (p: string) => `${BASE.replace(/\/$/, '')}${p}`;
 
-const SCROLL_CARD_VERSION = '20260605-1308';
+const SCROLL_CARD_VERSION = '20260605-1313';
 const CARD_IMAGES: string[][] = [
   [
     toAsset(`/assets/scroll-cards/scroll-01.webp?v=${SCROLL_CARD_VERSION}`),
