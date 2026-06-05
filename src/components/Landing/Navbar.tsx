@@ -6,7 +6,7 @@ import { toAssetPath } from '../../utils/assetPath';
 
 const navLinks = [
   { label: 'Home', href: '#hero' },
-  { label: 'Work', href: '#features' },
+  { label: 'Work', href: '#features-grid' },
 ];
 
 export default function Navbar() {

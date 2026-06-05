@@ -1018,7 +1018,7 @@ export default function Features() {
           </motion.p>
         </div>
 
-        <div id="features-grid" className="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-[1vw]">
+        <div id="features-grid" className="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-[1vw] scroll-mt-20">
           {showcases.map((feature) => (
             <FeatureCard
               key={feature.tag}
