@@ -16,7 +16,7 @@ const FULL_OPACITY_ANGLE = ANGLE_STEP * 1.96;
 const FADE_OUT_ANGLE = ANGLE_STEP * 2.82;
 
 const BASE = import.meta.env.BASE_URL ?? '/';
-const OPERATOR_IMAGE = `${BASE.replace(/\/$/, '')}/assets/操作人物.png?v=20260602-1610`;
+
 const toCardAsset = (colIndex: number, row: number) => {
   const imageIndex = (colIndex * ROWS.length + row) % CARD_IMAGE_COUNT + 1;
   const fileName = `card-${String(imageIndex).padStart(2, '0')}.webp`;
