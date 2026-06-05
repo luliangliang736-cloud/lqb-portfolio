@@ -14,6 +14,7 @@ const ANGLE_STEP = ANGLE_STEP_DEG * Math.PI / 180;
 const AUTO_SCROLL_SPEED = 0.0012;
 const FULL_OPACITY_ANGLE = ANGLE_STEP * 1.96;
 const FADE_OUT_ANGLE = ANGLE_STEP * 2.82;
+const MAX_HOVER_TILT = 8; // degrees — dragon-dance rotateX per column
 
 const BASE = import.meta.env.BASE_URL ?? '/';
 
@@ -60,6 +61,9 @@ export default function CardWallSection() {
     lastX: 0,
     lastTime: 0,
   });
+  // Dragon-dance: per-column tilt springs + mouse target
+  const colTiltRef = useRef(Array.from({ length: TOTAL_COLS }, () => 0));
+  const mouseTiltTargetRef = useRef(0);
   const [isDragging, setIsDragging] = useState(false);
   const [viewportWidth, setViewportWidth] = useState(() => window.innerWidth);
 
@@ -80,6 +84,21 @@ export default function CardWallSection() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Dragon-dance mouse tracking
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      // Normalize to -1..1, invert Y so mouse-up = tilt-toward-viewer (positive rotateX)
+      mouseTiltTargetRef.current = -(e.clientY / window.innerHeight - 0.5) * 2 * MAX_HOVER_TILT;
+    };
+    const onLeave = () => { mouseTiltTargetRef.current = 0; };
+    window.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseleave', onLeave);
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseleave', onLeave);
+    };
+  }, []);
+
   useEffect(() => {
     const animate = () => {
       if (!dragRef.current.active) {
@@ -89,6 +108,16 @@ export default function CardWallSection() {
         if (Math.abs(velocityRef.current) < 0.00008) {
           velocityRef.current = 0;
         }
+      }
+
+      // Dragon-dance: update chained tilt springs (col 0 = head, col 19 = tail)
+      const tilt = colTiltRef.current;
+      const tiltTarget = mouseTiltTargetRef.current;
+      // stiffness decreases linearly from head to tail: 0.13 → 0.026
+      tilt[0] = tilt[0]! + (tiltTarget - tilt[0]!) * 0.13;
+      for (let k = 1; k < TOTAL_COLS; k++) {
+        const stiffness = 0.13 - k * 0.0055;
+        tilt[k] = tilt[k]! + (tilt[k - 1]! - tilt[k]!) * stiffness;
       }
 
       columnRefs.current.forEach((column, colIndex) => {
@@ -105,8 +134,9 @@ export default function CardWallSection() {
           1,
         );
         const opacity = 1 - fadeProgress;
+        const tiltX = (tilt[colIndex] ?? 0).toFixed(2);
 
-        column.style.transform = `translate3d(${x.toFixed(2)}px, 0, ${z.toFixed(2)}px) rotateY(${rotateY.toFixed(2)}deg)`;
+        column.style.transform = `translate3d(${x.toFixed(2)}px, 0, ${z.toFixed(2)}px) rotateY(${rotateY.toFixed(2)}deg) rotateX(${tiltX}deg)`;
         column.style.opacity = `${opacity.toFixed(3)}`;
         column.style.pointerEvents = opacity > 0.02 ? 'auto' : 'none';
         column.style.zIndex = `${Math.round(z)}`;

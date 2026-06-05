@@ -110,6 +110,25 @@ function CardInStack({
 export default function EverythingCreatePage() {
   const [startIdx, setStartIdx] = useState(0);
   const [extraCard, setExtraCard] = useState<{ imgIdx: number; relIdx: number } | null>(null);
+  // Responsive vertical offset: ensures back card stays within viewport
+  const [stackOffset, setStackOffset] = useState(50);
+
+  useEffect(() => {
+    const compute = () => {
+      const vmin = Math.min(window.innerWidth, window.innerHeight);
+      const cardSize = Math.min(Math.max(324, 0.67 * vmin), 756);
+      const backScale = Math.pow(1 - SCALE_STEP, STACK_SIZE - 1);
+      const backCardHalf = (cardSize * backScale) / 2;
+      const backCardY = getTranslateY(STACK_SIZE - 1); // negative value
+      // Min offset = distance needed to keep back card >= 20px from viewport top
+      const minOffset = 20 - backCardY - backCardHalf - window.innerHeight / 2;
+      setStackOffset(Math.max(50, Math.ceil(minOffset)));
+    };
+    compute();
+    window.addEventListener('resize', compute);
+    return () => window.removeEventListener('resize', compute);
+  }, []);
+
   const travel = useMotionValue(0);
   const animating = useRef(false);
   const lastWheelTime = useRef(0);
@@ -265,7 +284,7 @@ export default function EverythingCreatePage() {
         {/* perspective enables 3D tilt from rotateX/Y */}
         <div
           className="relative"
-          style={{ width: 0, height: 0, transform: 'translateY(50px)', perspective: '1000px' }}
+          style={{ width: 0, height: 0, transform: `translateY(${stackOffset}px)`, perspective: '1000px' }}
         >
           {[...cards].reverse().map(({ imgIdx, relIdx }) => {
             const { x: hoverX, y: hoverY } = getHoverForRelIdx(relIdx);
